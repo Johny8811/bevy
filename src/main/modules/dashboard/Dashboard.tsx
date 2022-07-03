@@ -5,6 +5,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+import { DataGridDemo } from './components/DeliveryTable';
+
 export function Dashboard() {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -17,6 +19,7 @@ export function Dashboard() {
           <Button color="inherit">Load data</Button>
         </Toolbar>
       </AppBar>
+      <DataGridDemo />
     </Box>
   );
 }
