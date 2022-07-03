@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { red } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Routing from './Routing';
+import Routing from './routing/Routing';
 import reportWebVitals from './reportWebVitals';
 
 const theme = createTheme({
