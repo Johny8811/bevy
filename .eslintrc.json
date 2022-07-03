@@ -29,6 +29,9 @@
             { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
         ],
         "import/no-unresolved": "off",
-        "import/prefer-default-export": 0
+        "import/prefer-default-export": 0,
+        "react/require-default-props": [1, {
+            "functions": "defaultArguments"
+        }]
     }
 }
