@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
 
 import { DeliveryTable } from './components/DeliveryTable';
 
@@ -19,26 +20,29 @@ export function Dashboard() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Dispatcher: Emil
           </Typography>
-          <Button color="inherit">Export data</Button>
-          <Button color="inherit">Load data</Button>
-          <DatePicker
-            label="Select date"
-            value={value}
-            onChange={(newValue) => {
-              setValue(newValue);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                sx={{
-                  svg: { color: '#fff' },
-                  input: { color: '#fff' },
-                  label: { color: '#fff' }
-                }}
-                color="secondary"
-              />
-            )}
-          />
+          <Stack spacing={2} direction="row">
+            <Button color="inherit">Export data</Button>
+            <Button color="inherit">Load data</Button>
+            <DatePicker
+              label="Select date"
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  sx={{
+                    svg: { color: '#fff' },
+                    input: { color: '#fff' },
+                    label: { color: '#fff' }
+                  }}
+                  color="secondary"
+                />
+              )}
+            />
+            <Button variant="contained">Log out</Button>
+          </Stack>
         </Toolbar>
       </AppBar>
       <DeliveryTable />
