@@ -11,15 +11,32 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+
+import { auth } from '../../../integrations/firebase';
 
 export function SignIn() {
+  const navigate = useNavigate();
+  const [emailError, setEmailError] = React.useState(false);
+  const [passError, setPassError] = React.useState(false);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    });
+
+    const email = data.get('email') as string;
+    const password = data.get('password') as string;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        navigate('dashboard');
+      })
+      // TODO: improve error handling if it will be necessary
+      .catch((/* { code, message } */) => {
+        setEmailError((v) => !v);
+        setPassError((v) => !v);
+      });
   };
 
   return (
@@ -48,6 +65,8 @@ export function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            error={emailError}
+            onChange={() => setEmailError((v) => v && !v)}
           />
           <TextField
             margin="normal"
@@ -58,6 +77,8 @@ export function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            error={passError}
+            onChange={() => setPassError((v) => v && !v)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
