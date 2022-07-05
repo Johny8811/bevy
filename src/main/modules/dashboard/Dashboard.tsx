@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 
-import { DataGridDemo } from './components/DeliveryTable';
+import { DeliveryTable } from './components/DeliveryTable';
 
 export function Dashboard() {
   const [value, setValue] = React.useState<Date | null>(null);
@@ -41,7 +41,7 @@ export function Dashboard() {
           />
         </Toolbar>
       </AppBar>
-      <DataGridDemo />
+      <DeliveryTable />
     </Box>
   );
 }
