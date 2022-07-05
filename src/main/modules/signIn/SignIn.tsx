@@ -11,15 +11,22 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
-import { auth } from '../../../integrations/firebase';
+import { useSignIn } from '../../../integrations/firebase/hooks/useSignIn';
 
 export function SignIn() {
   const navigate = useNavigate();
   const [emailError, setEmailError] = React.useState(false);
   const [passError, setPassError] = React.useState(false);
+
+  const onSuccess = () => navigate('dashboard');
+  const onError = () => {
+    setEmailError((v) => !v);
+    setPassError((v) => !v);
+  };
+
+  const signIn = useSignIn({ onSuccess, onError });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,15 +35,7 @@ export function SignIn() {
     const email = data.get('email') as string;
     const password = data.get('password') as string;
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        navigate('dashboard');
-      })
-      // TODO: improve error handling if it will be necessary
-      .catch((/* { code, message } */) => {
-        setEmailError((v) => !v);
-        setPassError((v) => !v);
-      });
+    signIn(email, password);
   };
 
   return (
