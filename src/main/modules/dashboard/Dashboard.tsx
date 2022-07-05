@@ -7,10 +7,18 @@ import Button from '@mui/material/Button';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom';
 
 import { DeliveryTable } from './components/DeliveryTable';
+import { useSignOut } from '../../../integrations/firebase/hooks/useSignOut';
 
 export function Dashboard() {
+  const navigate = useNavigate();
+
+  const signOut = useSignOut({
+    onSuccess: () => navigate('/', { replace: true })
+  });
+
   const [value, setValue] = React.useState<Date | null>(null);
 
   return (
@@ -41,7 +49,9 @@ export function Dashboard() {
                 />
               )}
             />
-            <Button variant="contained">Log out</Button>
+            <Button variant="contained" onClick={signOut}>
+              Sign out
+            </Button>
           </Stack>
         </Toolbar>
       </AppBar>
