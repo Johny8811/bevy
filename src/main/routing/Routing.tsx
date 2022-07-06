@@ -1,18 +1,22 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { SignIn } from '../modules/signIn/SignIn';
-import { Dashboard } from '../modules/dashboard/Dashboard';
 
 import { NoMatchingRoute } from './components/NoMatchingRoute';
-import { TEST_USER } from '../../types/User';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { SignIn } from '../modules/signIn/SignIn';
+import { Dashboard } from '../modules/dashboard/Dashboard';
+import { useUser } from '../../integrations/user/hooks/useUser';
 
 function Routing() {
+  const { user } = useUser();
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<SignIn />} />
-        <Route element={<ProtectedRoute isAllowed={!!TEST_USER} />}>
+        <Route element={<ProtectedRoute isAllowed={!user} redirectPath="/dashboard" />}>
+          <Route path="/" element={<SignIn />} />
+        </Route>
+        <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
           <Route path="dashboard" element={<Dashboard />} />
         </Route>
         <Route path="*" element={<NoMatchingRoute />} />
