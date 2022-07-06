@@ -6,7 +6,7 @@ export const useUser = () => {
   const userContext = useContext(UserContext);
 
   if (!userContext) {
-    throw new Error('calling useAuth out of AuthContext');
+    throw new Error('calling useUser out of UserContext');
   }
 
   return userContext;

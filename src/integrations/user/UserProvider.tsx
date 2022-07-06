@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useEffect, useState } from 'react';
+import React, { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '../firebase';
@@ -7,22 +7,22 @@ type Props = {
   children: ReactNode;
 };
 
-export const UserContext = createContext<User | null>(null);
+type UserProviderType = {
+  user: User | null;
+};
+
+export const UserContext = createContext<UserProviderType | null>(null);
 
 export function UserProvider({ children }: Props) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (signedUser) => {
-      if (signedUser) {
-        // set signed user
-        setUser(signedUser);
-      } else {
-        // TODO: add logger
-        console.log('No user is signed');
-      }
+      setUser(signedUser || null);
     });
   }, []);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  const providerValueMemoized = useMemo(() => ({ user }), [user]);
+
+  return <UserContext.Provider value={providerValueMemoized}>{children}</UserContext.Provider>;
 }
