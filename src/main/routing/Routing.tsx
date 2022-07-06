@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { SignIn } from '../main/modules/signIn/SignIn';
-import { Dashboard } from '../main/modules/dashboard/Dashboard';
+import { SignIn } from '../modules/signIn/SignIn';
+import { Dashboard } from '../modules/dashboard/Dashboard';
 
 import { NoMatchingRoute } from './components/NoMatchingRoute';
-import { TEST_USER } from '../types/User';
+import { TEST_USER } from '../../types/User';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 function Routing() {

@@ -5,7 +5,7 @@ import { red } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import Routing from './routing/Routing';
+import Routing from './main/routing/Routing';
 import reportWebVitals from './reportWebVitals';
 // TypeScript 4.x and above
 import type {} from '@mui/x-date-pickers/themeAugmentation';
