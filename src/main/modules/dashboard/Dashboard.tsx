@@ -14,12 +14,17 @@ import { useSignOut } from '../../../integrations/firebase/hooks/useSignOut';
 
 export function Dashboard() {
   const navigate = useNavigate();
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [value, setValue] = React.useState<Date | null>(null);
 
   const signOut = useSignOut({
     onSuccess: () => navigate('/', { replace: true })
   });
 
-  const [value, setValue] = React.useState<Date | null>(null);
+  // TODO: create common component for input file
+  const handleCahngeFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('==> uploaded files: ', event.currentTarget.files);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -30,7 +35,18 @@ export function Dashboard() {
           </Typography>
           <Stack spacing={2} direction="row">
             <Button color="inherit">Export data</Button>
-            <Button color="inherit">Load data</Button>
+            <>
+              <Button color="inherit" onClick={() => fileInputRef.current?.click()}>
+                Load data
+              </Button>
+              <input
+                type="file"
+                name="file"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={handleCahngeFileInput}
+              />
+            </>
             <DatePicker
               label="Select date"
               value={value}
