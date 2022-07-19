@@ -34,6 +34,7 @@
             "functions": "defaultArguments"
         }],
         "react/jsx-props-no-spreading": 0,
+        "sort-imports": 1,
         "no-shadow": 0,
         "no-unused-vars": 0,
         "@typescript-eslint/no-shadow": 2,
