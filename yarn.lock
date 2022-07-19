@@ -9937,6 +9937,10 @@ ws@^7.4.6:
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.8.tgz#ac2729881ab9e7cbaf8787fe3469a48c5c7f636a"
   integrity sha512-ri1Id1WinAX5Jqn9HejiGb8crfRio0Qgu8+MtL36rlTA6RLsMdWt1Az/19A2Qij6uSHUMphEFaTKa4WG+UNHNw==
 
+"xlsx@https://cdn.sheetjs.com/xlsx-0.18.9/xlsx-0.18.9.tgz":
+  version "0.18.9"
+  resolved "https://cdn.sheetjs.com/xlsx-0.18.9/xlsx-0.18.9.tgz#d1d36c31dd0cc7a2d93885822252f7bae5aa2dbc"
+
 xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
