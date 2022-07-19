@@ -10,21 +10,20 @@ import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 
 import { DeliveryTable } from './components/DeliveryTable';
+import { transformSheetToOnFleetJSON } from './utils/transformSheetToOnFleetJSON';
 import { useSignOut } from '../../../integrations/firebase/hooks/useSignOut';
+import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 
 export function Dashboard() {
   const navigate = useNavigate();
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [value, setValue] = React.useState<Date | null>(null);
 
   const signOut = useSignOut({
     onSuccess: () => navigate('/', { replace: true })
   });
 
-  // TODO: create common component for input file
-  const handleCahngeFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('==> uploaded files: ', event.currentTarget.files);
-  };
+  const handleChangeFileInput = ({ file }: OnChangeParams) =>
+    file && transformSheetToOnFleetJSON(file);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -35,18 +34,7 @@ export function Dashboard() {
           </Typography>
           <Stack spacing={2} direction="row">
             <Button color="inherit">Export data</Button>
-            <>
-              <Button color="inherit" onClick={() => fileInputRef.current?.click()}>
-                Load data
-              </Button>
-              <input
-                type="file"
-                name="file"
-                ref={fileInputRef}
-                style={{ display: 'none' }}
-                onChange={handleCahngeFileInput}
-              />
-            </>
+            <FileInput title="Load data" onChange={handleChangeFileInput} />
             <DatePicker
               label="Select date"
               value={value}
