@@ -18,13 +18,11 @@ export const fetchApi = async ({
   switch (method) {
     case Methods.get: {
       const response = await fetch(url, { method: Methods.get, headers });
-      await response.json();
-      return response;
+      return response.json();
     }
     case Methods.post: {
       const response = await fetch(url, { method: Methods.post, body, headers });
-      await response.json();
-      return response;
+      return response.json();
     }
     default: {
       return new Promise((resolve, reject) => {
