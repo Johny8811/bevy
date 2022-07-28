@@ -35,8 +35,8 @@ export const transformSheetToOnFleet = async (tasksXlsx: File) => {
           skipSMSNotifications: data[SheetColumns.NOTIFICATION]
         }
       ],
-      completeAfter: excelDateToJSDate(data[SheetColumns.DELIVER_AFTER]),
-      completeBefore: excelDateToJSDate(data[SheetColumns.DELIVER_BEFORE])
+      completeAfter: excelDateToJSDate(data[SheetColumns.DELIVER_AFTER]).getTime(),
+      completeBefore: excelDateToJSDate(data[SheetColumns.DELIVER_BEFORE]).getTime()
     };
   });
 
