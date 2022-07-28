@@ -1,18 +1,18 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
-
-import { DeliveryTable } from './components/DeliveryTable';
-import { transformSheetToOnFleetJSON } from './utils/transformSheetToOnFleetJSON';
-import { useSignOut } from '../../../integrations/firebase/hooks/useSignOut';
+import Toolbar from '@mui/material/Toolbar';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
+
+import { transformSheetToOnFleet } from '../../utils/transformSheeToOnFleet';
+import { DeliveryTable } from './components/DeliveryTable';
+import { useSignOut } from '../../../integrations/firebase/hooks/useSignOut';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -22,8 +22,7 @@ export function Dashboard() {
     onSuccess: () => navigate('/', { replace: true })
   });
 
-  const handleChangeFileInput = ({ file }: OnChangeParams) =>
-    file && transformSheetToOnFleetJSON(file);
+  const handleChangeFileInput = ({ file }: OnChangeParams) => file && transformSheetToOnFleet(file);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -33,7 +32,9 @@ export function Dashboard() {
             Dispatcher: Emil
           </Typography>
           <Stack spacing={2} direction="row">
-            <Button color="inherit">Export data</Button>
+            <Button color="inherit" onClick={() => {}}>
+              Export data
+            </Button>
             <FileInput title="Load data" onChange={handleChangeFileInput} />
             <DatePicker
               label="Select date"
