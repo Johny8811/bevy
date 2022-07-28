@@ -1,6 +1,6 @@
 import { read, utils } from 'xlsx';
 import { parseStreet } from '../parseStreet';
-import { RawSheetData, SheetColumns } from './types';
+import { RawSheetData, SheetColumns } from '../../types/tasksSheet';
 
 import { excelDateToJSDate } from '../excelDateToJSDate';
 
@@ -11,7 +11,7 @@ export const transformSheetToOnFleet = async (tasksXlsx: File) => {
   const sheetNameList = workbook.SheetNames;
   const parsedSheetData = utils.sheet_to_json<RawSheetData>(workbook.Sheets[sheetNameList[0]]);
 
-  const onFleetTasks = parsedSheetData.map((data) => {
+  return parsedSheetData.map((data) => {
     const { street, streetNo } = parseStreet(data[SheetColumns.ADDRESS_STREET]);
     const name = `${data[SheetColumns.CUSTOMER_NAME]} ${data[SheetColumns.QUANTITY]}`;
 
@@ -21,7 +21,7 @@ export const transformSheetToOnFleet = async (tasksXlsx: File) => {
           number: streetNo,
           street,
           city: data[SheetColumns.COUNTRY],
-          postalCode: data[SheetColumns.POSTAL_CODE],
+          postalCode: data[SheetColumns.POSTAL_CODE].toString(),
           // TODO: has to be added
           country: 'Czech Republic'
           // country: data[SheetColumns]
@@ -31,7 +31,7 @@ export const transformSheetToOnFleet = async (tasksXlsx: File) => {
         {
           name,
           phone: data[SheetColumns.TEL_NUMBER],
-          notes: data[SheetColumns.CUSTOMER_NOTE],
+          notes: data[SheetColumns.CUSTOMER_NOTE].toString(),
           skipSMSNotifications: data[SheetColumns.NOTIFICATION]
         }
       ],
@@ -39,6 +39,4 @@ export const transformSheetToOnFleet = async (tasksXlsx: File) => {
       completeBefore: excelDateToJSDate(data[SheetColumns.DELIVER_BEFORE]).getTime()
     };
   });
-
-  console.log('==> onFleetTasks: ', onFleetTasks);
 };

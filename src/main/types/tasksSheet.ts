@@ -17,11 +17,11 @@ export enum SheetColumns {
 
 export type RawSheetData = {
   [SheetColumns.CUSTOMER_NAME]: string;
-  [SheetColumns.TEL_NUMBER]: number;
+  [SheetColumns.TEL_NUMBER]: string;
   [SheetColumns.NOTIFICATION]: boolean;
   [SheetColumns.CUSTOMER_NOTE]: string;
   [SheetColumns.ADDRESS_STREET]: string;
-  [SheetColumns.POSTAL_CODE]: number;
+  [SheetColumns.POSTAL_CODE]: string;
   [SheetColumns.COUNTRY]: string;
   [SheetColumns.DELIVER_AFTER]: number;
   [SheetColumns.DELIVER_BEFORE]: number;
