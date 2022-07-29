@@ -5,7 +5,7 @@ export enum Methods {
 
 export const fetchApi = async ({
   url,
-  method = Methods.get,
+  method = Methods.post,
   headers,
   body
 }: {
