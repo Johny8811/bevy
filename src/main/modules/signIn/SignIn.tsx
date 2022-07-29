@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
 
-import { useSignIn } from '../../../integrations/firebase/hooks/useSignIn';
+import { useSignIn } from '../../integrations/firebase/hooks/useSignIn';
 
 export function SignIn() {
   const navigate = useNavigate();

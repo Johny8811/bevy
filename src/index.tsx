@@ -9,7 +9,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 
 import Routing from './main/routing/Routing';
-import { UserProvider } from './integrations/user/UserProvider';
+import { UserProvider } from './main/integrations/user/UserProvider';
 import reportWebVitals from './reportWebVitals';
 
 const theme = createTheme({

@@ -12,7 +12,7 @@ import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput'
 
 import { transformSheetToOnFleet } from '../../utils/transformSheeToOnFleet';
 import { DeliveryTable } from './components/DeliveryTable';
-import { useSignOut } from '../../../integrations/firebase/hooks/useSignOut';
+import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 
 export function Dashboard() {
   const navigate = useNavigate();
