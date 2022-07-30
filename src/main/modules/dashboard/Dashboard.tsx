@@ -13,6 +13,7 @@ import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput'
 import { transformSheetToOnFleet } from '../../utils/transformSheeToOnFleet';
 import { DeliveryTable } from './components/DeliveryTable';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
+import { onFleetCreateTasks } from '../../queries/onFleetCreateTasks';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -22,7 +23,15 @@ export function Dashboard() {
     onSuccess: () => navigate('/', { replace: true })
   });
 
-  const handleChangeFileInput = ({ file }: OnChangeParams) => file && transformSheetToOnFleet(file);
+  const handleChangeFileInput = async ({ file }: OnChangeParams) => {
+    if (file) {
+      const onFleetTasks = await transformSheetToOnFleet(file);
+      const response = await onFleetCreateTasks(onFleetTasks);
+
+      // TODO: process onFleet response
+      console.log('==> dashboard:response ', response);
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
