@@ -16,10 +16,10 @@ export enum SheetColumns {
 }
 
 export type RawSheetData = {
-  [SheetColumns.CUSTOMER_NAME]: string;
-  [SheetColumns.TEL_NUMBER]: string;
-  [SheetColumns.ADDRESS_STREET]: string;
-  [SheetColumns.COUNTRY]: string;
+  [SheetColumns.CUSTOMER_NAME]?: string;
+  [SheetColumns.TEL_NUMBER]?: string;
+  [SheetColumns.ADDRESS_STREET]?: string;
+  [SheetColumns.COUNTRY]?: string;
   [SheetColumns.NOTIFICATION]?: boolean;
   [SheetColumns.CUSTOMER_NOTE]?: string;
   [SheetColumns.POSTAL_CODE]?: string;

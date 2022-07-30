@@ -28,6 +28,7 @@ export function Dashboard() {
       const onFleetTasks = await transformSheetToOnFleet(file);
       const response = await onFleetCreateTasks(onFleetTasks);
 
+      // console.log('==> dashboard:onFleetTasks ', onFleetTasks);
       // TODO: process onFleet response
       console.log('==> dashboard:response ', response);
     }
@@ -44,7 +45,7 @@ export function Dashboard() {
             <Button color="inherit" onClick={() => {}}>
               Export data
             </Button>
-            <FileInput title="Load data" onChange={handleChangeFileInput} />
+            <FileInput title="Upload data" onChange={handleChangeFileInput} />
             <DatePicker
               label="Select date"
               value={value}
