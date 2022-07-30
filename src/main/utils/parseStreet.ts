@@ -11,7 +11,8 @@ export const parseStreet = (data: string) => {
 
       return item;
     })
-    .join(' ');
+    .join(' ')
+    .trim();
 
   return {
     street,

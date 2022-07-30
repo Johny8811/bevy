@@ -13,30 +13,31 @@ export const transformSheetToOnFleet = async (tasksXlsx: File) => {
 
   return parsedSheetData.map((data) => {
     const { street, streetNo } = parseStreet(data[SheetColumns.ADDRESS_STREET]);
-    const name = `${data[SheetColumns.CUSTOMER_NAME]} ${data[SheetColumns.QUANTITY]}`;
+    const name = `${data[SheetColumns.CUSTOMER_NAME]} ${data[SheetColumns.QUANTITY] || '1'}`;
 
     return {
       destination: {
         address: {
           number: streetNo,
           street,
+          // TODO: should be changed to name "city"
           city: data[SheetColumns.COUNTRY],
-          postalCode: data[SheetColumns.POSTAL_CODE].toString(),
-          // TODO: has to be added
+          postalCode: data[SheetColumns.POSTAL_CODE]?.toString(),
           country: 'Czech Republic'
+          // TODO: "country" has to be defined in sheet
           // country: data[SheetColumns]
         }
       },
       recipients: [
         {
           name,
-          phone: data[SheetColumns.TEL_NUMBER],
-          notes: data[SheetColumns.CUSTOMER_NOTE].toString(),
-          skipSMSNotifications: data[SheetColumns.NOTIFICATION]
+          phone: data[SheetColumns.TEL_NUMBER].toString(),
+          notes: data[SheetColumns.CUSTOMER_NOTE]?.toString(),
+          skipSMSNotifications: data[SheetColumns.NOTIFICATION] || false
         }
       ],
-      completeAfter: excelDateToJSDate(data[SheetColumns.DELIVER_AFTER]).getTime(),
-      completeBefore: excelDateToJSDate(data[SheetColumns.DELIVER_BEFORE]).getTime()
+      completeAfter: excelDateToJSDate(data[SheetColumns.DELIVER_AFTER] || 0)?.getTime(),
+      completeBefore: excelDateToJSDate(data[SheetColumns.DELIVER_BEFORE] || 0)?.getTime()
     };
   });
 };

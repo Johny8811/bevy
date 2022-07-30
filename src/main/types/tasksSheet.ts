@@ -18,16 +18,16 @@ export enum SheetColumns {
 export type RawSheetData = {
   [SheetColumns.CUSTOMER_NAME]: string;
   [SheetColumns.TEL_NUMBER]: string;
-  [SheetColumns.NOTIFICATION]: boolean;
-  [SheetColumns.CUSTOMER_NOTE]: string;
   [SheetColumns.ADDRESS_STREET]: string;
-  [SheetColumns.POSTAL_CODE]: string;
   [SheetColumns.COUNTRY]: string;
-  [SheetColumns.DELIVER_AFTER]: number;
-  [SheetColumns.DELIVER_BEFORE]: number;
-  [SheetColumns.QUANTITY]: number;
+  [SheetColumns.NOTIFICATION]?: boolean;
+  [SheetColumns.CUSTOMER_NOTE]?: string;
+  [SheetColumns.POSTAL_CODE]?: string;
+  [SheetColumns.DELIVER_AFTER]?: number;
+  [SheetColumns.DELIVER_BEFORE]?: number;
+  [SheetColumns.QUANTITY]?: number;
   // -- define types of these items
-  [SheetColumns.PAYMENT]: number;
-  [SheetColumns.CASH_ON_DELIVER]: number;
-  [SheetColumns.INTERNAL_ORDER_NO]: number;
+  [SheetColumns.PAYMENT]?: number;
+  [SheetColumns.CASH_ON_DELIVER]?: number;
+  [SheetColumns.INTERNAL_ORDER_NO]?: number;
 };
