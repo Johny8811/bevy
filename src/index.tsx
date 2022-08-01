@@ -8,6 +8,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // TypeScript 4.x and above
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 
+import { LoadingProvider } from './main/integrations/fetch/context/LoadingProvider';
 import Routing from './main/routing/Routing';
 import { UserProvider } from './main/integrations/user/UserProvider';
 import reportWebVitals from './reportWebVitals';
@@ -32,7 +33,9 @@ root.render(
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <UserProvider>
-          <Routing />
+          <LoadingProvider>
+            <Routing />
+          </LoadingProvider>
         </UserProvider>
       </LocalizationProvider>
     </ThemeProvider>
