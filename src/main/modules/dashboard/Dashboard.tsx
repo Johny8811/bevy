@@ -13,10 +13,11 @@ import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput'
 import { transformSheetToOnFleet } from '../../utils/transformSheeToOnFleet';
 import { DeliveryTable } from './components/DeliveryTable';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
-import { onFleetCreateTasks } from '../../queries/onFleetCreateTasks';
+import { useCreateOnFleetTasks } from '../../queryHooks/useCreateOnFleetTasks';
 
 export function Dashboard() {
   const navigate = useNavigate();
+  const createOnFleetTasks = useCreateOnFleetTasks();
   const [value, setValue] = React.useState<Date | null>(null);
 
   const signOut = useSignOut({
@@ -26,7 +27,7 @@ export function Dashboard() {
   const handleChangeFileInput = async ({ file }: OnChangeParams) => {
     if (file) {
       const onFleetTasks = await transformSheetToOnFleet(file);
-      const response = await onFleetCreateTasks(onFleetTasks);
+      const response = await createOnFleetTasks(onFleetTasks);
 
       // console.log('==> dashboard:onFleetTasks ', onFleetTasks);
       // TODO: process onFleet response
