@@ -33,7 +33,7 @@ export function LoadingProvider({ children }: Props) {
   return <LoadingContext.Provider value={value}>{children}</LoadingContext.Provider>;
 }
 
-const useLoading = () => {
+export const useLoading = () => {
   const loadingContext = useContext(LoadingContext);
 
   if (!loadingContext) {
