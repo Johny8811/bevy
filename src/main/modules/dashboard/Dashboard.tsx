@@ -8,18 +8,15 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
-import LinearProgress from '@mui/material/LinearProgress';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 
 import { transformSheetToOnFleet } from '../../utils/transformSheeToOnFleet';
 import { DeliveryTable } from './components/DeliveryTable';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { useCreateOnFleetTasks } from '../../queryHooks/useCreateOnFleetTasks';
-import { useLoading } from '../../integrations/fetch/context/LoadingProvider';
 
 export function Dashboard() {
   const navigate = useNavigate();
-  const { loading } = useLoading();
   const createOnFleetTasks = useCreateOnFleetTasks();
   const [value, setValue] = React.useState<Date | null>(null);
 
@@ -74,7 +71,6 @@ export function Dashboard() {
           </Stack>
         </Toolbar>
       </AppBar>
-      <Box sx={{ height: '4px' }}>{loading && <LinearProgress />}</Box>
       <DeliveryTable />
     </Box>
   );

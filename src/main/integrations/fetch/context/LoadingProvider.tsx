@@ -1,15 +1,14 @@
-// TODO: replace with better loading management
+// TODO: replace with better loading management (react-query should have loading build-in)
 import React, { createContext, ReactNode, useMemo, useState, useContext } from 'react';
+import LinearProgress from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
 
 type LoadingProviderType = {
-  loading: boolean;
   startLoading?: () => void;
   stopLoading?: () => void;
 };
 
-const LoadingContext = createContext<LoadingProviderType>({
-  loading: false
-});
+const LoadingContext = createContext<LoadingProviderType>({});
 
 type Props = {
   children: ReactNode;
@@ -23,14 +22,18 @@ export function LoadingProvider({ children }: Props) {
 
   const value = useMemo(
     () => ({
-      loading,
       startLoading: handleStartLoading,
       stopLoading: handleStopLoading
     }),
     [loading]
   );
 
-  return <LoadingContext.Provider value={value}>{children}</LoadingContext.Provider>;
+  return (
+    <LoadingContext.Provider value={value}>
+      {loading ? <LinearProgress /> : <Box sx={{ height: 4, backgroundColor: 'primary.main' }} />}
+      {children}
+    </LoadingContext.Provider>
+  );
 }
 
 export const useLoading = () => {
