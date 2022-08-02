@@ -45,7 +45,7 @@ export const transformSheetToOnFleet = async (
       {
         name: 'User ID',
         type: 'string',
-        visibility: ['api', 'dashboard', 'worker'],
+        visibility: ['api'],
         // TODO: add user uniq ID
         value: 'abcd1234'
       }
