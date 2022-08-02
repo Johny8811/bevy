@@ -1,6 +1,5 @@
 import { read, utils } from 'xlsx';
 import OnFleet from '@onfleet/node-onfleet';
-import { parseStreet } from '../parseStreet';
 import { RawSheetData, SheetColumns } from '../../types/tasksSheet';
 
 import { excelDateToJSDate } from '../excelDateToJSDate';
@@ -16,17 +15,17 @@ export const transformSheetToOnFleet = async (
 
   return parsedSheetData.map((data) => {
     // Destination
-    const { street, streetNo } = parseStreet(data[SheetColumns.ADDRESS_STREET] || '');
-    // TODO: "SheetColumns.COUNTRY" should be changed to name "SheetColumns.CITY"
-    const city = data[SheetColumns.COUNTRY] || '';
+    const number = data[SheetColumns.HOUSE_NUMBER]?.toString() || '';
+    const street = data[SheetColumns.STREET] || '';
+    const city = data[SheetColumns.CITY] || '';
     const postalCode = data[SheetColumns.POSTAL_CODE]?.toString();
-    const country = 'Czech Republic';
+    const country = data[SheetColumns.COUNTRY] || '';
 
     // Recipients
     const quantity = data[SheetColumns.QUANTITY] || 1;
     const name = `${data[SheetColumns.CUSTOMER_NAME]} ${quantity}ks`;
     const phone = data[SheetColumns.TEL_NUMBER]?.toString() || '';
-    const recipientNotes = data[SheetColumns.CUSTOMER_NOTE]?.toString();
+    const recipientNotes = data[SheetColumns.CUSTOMER_NOTE];
     const skipSMSNotifications = data[SheetColumns.NOTIFICATION];
 
     // Delivery time
@@ -42,7 +41,7 @@ export const transformSheetToOnFleet = async (
     return {
       destination: {
         address: {
-          number: streetNo,
+          number,
           street,
           city,
           postalCode,
