@@ -1,5 +1,7 @@
 import { read, utils } from 'xlsx';
 import OnFleet from '@onfleet/node-onfleet';
+// TODO: "OnfleetMetadata" should be used from "OnFleet" - ts error union in interface
+import { OnfleetMetadata } from '@onfleet/node-onfleet/metadata';
 import { RawSheetData, SheetColumns } from '../../types/tasksSheet';
 
 import { excelDateToJSDate } from '../excelDateToJSDate';
@@ -13,9 +15,6 @@ export const transformSheetToOnFleet = async (
   const sheetNameList = workbook.SheetNames;
   const parsedSheetData = utils.sheet_to_json<RawSheetData>(workbook.Sheets[sheetNameList[0]]);
 
-  // FIXME: to check types, remove @ts-ignore and comment metadata key
-  //  ! ts doesn't know properties of "metadata" because union in interface !
-  // @ts-ignore
   return parsedSheetData.map((data) => {
     // Destination
     const number = data[SheetColumns.HOUSE_NUMBER]?.toString() || '';
@@ -42,11 +41,11 @@ export const transformSheetToOnFleet = async (
         : undefined;
 
     // Metadata
-    const metadata = [
+    const metadata: OnfleetMetadata[] = [
       {
         name: 'User ID',
         type: 'string',
-        visibility: ['api'],
+        visibility: ['api', 'dashboard', 'worker'],
         // TODO: add user uniq ID
         value: 'abcd1234'
       }
