@@ -1,10 +1,13 @@
 import { read, utils } from 'xlsx';
+import OnFleet from '@onfleet/node-onfleet';
 import { parseStreet } from '../parseStreet';
 import { RawSheetData, SheetColumns } from '../../types/tasksSheet';
 
 import { excelDateToJSDate } from '../excelDateToJSDate';
 
-export const transformSheetToOnFleet = async (tasksXlsx: File) => {
+export const transformSheetToOnFleet = async (
+  tasksXlsx: File
+): Promise<Parameters<OnFleet['tasks']['batchCreate']>[0]> => {
   const buff = await tasksXlsx.arrayBuffer();
   const workbook = read(buff);
 
@@ -17,13 +20,13 @@ export const transformSheetToOnFleet = async (tasksXlsx: File) => {
     // TODO: "SheetColumns.COUNTRY" should be changed to name "SheetColumns.CITY"
     const city = data[SheetColumns.COUNTRY] || '';
     const postalCode = data[SheetColumns.POSTAL_CODE]?.toString();
-    // TODO: "country" has to be defined in sheet
     const country = 'Czech Republic';
 
     // Recipients
-    const name = `${data[SheetColumns.CUSTOMER_NAME]} ${data[SheetColumns.QUANTITY] || '1'}`;
+    const quantity = data[SheetColumns.QUANTITY] || 1;
+    const name = `${data[SheetColumns.CUSTOMER_NAME]} ${quantity}ks`;
     const phone = data[SheetColumns.TEL_NUMBER]?.toString() || '';
-    const notes = data[SheetColumns.CUSTOMER_NOTE]?.toString();
+    const recipientNotes = data[SheetColumns.CUSTOMER_NOTE]?.toString();
     const skipSMSNotifications = data[SheetColumns.NOTIFICATION];
 
     // Delivery time
@@ -50,12 +53,13 @@ export const transformSheetToOnFleet = async (tasksXlsx: File) => {
         {
           name,
           phone,
-          notes,
+          notes: recipientNotes,
           skipSMSNotifications
         }
       ],
       completeAfter,
-      completeBefore
+      completeBefore,
+      quantity
     };
   });
 };
