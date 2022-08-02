@@ -13,6 +13,9 @@ export const transformSheetToOnFleet = async (
   const sheetNameList = workbook.SheetNames;
   const parsedSheetData = utils.sheet_to_json<RawSheetData>(workbook.Sheets[sheetNameList[0]]);
 
+  // FIXME: to check types, remove @ts-ignore and comment metadata key
+  //  ! ts doesn't know properties of "metadata" because union in interface !
+  // @ts-ignore
   return parsedSheetData.map((data) => {
     // Destination
     const number = data[SheetColumns.HOUSE_NUMBER]?.toString() || '';
@@ -38,6 +41,17 @@ export const transformSheetToOnFleet = async (
         ? excelDateToJSDate(data[SheetColumns.DELIVER_BEFORE] as number).getTime()
         : undefined;
 
+    // Metadata
+    const metadata = [
+      {
+        name: 'User ID',
+        type: 'string',
+        visibility: ['api'],
+        // TODO: add user uniq ID
+        value: 'abcd1234'
+      }
+    ];
+
     return {
       destination: {
         address: {
@@ -58,7 +72,8 @@ export const transformSheetToOnFleet = async (
       ],
       completeAfter,
       completeBefore,
-      quantity
+      quantity,
+      metadata
     };
   });
 };
