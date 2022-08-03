@@ -5,7 +5,7 @@ import { NoMatchingRoute } from './components/NoMatchingRoute';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { SignIn } from '../modules/signIn/SignIn';
 import { Dashboard } from '../modules/dashboard/Dashboard';
-import { useUser } from '../integrations/firebase/hooks/useUser';
+import { useUser } from '../integrations/firebase/context/UserProvider';
 
 function Routing() {
   const { user } = useUser();

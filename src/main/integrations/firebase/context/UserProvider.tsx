@@ -1,7 +1,7 @@
-import React, { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 
-import { auth } from '../index';
+import { auth } from '..';
 
 type Props = {
   children: ReactNode;
@@ -26,3 +26,13 @@ export function UserProvider({ children }: Props) {
 
   return <UserContext.Provider value={providerValueMemoized}>{children}</UserContext.Provider>;
 }
+
+export const useUser = () => {
+  const userContext = useContext(UserContext);
+
+  if (!userContext) {
+    throw new Error('calling useUser out of UserContext');
+  }
+
+  return userContext;
+};
