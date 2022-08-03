@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 
-import { auth } from '../firebase';
+import { auth } from '../index';
 
 type Props = {
   children: ReactNode;
