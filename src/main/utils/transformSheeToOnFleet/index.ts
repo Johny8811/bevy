@@ -7,7 +7,8 @@ import { RawSheetData, SheetColumns } from '../../types/tasksSheet';
 import { excelDateToJSDate } from '../excelDateToJSDate';
 
 export const transformSheetToOnFleet = async (
-  tasksXlsx: File
+  tasksXlsx: File,
+  userUID: string
 ): Promise<Parameters<OnFleet['tasks']['batchCreate']>[0]> => {
   const buff = await tasksXlsx.arrayBuffer();
   const workbook = read(buff);
@@ -46,8 +47,7 @@ export const transformSheetToOnFleet = async (
         name: 'User ID',
         type: 'string',
         visibility: ['api'],
-        // TODO: add user uniq ID
-        value: 'abcd1234'
+        value: userUID
       }
     ];
 
