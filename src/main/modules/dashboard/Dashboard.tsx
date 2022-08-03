@@ -10,14 +10,16 @@ import { useNavigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 
-import { transformSheetToOnFleet } from '../../utils/transformSheeToOnFleet';
 import { DeliveryTable } from './components/DeliveryTable';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { useCreateOnFleetTasks } from '../../queryHooks/useCreateOnFleetTasks';
 
+import { useTransformSheetToOnFleetTasks } from './hooks/useTransformSheetToOnFleetTasks';
+
 export function Dashboard() {
   const navigate = useNavigate();
   const createOnFleetTasks = useCreateOnFleetTasks();
+  const transformSheetToOnFleetTasks = useTransformSheetToOnFleetTasks();
   const [value, setValue] = React.useState<Date | null>(null);
 
   const signOut = useSignOut({
@@ -26,8 +28,8 @@ export function Dashboard() {
 
   const handleChangeFileInput = async ({ file }: OnChangeParams) => {
     if (file) {
-      const onFleetTasks = await transformSheetToOnFleet(file);
-      const response = await createOnFleetTasks(onFleetTasks);
+      const onFleetTasks = await transformSheetToOnFleetTasks(file);
+      const response = onFleetTasks && (await createOnFleetTasks(onFleetTasks));
 
       // console.log('==> dashboard:onFleetTasks ', onFleetTasks);
       // TODO: process onFleet response
