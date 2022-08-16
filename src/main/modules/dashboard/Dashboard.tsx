@@ -11,6 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 
 import { DeliveryTable } from './components/DeliveryTable';
+import { BadimportsTable } from './components/BadimportsTable';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { useCreateOnFleetTasks } from '../../queryHooks/useCreateOnFleetTasks';
 
@@ -74,6 +75,7 @@ export function Dashboard() {
         </Toolbar>
       </AppBar>
       <DeliveryTable />
+      <BadimportsTable />
     </Box>
   );
 }
