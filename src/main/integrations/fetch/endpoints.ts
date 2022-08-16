@@ -2,5 +2,6 @@
 // const BE_URL_PROD = '';
 const ON_FLEET_URL = 'https://onfleet.com/api/v2';
 
+// TODO: remove "OnFleetTasksAllUrl"
 export const OnFleetTasksAllUrl = `${ON_FLEET_URL}/tasks/all`;
 export const OnFleetTasksBatchUrl = `${ON_FLEET_URL}/tasks/batch`;

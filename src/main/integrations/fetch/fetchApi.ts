@@ -21,7 +21,7 @@ export const fetchApi = async ({
       return response.json();
     }
     case Methods.post: {
-      const response = await fetch(url, { method: Methods.post, body, headers });
+      const response = await fetch(url, { method: Methods.post, headers, body });
       return response.json();
     }
     default: {

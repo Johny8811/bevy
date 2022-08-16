@@ -15,6 +15,7 @@ type Props = {
 };
 
 export function LoadingProvider({ children }: Props) {
+  // TODO: make number, startLoading increase, stopLoading decrease
   const [loading, setLoading] = useState(false);
 
   const handleStartLoading = () => setLoading(true);
