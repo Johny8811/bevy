@@ -1,26 +1,26 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '@mui/material/Button';
-import Dialog, { DialogProps } from '@mui/material/Dialog';
+import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export function BadimportsTable() {
-  const [open, setOpen] = React.useState(false);
-  const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
+import { isDev } from '../../../utils/isDev';
 
-  const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
+export function BadimportsTable() {
+  const descriptionElementRef = useRef<HTMLElement>(null);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => () => {
     setOpen(true);
-    setScroll(scrollType);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const descriptionElementRef = React.useRef<HTMLElement>(null);
-  React.useEffect(() => {
+  useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
@@ -31,32 +31,34 @@ export function BadimportsTable() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen('paper')}>scroll=paper</Button>
-      <Button onClick={handleClickOpen('body')}>scroll=body</Button>
+      {isDev() && (
+        <Button variant="contained" onClick={handleClickOpen()}>
+          Open bad imports dialog
+        </Button>
+      )}
       <Dialog
         open={open}
-        scroll={scroll}
+        scroll="paper"
+        fullWidth
+        maxWidth="lg"
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description">
-        <DialogTitle id="scroll-dialog-title">Subscribe</DialogTitle>
-        <DialogContent dividers={scroll === 'paper'}>
+        <DialogTitle id="scroll-dialog-title">
+          Some tasks was not imported because of missing or bad data
+        </DialogTitle>
+        <DialogContent dividers>
           <DialogContentText
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}>
-            {[...new Array(50)]
-              .map(
-                () => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-              )
-              .join('\n')}
+            Here will be table
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button variant="contained" onClick={handleClose}>
+            Import repaired tasks
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
