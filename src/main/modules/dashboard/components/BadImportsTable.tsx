@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { isDev } from '../../../utils/isDev';
 
-export function BadimportsTable() {
+export function BadImportsTable() {
   const descriptionElementRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
 
