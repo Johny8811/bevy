@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import { useCreateOnFleetTasks } from '../../../queryHooks/useCreateOnFleetTasks';
-import { CreateTasksResponse } from '../../../types/tasks';
+import { CreateBatchTasksResponse } from '../../../types/tasks';
 import { useTransformSheetToOnFleetTasks } from './useTransformSheetToOnFleetTasks';
 
 export const useCreateTasks = () => {
-  const [result, setResult] = useState<CreateTasksResponse | null>(null);
+  const [result, setResult] = useState<CreateBatchTasksResponse | null>(null);
 
   const transformSheetToOnFleetTasks = useTransformSheetToOnFleetTasks();
   const createOnFleetTasks = useCreateOnFleetTasks();
@@ -14,7 +14,8 @@ export const useCreateTasks = () => {
     const onFleetTasks = await transformSheetToOnFleetTasks(file);
     const response =
       // FIXME: we have to re-type response here, cause onFleet has bad typing here - check onFleet types
-      onFleetTasks && ((await createOnFleetTasks(onFleetTasks)) as unknown as CreateTasksResponse);
+      onFleetTasks &&
+      ((await createOnFleetTasks(onFleetTasks)) as unknown as CreateBatchTasksResponse);
 
     setResult(response);
   };

@@ -38,7 +38,7 @@ export type RawSheetData = {
   [SheetColumns.INTERNAL_ORDER_NO]?: number;
 };
 
-export type CreateTasksResponse = {
+export type CreateBatchTasksResponse = {
   errors: {
     error: {
       error: number;
