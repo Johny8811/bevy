@@ -48,7 +48,9 @@ export function BadImportsTable({ importedCount = 0, failedTasks }: Props) {
   };
 
   const handleClose = () => {
-    setOpen(false);
+    if (window.confirm('Are you sure, you want to leave? Your changes will be lost.')) {
+      setOpen(false);
+    }
   };
 
   useEffect(() => {
