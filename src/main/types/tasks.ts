@@ -1,3 +1,5 @@
+import { OnfleetTask } from '@onfleet/node-onfleet/Resources/Tasks';
+
 export enum SheetColumns {
   CUSTOMER_NAME = 'Customer_name',
   TEL_NUMBER = 'Tel_number',
@@ -34,4 +36,17 @@ export type RawSheetData = {
   [SheetColumns.PAYMENT]?: number;
   [SheetColumns.CASH_ON_DELIVER]?: number;
   [SheetColumns.INTERNAL_ORDER_NO]?: number;
+};
+
+export type CreateTasksResponse = {
+  errors: {
+    error: {
+      error: number;
+      message: string;
+      request: string;
+      cause: string | null;
+    };
+    task: OnfleetTask;
+  }[];
+  tasks: OnfleetTask[];
 };
