@@ -4,52 +4,34 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { head } from 'lodash';
+import { CreateRecipientProps } from '@onfleet/node-onfleet/Resources/Recipients';
+import { CreateDestinationProps } from '@onfleet/node-onfleet/Resources/Destinations';
+import { format } from 'date-fns';
 
 import { isDev } from '../../../utils/isDev';
 import { CreateBatchTasksErrors } from '../../../types/tasks';
 
-const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 90 },
+const taskColumns: GridColDef[] = [
+  { field: 'name', headerName: 'Name', width: 150, editable: true },
+  { field: 'phoneNumber', headerName: 'Phone number', width: 120, editable: true },
   {
-    field: 'firstName',
-    headerName: 'First name',
-    width: 150,
+    field: 'skipSMSNotifications',
+    headerName: 'Notification',
+    width: 100,
+    type: 'boolean',
     editable: true
   },
-  {
-    field: 'lastName',
-    headerName: 'Last name',
-    width: 150,
-    editable: true
-  },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 110,
-    editable: true
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: ({ row }: GridValueGetterParams) => `${row.firstName || ''} ${row.lastName || ''}`
-  }
-];
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Prd', firstName: 'Harvey', age: 65 }
+  { field: 'recipientNotes', headerName: 'Customer Notes', width: 250, editable: true },
+  { field: 'street', headerName: 'Street', width: 150, editable: true },
+  { field: 'number', headerName: 'House number', width: 120, editable: true },
+  { field: 'city', headerName: 'City', width: 120, editable: true },
+  { field: 'postalCode', headerName: 'Postal code', width: 120, editable: true },
+  { field: 'country', headerName: 'Country', width: 150, editable: true },
+  { field: 'completeAfter', headerName: 'Deliver after', width: 150, editable: true },
+  { field: 'completeBefore', headerName: 'Deliver before', width: 150, editable: true },
+  { field: 'quantity', headerName: 'Quantity', width: 100, editable: true }
 ];
 
 type Props = {
@@ -59,6 +41,7 @@ type Props = {
 
 export function BadImportsTable({ importedCount = 0, failedTasks }: Props) {
   const [open, setOpen] = useState(false);
+  const [rows, setRows] = useState<any>();
 
   const handleClickOpen = () => () => {
     setOpen(true);
@@ -69,7 +52,34 @@ export function BadImportsTable({ importedCount = 0, failedTasks }: Props) {
   };
 
   useEffect(() => {
-    if (errors && errors.length > 0) {
+    if (failedTasks && failedTasks.length > 0) {
+      const failedTasksRows = failedTasks.map((failedTask, index) => {
+        // FIXME: improve this types!
+        const recipient = head(failedTask.task.recipients as CreateRecipientProps[]);
+        const { address } = failedTask.task.destination as CreateDestinationProps;
+
+        return {
+          id: index,
+          name: recipient?.name,
+          phoneNumber: recipient?.phone,
+          skipSMSNotifications: recipient?.skipSMSNotifications,
+          recipientNotes: recipient?.notes,
+          street: address.street,
+          number: address.number,
+          city: address.city,
+          postalCode: address.postalCode,
+          country: address.country,
+          completeAfter:
+            failedTask.task.completeAfter &&
+            format(new Date(failedTask.task.completeAfter), 'dd.MM.yyyy hh:mm'),
+          completeBefore:
+            failedTask.task.completeBefore &&
+            format(new Date(failedTask.task.completeBefore), 'dd.MM.yyyy hh:mm'),
+          quantity: failedTask.task.quantity
+        };
+      });
+
+      setRows(failedTasksRows);
       setOpen(true);
     }
   }, [failedTasks]);
@@ -85,7 +95,7 @@ export function BadImportsTable({ importedCount = 0, failedTasks }: Props) {
         open={open}
         scroll="paper"
         fullWidth
-        maxWidth="lg"
+        maxWidth="xl"
         aria-labelledby="scroll-dialog-title">
         <DialogTitle id="scroll-dialog-title">
           <>
@@ -96,8 +106,7 @@ export function BadImportsTable({ importedCount = 0, failedTasks }: Props) {
         <DialogContent>
           <DataGrid
             rows={rows}
-            columns={columns}
-            // checkboxSelection
+            columns={taskColumns}
             disableSelectionOnClick
             autoHeight
             hideFooter
