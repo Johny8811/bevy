@@ -20,7 +20,7 @@ export function Dashboard() {
   const signOut = useSignOut({
     onSuccess: () => navigate('/', { replace: true })
   });
-  const { createTasks } = useCreateTasks();
+  const { createTasks, result } = useCreateTasks();
   const [value, setValue] = useState<Date | null>(null);
 
   const handleChangeFileInput = ({ file }: OnChangeParams) => file && createTasks(file);
@@ -62,7 +62,7 @@ export function Dashboard() {
         </Toolbar>
       </AppBar>
       <DeliveryTable />
-      <BadImportsTable />
+      <BadImportsTable importedCount={result?.tasks.length} errors={result?.errors} />
     </Box>
   );
 }
