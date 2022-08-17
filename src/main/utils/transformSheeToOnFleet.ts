@@ -1,7 +1,7 @@
 import { read, utils } from 'xlsx';
-import OnFleet from '@onfleet/node-onfleet';
-// TODO: "OnfleetMetadata" should be used from "OnFleet" - ts error union in interface
+// FIXME: "OnfleetMetadata" should be used from "OnFleet" - ts error union in interface
 import { OnfleetMetadata } from '@onfleet/node-onfleet/metadata';
+import { CreateTaskProps } from '@onfleet/node-onfleet/Resources/Tasks';
 import { RawSheetData, SheetColumns } from '../types/tasks';
 
 import { excelDateToJSDate } from './excelDateToJSDate';
@@ -9,7 +9,7 @@ import { excelDateToJSDate } from './excelDateToJSDate';
 export const transformSheetToOnFleet = async (
   tasksXlsx: File,
   userUID: string
-): Promise<Parameters<OnFleet['tasks']['batchCreate']>[0]> => {
+): Promise<CreateTaskProps[]> => {
   const buff = await tasksXlsx.arrayBuffer();
   const workbook = read(buff);
 
