@@ -1,4 +1,4 @@
-import { OnfleetTask } from '@onfleet/node-onfleet/Resources/Tasks';
+import { OnfleetTask, CreateTaskProps } from '@onfleet/node-onfleet/Resources/Tasks';
 
 export enum SheetColumns {
   CUSTOMER_NAME = 'Customer_name',
@@ -38,15 +38,22 @@ export type RawSheetData = {
   [SheetColumns.INTERNAL_ORDER_NO]?: number;
 };
 
+export type CreateBatchTasksError = {
+  cause: string | null;
+  error: number;
+  message: string;
+  statusCode: number;
+};
+
+export type CreateBatchTasksErrors = {
+  error: CreateBatchTasksError;
+  task: Pick<
+    CreateTaskProps,
+    'destination' | 'recipients' | 'completeAfter' | 'completeBefore' | 'quantity' | 'metadata'
+  >;
+};
+
 export type CreateBatchTasksResponse = {
-  errors: {
-    error: {
-      error: number;
-      message: string;
-      request: string;
-      cause: string | null;
-    };
-    task: OnfleetTask;
-  }[];
+  errors: CreateBatchTasksErrors[];
   tasks: OnfleetTask[];
 };
