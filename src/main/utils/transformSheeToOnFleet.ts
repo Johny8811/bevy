@@ -2,7 +2,7 @@ import { read, utils } from 'xlsx';
 import OnFleet from '@onfleet/node-onfleet';
 // TODO: "OnfleetMetadata" should be used from "OnFleet" - ts error union in interface
 import { OnfleetMetadata } from '@onfleet/node-onfleet/metadata';
-import { RawSheetData, SheetColumns } from '../types/tasksSheet';
+import { RawSheetData, SheetColumns } from '../types/tasks';
 
 import { excelDateToJSDate } from './excelDateToJSDate';
 
