@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 import { isDev } from '../../../utils/isDev';
+import { CreateBatchTasksErrors } from '../../../types/tasks';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -52,7 +52,12 @@ const rows = [
   { id: 9, lastName: 'Prd', firstName: 'Harvey', age: 65 }
 ];
 
-export function BadImportsTable() {
+type Props = {
+  importedCount?: number;
+  errors?: CreateBatchTasksErrors[];
+};
+
+export function BadImportsTable({ importedCount = 0, errors }: Props) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => () => {
@@ -62,6 +67,12 @@ export function BadImportsTable() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (errors && errors.length > 0) {
+      setOpen(true);
+    }
+  }, [errors]);
 
   return (
     <div>
@@ -77,7 +88,10 @@ export function BadImportsTable() {
         maxWidth="lg"
         aria-labelledby="scroll-dialog-title">
         <DialogTitle id="scroll-dialog-title">
-          Some tasks was not imported because of missing or bad data
+          <>
+            We couldn&apos;t import some tasks ({errors?.length}), please fix it. Successfully
+            imported: {importedCount}
+          </>
         </DialogTitle>
         <DialogContent>
           <DataGrid
