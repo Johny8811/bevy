@@ -54,10 +54,10 @@ const rows = [
 
 type Props = {
   importedCount?: number;
-  errors?: CreateBatchTasksErrors[];
+  failedTasks: CreateBatchTasksErrors[] | undefined;
 };
 
-export function BadImportsTable({ importedCount = 0, errors }: Props) {
+export function BadImportsTable({ importedCount = 0, failedTasks }: Props) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => () => {
@@ -72,7 +72,7 @@ export function BadImportsTable({ importedCount = 0, errors }: Props) {
     if (errors && errors.length > 0) {
       setOpen(true);
     }
-  }, [errors]);
+  }, [failedTasks]);
 
   return (
     <div>
@@ -89,8 +89,8 @@ export function BadImportsTable({ importedCount = 0, errors }: Props) {
         aria-labelledby="scroll-dialog-title">
         <DialogTitle id="scroll-dialog-title">
           <>
-            We couldn&apos;t import some tasks ({errors?.length}), please fix it. Successfully
-            imported: {importedCount}
+            We couldn&apos;t import some tasks ({failedTasks?.length}), please fix it. Successfully
+            imported tasks: {importedCount}
           </>
         </DialogTitle>
         <DialogContent>

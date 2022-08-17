@@ -62,7 +62,7 @@ export function Dashboard() {
         </Toolbar>
       </AppBar>
       <DeliveryTable />
-      <BadImportsTable importedCount={result?.tasks.length} errors={result?.errors} />
+      <BadImportsTable importedCount={result?.tasks.length} failedTasks={result?.errors} />
     </Box>
   );
 }
