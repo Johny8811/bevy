@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -10,33 +10,20 @@ import { useNavigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 
+import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { DeliveryTable } from './components/DeliveryTable';
 import { BadImportsTable } from './components/BadImportsTable';
-import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
-import { useCreateOnFleetTasks } from '../../queryHooks/useCreateOnFleetTasks';
-
-import { useTransformSheetToOnFleetTasks } from './hooks/useTransformSheetToOnFleetTasks';
+import { useCreateTasks } from './hooks/useCreateTasks';
 
 export function Dashboard() {
   const navigate = useNavigate();
-  const createOnFleetTasks = useCreateOnFleetTasks();
-  const transformSheetToOnFleetTasks = useTransformSheetToOnFleetTasks();
-  const [value, setValue] = React.useState<Date | null>(null);
-
   const signOut = useSignOut({
     onSuccess: () => navigate('/', { replace: true })
   });
+  const { createTasks } = useCreateTasks();
+  const [value, setValue] = useState<Date | null>(null);
 
-  const handleChangeFileInput = async ({ file }: OnChangeParams) => {
-    if (file) {
-      const onFleetTasks = await transformSheetToOnFleetTasks(file);
-      const response = onFleetTasks && (await createOnFleetTasks(onFleetTasks));
-
-      // console.log('==> dashboard:onFleetTasks ', onFleetTasks);
-      // TODO: process onFleet response
-      console.log('==> dashboard:response ', response);
-    }
-  };
+  const handleChangeFileInput = ({ file }: OnChangeParams) => file && createTasks(file);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
