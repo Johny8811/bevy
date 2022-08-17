@@ -1,13 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-// import Box from '@mui/material/Box';
 
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+
 import { isDev } from '../../../utils/isDev';
 
 const columns: GridColDef[] = [
@@ -54,7 +53,6 @@ const rows = [
 ];
 
 export function BadImportsTable() {
-  const descriptionElementRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => () => {
@@ -64,15 +62,6 @@ export function BadImportsTable() {
   const handleClose = () => {
     setOpen(false);
   };
-
-  useEffect(() => {
-    if (open) {
-      const { current: descriptionElement } = descriptionElementRef;
-      if (descriptionElement !== null) {
-        descriptionElement.focus();
-      }
-    }
-  }, [open]);
 
   return (
     <div>
@@ -86,30 +75,24 @@ export function BadImportsTable() {
         scroll="paper"
         fullWidth
         maxWidth="lg"
-        aria-labelledby="scroll-dialog-title"
-        aria-describedby="scroll-dialog-description">
+        aria-labelledby="scroll-dialog-title">
         <DialogTitle id="scroll-dialog-title">
           Some tasks was not imported because of missing or bad data
         </DialogTitle>
         <DialogContent>
-          <DialogContentText
-            id="scroll-dialog-description"
-            ref={descriptionElementRef}
-            tabIndex={-1}>
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              // checkboxSelection
-              disableSelectionOnClick
-              autoHeight
-              hideFooter
-            />
-          </DialogContentText>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            // checkboxSelection
+            disableSelectionOnClick
+            autoHeight
+            hideFooter
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button variant="contained" onClick={handleClose}>
-            Import repaired tasks
+            Import fixed tasks
           </Button>
         </DialogActions>
       </Dialog>
