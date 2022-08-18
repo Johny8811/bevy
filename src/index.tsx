@@ -9,6 +9,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 
 import { LoadingProvider } from './main/integrations/fetch/components/LoadingProvider';
+import { SnackBarProvider } from './main/components/snackBar/SnackbarProvider';
 import Routing from './main/routing/Routing';
 import { UserProvider } from './main/integrations/firebase/components/UserProvider';
 import reportWebVitals from './reportWebVitals';
@@ -34,7 +35,9 @@ root.render(
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <UserProvider>
           <LoadingProvider>
-            <Routing />
+            <SnackBarProvider>
+              <Routing />
+            </SnackBarProvider>
           </LoadingProvider>
         </UserProvider>
       </LocalizationProvider>

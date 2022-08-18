@@ -26,7 +26,7 @@ export function LoadingProvider({ children }: Props) {
       startLoading: handleStartLoading,
       stopLoading: handleStopLoading
     }),
-    [loading]
+    []
   );
 
   return (
