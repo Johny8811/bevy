@@ -2,9 +2,9 @@ import { read, utils } from 'xlsx';
 // FIXME: "OnfleetMetadata" should be used from "OnFleet" - ts error union in interface
 import { OnfleetMetadata } from '@onfleet/node-onfleet/metadata';
 import { CreateTaskProps } from '@onfleet/node-onfleet/Resources/Tasks';
-import { RawSheetData, SheetColumns } from '../types/tasks';
+import { RawSheetData, SheetColumns } from '../../types/tasks';
 
-import { excelDateToJSDate } from './excelDateToJSDate';
+import { excelDateToJSDate } from '../excelDateToJSDate';
 
 export const transformSheetToOnFleet = async (
   tasksXlsx: File,
