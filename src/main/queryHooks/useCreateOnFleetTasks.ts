@@ -1,7 +1,7 @@
 import OnFleet from '@onfleet/node-onfleet';
 import { fetchApi } from '../integrations/fetch/fetchApi';
 import { OnFleetTasksBatchUrl } from '../integrations/fetch/endpoints';
-import { useLoading } from '../integrations/fetch/context/LoadingProvider';
+import { useLoading } from '../integrations/fetch/components/LoadingProvider';
 
 export const useCreateOnFleetTasks = () => {
   const { startLoading, stopLoading } = useLoading();

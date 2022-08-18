@@ -1,4 +1,4 @@
-import { useUser } from '../../../integrations/firebase/context/UserProvider';
+import { useUser } from '../../../integrations/firebase/components/UserProvider';
 import { transformSheetToOnFleet } from '../../../utils/onFleet/transformSheeToOnFleet';
 
 export const useTransformSheetToOnFleetTasks = () => {

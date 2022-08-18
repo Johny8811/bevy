@@ -8,9 +8,9 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 // TypeScript 4.x and above
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 
-import { LoadingProvider } from './main/integrations/fetch/context/LoadingProvider';
+import { LoadingProvider } from './main/integrations/fetch/components/LoadingProvider';
 import Routing from './main/routing/Routing';
-import { UserProvider } from './main/integrations/firebase/context/UserProvider';
+import { UserProvider } from './main/integrations/firebase/components/UserProvider';
 import reportWebVitals from './reportWebVitals';
 
 const theme = createTheme({
