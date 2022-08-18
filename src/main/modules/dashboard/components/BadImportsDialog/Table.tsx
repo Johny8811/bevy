@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-
 import { head } from 'lodash';
+import { format } from 'date-fns';
 import { CreateRecipientProps } from '@onfleet/node-onfleet/Resources/Recipients';
 import { CreateDestinationProps } from '@onfleet/node-onfleet/Resources/Destinations';
-import { format } from 'date-fns';
-import { TASK_COLUMNS } from '../../constants';
-import { CreateBatchTasksErrors } from '../../../../types/tasks';
 
-type Props = {
+import { CreateBatchTasksErrors } from '../../../../types/tasks';
+import { TASK_COLUMNS } from '../../constants';
+import { TableFooter } from './TableFooter';
+
+export type Props = {
   failedTasks: CreateBatchTasksErrors[];
+  onCancel: () => void;
+  onConfirm: () => void;
 };
 
-export function Table({ failedTasks }: Props) {
+export function Table({ failedTasks, onCancel, onConfirm }: Props) {
   // FIXME: type correctly
   const [rows, setRows] = useState<any>();
 
@@ -51,6 +54,18 @@ export function Table({ failedTasks }: Props) {
   }
 
   return (
-    <DataGrid rows={rows} columns={TASK_COLUMNS} disableSelectionOnClick autoHeight hideFooter />
+    <DataGrid
+      rows={rows}
+      columns={TASK_COLUMNS}
+      disableSelectionOnClick
+      autoHeight
+      components={{ Footer: TableFooter }}
+      componentsProps={{
+        footer: {
+          onCancel,
+          onConfirm
+        }
+      }}
+    />
   );
 }

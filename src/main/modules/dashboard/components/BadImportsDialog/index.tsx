@@ -2,7 +2,6 @@ import Button from '@mui/material/Button';
 import MuiDialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import React, { useEffect, useState } from 'react';
 
 import { CreateBatchTasksErrors } from '../../../../types/tasks';
@@ -52,13 +51,11 @@ export function Dialog({ importedCount = 0, failedTasks }: Props) {
             imported tasks: {importedCount}
           </>
         </DialogTitle>
-        <DialogContent>{failedTasks && <Table failedTasks={failedTasks} />}</DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="contained" onClick={handleClose}>
-            Import fixed tasks
-          </Button>
-        </DialogActions>
+        <DialogContent>
+          {failedTasks && (
+            <Table failedTasks={failedTasks} onCancel={handleClose} onConfirm={handleClose} />
+          )}
+        </DialogContent>
       </MuiDialog>
     </div>
   );
