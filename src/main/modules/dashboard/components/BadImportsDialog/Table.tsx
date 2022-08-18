@@ -16,16 +16,16 @@ export type Props = {
     data: {
       name: string;
       phoneNumber: string;
-      skipSMSNotifications: string;
-      recipientNotes: string;
+      skipSMSNotifications: boolean | undefined;
+      recipientNotes: string | undefined;
       street: string;
       number: string;
       city: string;
-      postalCode: string;
+      postalCode: string | undefined;
       country: string;
-      completeAfter: string;
-      completeBefore: string;
-      quantity: string;
+      completeAfter: string | undefined;
+      completeBefore: string | undefined;
+      quantity: number | undefined;
     }[]
   ) => void;
 };
