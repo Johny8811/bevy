@@ -12,7 +12,7 @@ import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput'
 
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { DeliveryTable } from './components/DeliveryTable';
-import { BadImportsTable } from './components/BadImportsTable';
+import { Dialog as BadImportsDialog } from './components/BadImportsDialog';
 import { useCreateTasks } from './hooks/useCreateTasks';
 
 export function Dashboard() {
@@ -62,7 +62,7 @@ export function Dashboard() {
         </Toolbar>
       </AppBar>
       <DeliveryTable />
-      <BadImportsTable importedCount={result?.tasks.length} failedTasks={result?.errors} />
+      <BadImportsDialog importedCount={result?.tasks.length} failedTasks={result?.errors} />
     </Box>
   );
 }
