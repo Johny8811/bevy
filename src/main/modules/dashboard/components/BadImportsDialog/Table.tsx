@@ -12,6 +12,7 @@ import { TableFooter } from './TableFooter';
 export type Props = {
   failedTasks: CreateBatchTasksErrors[];
   onCancel: () => void;
+  // TODO: optimise this, move to separated file
   onConfirm: (
     data: {
       name: string;
