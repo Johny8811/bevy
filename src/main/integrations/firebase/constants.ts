@@ -1,6 +1,6 @@
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-export const firebaseConfigDev = {
+export const FIREBASE_CONFIG_DEV = {
   apiKey: 'AIzaSyBbUkEoHXiW77RVnKmT8iiBvJKCiuQ0E70',
   authDomain: 'bevy-bbf67.firebaseapp.com',
   projectId: 'bevy-bbf67',

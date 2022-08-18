@@ -6,14 +6,14 @@ import { getAuth } from 'firebase/auth';
 
 import { isDev } from '../../utils/isDev';
 
-import { firebaseConfigDev } from './constants';
+import { FIREBASE_CONFIG_DEV } from './constants';
 
 // Initialize Firebase
 const app = initializeApp(
   isDev()
     ? // TODO: add production config
-      firebaseConfigDev
-    : firebaseConfigDev
+      FIREBASE_CONFIG_DEV
+    : FIREBASE_CONFIG_DEV
 );
 export const analytics = getAnalytics(app);
 export const auth = getAuth(app);

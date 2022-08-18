@@ -5,7 +5,7 @@ import { head } from 'lodash';
 import { CreateRecipientProps } from '@onfleet/node-onfleet/Resources/Recipients';
 import { CreateDestinationProps } from '@onfleet/node-onfleet/Resources/Destinations';
 import { format } from 'date-fns';
-import { taskColumns } from '../../constants';
+import { TASK_COLUMNS } from '../../constants';
 import { CreateBatchTasksErrors } from '../../../../types/tasks';
 
 type Props = {
@@ -51,6 +51,6 @@ export function Table({ failedTasks }: Props) {
   }
 
   return (
-    <DataGrid rows={rows} columns={taskColumns} disableSelectionOnClick autoHeight hideFooter />
+    <DataGrid rows={rows} columns={TASK_COLUMNS} disableSelectionOnClick autoHeight hideFooter />
   );
 }
