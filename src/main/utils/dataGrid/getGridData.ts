@@ -6,7 +6,7 @@ import {
 } from '@mui/x-data-grid';
 
 // TODO: add tests
-export const getJson = (apiRef: MutableRefObject<GridApi>) => {
+export const getGridData = (apiRef: MutableRefObject<GridApi>) => {
   // Select rows and columns
   const filteredSortedRowIds = gridFilteredSortedRowIdsSelector(apiRef);
   const visibleColumnsField = gridVisibleColumnFieldsSelector(apiRef);
