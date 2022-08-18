@@ -23,8 +23,8 @@ export type Props = {
       city: string;
       postalCode: string | undefined;
       country: string;
-      completeAfter: string | undefined;
-      completeBefore: string | undefined;
+      completeAfter: number | undefined;
+      completeBefore: number | undefined;
       quantity: number | undefined;
     }[]
   ) => void;
