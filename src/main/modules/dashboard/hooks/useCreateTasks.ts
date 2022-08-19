@@ -40,6 +40,10 @@ export const useCreateTasks = () => {
         severity: 'success'
       });
     } else {
+      openSnackBar({
+        text: `Some tasks was not imported (${response.errors.length})`,
+        severity: 'error'
+      });
       setResult({
         importedCount: response.tasks.length,
         failedTasks: response.errors

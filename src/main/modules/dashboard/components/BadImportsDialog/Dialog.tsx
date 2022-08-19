@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button';
 import MuiDialog from '@mui/material/Dialog';
+import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import React, { useEffect, useState } from 'react';
@@ -47,12 +48,10 @@ export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: P
         maxWidth="xl"
         aria-labelledby="scroll-dialog-title">
         <DialogTitle id="scroll-dialog-title">
-          <>
-            We couldn&apos;t import some tasks ({failedTasks?.length}), please fix it. Successfully
-            imported tasks: {importedCount}
-          </>
+          Failed to import tasks: {failedTasks?.length}
         </DialogTitle>
         <DialogContent>
+          <DialogContentText> Successfully imported tasks: {importedCount}</DialogContentText>
           {failedTasks && (
             <Table
               failedTasks={failedTasks}
