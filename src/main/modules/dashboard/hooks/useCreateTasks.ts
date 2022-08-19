@@ -1,13 +1,15 @@
 import { useState } from 'react';
-
 import { OnfleetMetadata } from '@onfleet/node-onfleet/metadata';
+
 import { useCreateOnFleetTasks } from '../../../queryHooks/useCreateOnFleetTasks';
 import { TaskData, CreateBatchTasksResponse } from '../../../types/tasks';
 import { transformTaskDataToOnFleetTasks } from '../../../utils/onFleet/transformTaskDataToOnFleetTasks';
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
+import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
 
 export const useCreateTasks = () => {
   const { user } = useUser();
+  const { openSnackBar } = useSnackBar();
   const [result, setResult] = useState<CreateBatchTasksResponse | null>(null);
 
   const createOnFleetTasks = useCreateOnFleetTasks();
@@ -27,6 +29,13 @@ export const useCreateTasks = () => {
     const response =
       // FIXME: we have to re-type response here, because of bad onFleet typing - check onFleet types
       (await createOnFleetTasks(onFleetTasks)) as unknown as CreateBatchTasksResponse;
+
+    if (response.errors.length === 0) {
+      openSnackBar({
+        text: `${response.tasks.length} was successfully created.`,
+        severity: 'success'
+      });
+    }
 
     setResult(response);
   };
