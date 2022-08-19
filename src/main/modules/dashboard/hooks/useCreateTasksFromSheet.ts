@@ -13,7 +13,7 @@ export const useCreateTasksFromSheet = () => {
   const createTasksFromSheet = async (file: File) => {
     const onFleetTasks = await transformSheetToOnFleetTasks(file);
     const response =
-      // FIXME: we have to re-type response here, cause onFleet has bad typing here - check onFleet types
+      // FIXME: we have to re-type response here, because of bad onFleet typing - check onFleet types
       onFleetTasks &&
       ((await createOnFleetTasks(onFleetTasks)) as unknown as CreateBatchTasksResponse);
 
