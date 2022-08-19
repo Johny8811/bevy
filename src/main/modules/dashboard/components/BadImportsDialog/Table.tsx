@@ -54,10 +54,10 @@ export function Table({ failedTasks, onCancel, onConfirm }: Props) {
         country: address.country,
         completeAfter:
           failedTask.task.completeAfter &&
-          format(new Date(failedTask.task.completeAfter), 'dd.MM.yyyy hh:mm'),
+          format(new Date(failedTask.task.completeAfter), 'MM.dd.yyyy hh:mm'),
         completeBefore:
           failedTask.task.completeBefore &&
-          format(new Date(failedTask.task.completeBefore), 'dd.MM.yyyy hh:mm'),
+          format(new Date(failedTask.task.completeBefore), 'MM.dd.yyyy hh:mm'),
         quantity: failedTask.task.quantity
       };
     });
