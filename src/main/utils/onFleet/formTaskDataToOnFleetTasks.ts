@@ -3,43 +3,47 @@ import { OnfleetMetadata } from '@onfleet/node-onfleet/metadata';
 import { TaskData } from '../../types/tasks';
 
 export const formTaskDataToOnFleetTasks = (
-  {
-    name,
-    phoneNumber,
-    recipientNotes,
-    skipSMSNotifications,
-    houseNumber,
-    street,
-    city,
-    postalCode,
-    country,
-    completeAfter,
-    completeBefore,
-    quantity
-  }: TaskData,
+  tasks: TaskData[],
   metadata: OnfleetMetadata[]
-): CreateTaskProps => {
-  return {
-    recipients: [
-      {
-        name,
-        phone: phoneNumber,
-        notes: recipientNotes,
-        skipSMSNotifications
-      }
-    ],
-    destination: {
-      address: {
-        number: houseNumber,
-        street,
-        city,
-        postalCode,
-        country
-      }
-    },
-    completeAfter,
-    completeBefore,
-    quantity,
-    metadata
-  };
+): CreateTaskProps[] => {
+  return tasks.map((task) => {
+    const {
+      name,
+      phoneNumber,
+      recipientNotes,
+      skipSMSNotifications,
+      houseNumber,
+      street,
+      city,
+      postalCode,
+      country,
+      completeAfter,
+      completeBefore,
+      quantity
+    } = task;
+
+    return {
+      recipients: [
+        {
+          name,
+          phone: phoneNumber,
+          notes: recipientNotes,
+          skipSMSNotifications
+        }
+      ],
+      destination: {
+        address: {
+          number: houseNumber,
+          street,
+          city,
+          postalCode,
+          country
+        }
+      },
+      completeAfter,
+      completeBefore,
+      quantity,
+      metadata
+    };
+  });
 };
