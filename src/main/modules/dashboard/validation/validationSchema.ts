@@ -7,7 +7,7 @@ export const badImportsValidationSchema = array().of(
     skipSMSNotifications: boolean(),
     recipientNotes: string(),
     street: string().required(),
-    number: string().required(),
+    houseNumber: string().required(),
     city: string().required(),
     postalCode: string(),
     country: string().required(),

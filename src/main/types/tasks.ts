@@ -6,7 +6,7 @@ export type TaskData = {
   skipSMSNotifications: boolean | undefined;
   recipientNotes: string | undefined;
   street: string;
-  number: string;
+  houseNumber: string;
   city: string;
   postalCode: string | undefined;
   country: string;

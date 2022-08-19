@@ -32,7 +32,7 @@ export function Table({ failedTasks, onCancel, onConfirm }: Props) {
         skipSMSNotifications: recipient?.skipSMSNotifications,
         recipientNotes: recipient?.notes,
         street: address.street,
-        number: address.number,
+        houseNumber: address.number,
         city: address.city,
         postalCode: address.postalCode,
         country: address.country,
