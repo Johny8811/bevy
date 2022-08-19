@@ -4,10 +4,12 @@ import Button from '@mui/material/Button';
 import { useGridApiContext } from '@mui/x-data-grid';
 
 import { getGridData } from '../../../../utils/dataGrid/getGridData';
+import { useSnackBar } from '../../../../components/snackBar/SnackbarProvider';
 import { badImportsValidationSchema } from '../../validation/validationSchema';
 import { Props as TableProps } from './Table';
 
 export function TableFooter({ onConfirm, onCancel }: Omit<TableProps, 'failedTasks'>) {
+  const { openSnackBar } = useSnackBar();
   const apiRef = useGridApiContext();
   const data = getGridData(apiRef);
   // TODO: cell should be "date" type
@@ -27,6 +29,7 @@ export function TableFooter({ onConfirm, onCancel }: Omit<TableProps, 'failedTas
       <Button
         variant="contained"
         onClick={() => {
+          // TODO: validation shouldn't be here, move to hook
           badImportsValidationSchema
             .validate(transformData)
             .then((validationResult) => {
@@ -34,8 +37,12 @@ export function TableFooter({ onConfirm, onCancel }: Omit<TableProps, 'failedTas
                 onConfirm(validationResult);
               }
             })
-            .catch((e) => {
-              console.log('=-=> validation ERRor: ', e);
+            .catch(() => {
+              openSnackBar({
+                text: `Some mandatory fields are still missing. 
+                Mandatory fields: "Name, Phone number, Notifications, Street, House number, City, Country"`,
+                severity: 'error'
+              });
             });
         }}>
         Import fixed tasks
