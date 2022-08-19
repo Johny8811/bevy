@@ -2,7 +2,7 @@ import { OnfleetMetadata } from '@onfleet/node-onfleet/metadata';
 
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
 import { transformSheetToTaskData } from '../../../utils/onFleet/transformSheeToTaskData';
-import { formTaskDataToOnFleetTasks } from '../../../utils/onFleet/formTaskDataToOnFleetTasks';
+import { transformTaskDataToOnFleetTasks } from '../../../utils/onFleet/transformTaskDataToOnFleetTasks';
 
 export const useTransformSheetToOnFleetTasks = () => {
   const { user } = useUser();
@@ -19,6 +19,6 @@ export const useTransformSheetToOnFleetTasks = () => {
 
   return async (tasksXlsx: File) => {
     const taskData = await transformSheetToTaskData(tasksXlsx);
-    return formTaskDataToOnFleetTasks(taskData, metadata);
+    return transformTaskDataToOnFleetTasks(taskData, metadata);
   };
 };
