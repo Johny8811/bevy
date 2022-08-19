@@ -1,8 +1,24 @@
+import { OnfleetMetadata } from '@onfleet/node-onfleet/metadata';
+
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
-import { transformSheetToOnFleet } from '../../../utils/onFleet/transformSheeToOnFleet';
+import { transformSheetToTaskData } from '../../../utils/onFleet/transformSheeToTaskData';
+import { formTaskDataToOnFleetTasks } from '../../../utils/onFleet/formTaskDataToOnFleetTasks';
 
 export const useTransformSheetToOnFleetTasks = () => {
   const { user } = useUser();
 
-  return (tasksXlsx: File) => user && transformSheetToOnFleet(tasksXlsx, user?.uid);
+  // Metadata
+  const metadata: OnfleetMetadata[] = [
+    {
+      name: 'User ID',
+      type: 'string',
+      visibility: ['api'],
+      value: user?.uid
+    }
+  ];
+
+  return async (tasksXlsx: File) => {
+    const taskData = await transformSheetToTaskData(tasksXlsx);
+    return formTaskDataToOnFleetTasks(taskData, metadata);
+  };
 };
