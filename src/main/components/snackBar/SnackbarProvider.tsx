@@ -39,7 +39,11 @@ export function SnackBarProvider({ children }: Props) {
   return (
     <SnackBarContext.Provider value={value}>
       {children}
-      <Snackbar open={!!snackBarProps} autoHideDuration={AUTO_HIDE_DURATION} onClose={handleClose}>
+      <Snackbar
+        open={!!snackBarProps}
+        autoHideDuration={AUTO_HIDE_DURATION}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
         <MuiAlert onClose={handleClose} severity={snackBarProps?.severity} sx={{ width: '100%' }}>
           {snackBarProps?.text}
         </MuiAlert>
