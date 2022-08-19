@@ -13,17 +13,17 @@ import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput'
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { DeliveryTable } from './components/DeliveryTable';
 import { Dialog as BadImportsDialog } from './components/BadImportsDialog/Dialog';
-import { useCreateTasks } from './hooks/useCreateTasks';
+import { useCreateTasksFromSheet } from './hooks/useCreateTasksFromSheet';
 
 export function Dashboard() {
   const navigate = useNavigate();
   const signOut = useSignOut({
     onSuccess: () => navigate('/', { replace: true })
   });
-  const { createTasks, result } = useCreateTasks();
+  const { createTasksFromSheet, result } = useCreateTasksFromSheet();
   const [value, setValue] = useState<Date | null>(null);
 
-  const handleChangeFileInput = ({ file }: OnChangeParams) => file && createTasks(file);
+  const handleChangeFileInput = ({ file }: OnChangeParams) => file && createTasksFromSheet(file);
 
   const handleOnImportFixedTasks = () => {};
 
