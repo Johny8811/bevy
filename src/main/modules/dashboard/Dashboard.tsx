@@ -68,8 +68,8 @@ export function Dashboard() {
       </AppBar>
       <DeliveryTable />
       <BadImportsDialog
-        importedCount={result?.tasks.length}
-        failedTasks={result?.errors}
+        importedCount={result?.importedCount}
+        failedTasks={result?.failedTasks}
         onImportFixedTasks={handleOnImportFixedTasks}
       />
     </Box>

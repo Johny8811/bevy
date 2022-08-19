@@ -3,11 +3,15 @@ import { useState } from 'react';
 import { useCreateOnFleetTasks } from '../../../queryHooks/useCreateOnFleetTasks';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
 import { CreateBatchTasksResponse } from '../../../types/tasks';
+import { Props as BadImportsDialog } from '../components/BadImportsDialog/Dialog';
 import { useTransformSheetToOnFleetTasks } from './useTransformSheetToOnFleetTasks';
 
 export const useCreateTasksFromSheet = () => {
   const { openSnackBar } = useSnackBar();
-  const [result, setResult] = useState<CreateBatchTasksResponse | null>(null);
+  const [result, setResult] = useState<Pick<
+    BadImportsDialog,
+    'importedCount' | 'failedTasks'
+  > | null>(null);
 
   const transformSheetToOnFleetTasks = useTransformSheetToOnFleetTasks();
   const createOnFleetTasks = useCreateOnFleetTasks();
@@ -24,9 +28,12 @@ export const useCreateTasksFromSheet = () => {
         text: `${response.tasks.length} was successfully created.`,
         severity: 'success'
       });
+    } else {
+      setResult({
+        importedCount: response.tasks.length,
+        failedTasks: response.errors
+      });
     }
-
-    setResult(response);
   };
 
   return {

@@ -6,11 +6,15 @@ import { TaskData, CreateBatchTasksResponse } from '../../../types/tasks';
 import { transformTaskDataToOnFleetTasks } from '../../../utils/onFleet/transformTaskDataToOnFleetTasks';
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
+import { Props as BadImportsDialog } from '../components/BadImportsDialog/Dialog';
 
 export const useCreateTasks = () => {
   const { user } = useUser();
   const { openSnackBar } = useSnackBar();
-  const [result, setResult] = useState<CreateBatchTasksResponse | null>(null);
+  const [result, setResult] = useState<Pick<
+    BadImportsDialog,
+    'importedCount' | 'failedTasks'
+  > | null>(null);
 
   const createOnFleetTasks = useCreateOnFleetTasks();
 
@@ -35,9 +39,12 @@ export const useCreateTasks = () => {
         text: `${response.tasks.length} was successfully created.`,
         severity: 'success'
       });
+    } else {
+      setResult({
+        importedCount: response.tasks.length,
+        failedTasks: response.errors
+      });
     }
-
-    setResult(response);
   };
 
   return {
