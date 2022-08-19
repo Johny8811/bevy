@@ -18,7 +18,13 @@ export type Props = {
 export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: Props) {
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => () => {
+  useEffect(() => {
+    if (failedTasks && failedTasks.length > 0) {
+      setOpen(true);
+    }
+  }, [failedTasks]);
+
+  const handleClickOpen = () => {
     setOpen(true);
   };
 
@@ -28,16 +34,15 @@ export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: P
     }
   };
 
-  useEffect(() => {
-    if (failedTasks && failedTasks.length > 0) {
-      setOpen(true);
-    }
-  }, [failedTasks]);
+  const handleOnConfirm = (tasks: TaskData[]) => {
+    setOpen(false);
+    onImportFixedTasks(tasks);
+  };
 
   return (
     <div>
       {isDev() && (
-        <Button variant="contained" onClick={handleClickOpen()}>
+        <Button variant="contained" onClick={handleClickOpen}>
           Open bad imports dialog
         </Button>
       )}
@@ -53,11 +58,7 @@ export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: P
         <DialogContent>
           <DialogContentText> Successfully imported tasks: {importedCount}</DialogContentText>
           {failedTasks && (
-            <Table
-              failedTasks={failedTasks}
-              onCancel={handleClose}
-              onConfirm={onImportFixedTasks}
-            />
+            <Table failedTasks={failedTasks} onCancel={handleClose} onConfirm={handleOnConfirm} />
           )}
         </DialogContent>
       </MuiDialog>

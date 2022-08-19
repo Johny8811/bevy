@@ -36,7 +36,7 @@ export const useCreateTasks = () => {
 
     if (response.errors.length === 0) {
       openSnackBar({
-        text: `${response.tasks.length} was successfully created.`,
+        text: `${response.tasks.length} tasks was successfully created.`,
         severity: 'success'
       });
     } else {
