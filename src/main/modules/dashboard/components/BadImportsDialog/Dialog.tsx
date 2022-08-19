@@ -8,6 +8,8 @@ import React, { useEffect, useState } from 'react';
 import { TaskData, CreateBatchTasksErrors } from '../../../../types/tasks';
 import { isDev } from '../../../../utils/isDev';
 import { Table } from './Table';
+// TODO: improve development
+import { EXAMPLE_IMPORT_ERRORS } from './devTableData';
 
 export type Props = {
   importedCount?: number;
@@ -16,7 +18,7 @@ export type Props = {
 };
 
 export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: Props) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(isDev());
 
   useEffect(() => {
     if (failedTasks && failedTasks.length > 0) {
@@ -63,6 +65,13 @@ export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: P
               <i>Name, Phone number, Notifications, Street, House number, City, Country</i>
             </div>
           </DialogContentText>
+          {isDev() && (
+            <Table
+              failedTasks={EXAMPLE_IMPORT_ERRORS}
+              onCancel={handleClose}
+              onConfirm={handleOnConfirm}
+            />
+          )}
           {failedTasks && (
             <Table failedTasks={failedTasks} onCancel={handleClose} onConfirm={handleOnConfirm} />
           )}

@@ -1,4 +1,6 @@
-export const EXAMPLE_IMPORT_ERRORS = [
+import { CreateBatchTasksErrors } from '../../../../types/tasks';
+
+export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
   {
     error: {
       statusCode: 400,
