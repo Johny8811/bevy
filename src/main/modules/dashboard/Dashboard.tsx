@@ -39,11 +39,9 @@ export function Dashboard() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          {isDev() && (
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Dispatcher: Emil
-            </Typography>
-          )}
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Name: -
+          </Typography>
           <Stack spacing={2} direction="row">
             {isDev() && (
               <Button color="inherit" onClick={() => {}}>
