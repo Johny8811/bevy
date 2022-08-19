@@ -6,14 +6,15 @@ import React, { useEffect, useState } from 'react';
 
 import { CreateBatchTasksErrors } from '../../../../types/tasks';
 import { isDev } from '../../../../utils/isDev';
-import { Table } from './Table';
+import { Table, Props as TableProps } from './Table';
 
 type Props = {
   importedCount?: number;
   failedTasks: CreateBatchTasksErrors[] | undefined;
+  onImportFixedTasks: TableProps['onConfirm'];
 };
 
-export function Dialog({ importedCount = 0, failedTasks }: Props) {
+export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: Props) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => () => {
@@ -53,7 +54,11 @@ export function Dialog({ importedCount = 0, failedTasks }: Props) {
         </DialogTitle>
         <DialogContent>
           {failedTasks && (
-            <Table failedTasks={failedTasks} onCancel={handleClose} onConfirm={handleClose} />
+            <Table
+              failedTasks={failedTasks}
+              onCancel={handleClose}
+              onConfirm={onImportFixedTasks}
+            />
           )}
         </DialogContent>
       </MuiDialog>

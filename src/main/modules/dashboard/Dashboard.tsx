@@ -25,6 +25,8 @@ export function Dashboard() {
 
   const handleChangeFileInput = ({ file }: OnChangeParams) => file && createTasks(file);
 
+  const handleOnImportFixedTasks = () => {};
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -62,7 +64,11 @@ export function Dashboard() {
         </Toolbar>
       </AppBar>
       <DeliveryTable />
-      <BadImportsDialog importedCount={result?.tasks.length} failedTasks={result?.errors} />
+      <BadImportsDialog
+        importedCount={result?.tasks.length}
+        failedTasks={result?.errors}
+        onImportFixedTasks={handleOnImportFixedTasks}
+      />
     </Box>
   );
 }
