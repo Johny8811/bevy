@@ -12,7 +12,7 @@ import { TableFooter } from './TableFooter';
 export type Props = {
   failedTasks: CreateBatchTasksErrors[];
   onCancel: () => void;
-  onConfirm: (data: TaskData[]) => void;
+  onConfirm: (tasks: TaskData[]) => void;
 };
 
 export function Table({ failedTasks, onCancel, onConfirm }: Props) {

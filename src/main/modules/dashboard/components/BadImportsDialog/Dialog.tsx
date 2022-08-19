@@ -11,7 +11,7 @@ import { Table } from './Table';
 type Props = {
   importedCount?: number;
   failedTasks: CreateBatchTasksErrors[] | undefined;
-  onImportFixedTasks: (data: TaskData[]) => void;
+  onImportFixedTasks: (tasks: TaskData[]) => void;
 };
 
 export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: Props) {
