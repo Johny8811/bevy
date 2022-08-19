@@ -1,5 +1,20 @@
 import { OnfleetTask, CreateTaskProps } from '@onfleet/node-onfleet/Resources/Tasks';
 
+export type TaskData = {
+  name: string;
+  phoneNumber: string;
+  skipSMSNotifications: boolean | undefined;
+  recipientNotes: string | undefined;
+  street: string;
+  number: string;
+  city: string;
+  postalCode: string | undefined;
+  country: string;
+  completeAfter: number | undefined;
+  completeBefore: number | undefined;
+  quantity: number | undefined;
+};
+
 export enum SheetColumns {
   CUSTOMER_NAME = 'Customer_name',
   TEL_NUMBER = 'Tel_number',

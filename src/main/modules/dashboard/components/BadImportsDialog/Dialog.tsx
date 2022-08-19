@@ -4,14 +4,14 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import React, { useEffect, useState } from 'react';
 
-import { CreateBatchTasksErrors } from '../../../../types/tasks';
+import { TaskData, CreateBatchTasksErrors } from '../../../../types/tasks';
 import { isDev } from '../../../../utils/isDev';
-import { Table, Props as TableProps } from './Table';
+import { Table } from './Table';
 
 type Props = {
   importedCount?: number;
   failedTasks: CreateBatchTasksErrors[] | undefined;
-  onImportFixedTasks: TableProps['onConfirm'];
+  onImportFixedTasks: (data: TaskData[]) => void;
 };
 
 export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: Props) {

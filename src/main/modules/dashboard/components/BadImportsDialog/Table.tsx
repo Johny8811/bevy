@@ -5,30 +5,14 @@ import { format } from 'date-fns';
 import { CreateRecipientProps } from '@onfleet/node-onfleet/Resources/Recipients';
 import { CreateDestinationProps } from '@onfleet/node-onfleet/Resources/Destinations';
 
-import { CreateBatchTasksErrors } from '../../../../types/tasks';
+import { TaskData, CreateBatchTasksErrors } from '../../../../types/tasks';
 import { TASK_COLUMNS } from '../../constants';
 import { TableFooter } from './TableFooter';
 
 export type Props = {
   failedTasks: CreateBatchTasksErrors[];
   onCancel: () => void;
-  // TODO: optimise this, move type to separated file, can be used for transforming data to onFleet shape too
-  onConfirm: (
-    data: {
-      name: string;
-      phoneNumber: string;
-      skipSMSNotifications: boolean | undefined;
-      recipientNotes: string | undefined;
-      street: string;
-      number: string;
-      city: string;
-      postalCode: string | undefined;
-      country: string;
-      completeAfter: number | undefined;
-      completeBefore: number | undefined;
-      quantity: number | undefined;
-    }[]
-  ) => void;
+  onConfirm: (data: TaskData[]) => void;
 };
 
 export function Table({ failedTasks, onCancel, onConfirm }: Props) {
