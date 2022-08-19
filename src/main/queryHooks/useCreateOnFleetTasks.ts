@@ -1,4 +1,4 @@
-import OnFleet from '@onfleet/node-onfleet';
+import { CreateTaskProps, OnfleetTask } from '@onfleet/node-onfleet/Resources/Tasks';
 import { fetchApi } from '../integrations/fetch/fetchApi';
 import { OnFleetTasksBatchUrl } from '../integrations/fetch/endpoints';
 import { useLoading } from '../integrations/fetch/components/LoadingProvider';
@@ -6,7 +6,7 @@ import { useLoading } from '../integrations/fetch/components/LoadingProvider';
 export const useCreateOnFleetTasks = () => {
   const { startLoading, stopLoading } = useLoading();
 
-  const createTasks: OnFleet['tasks']['batchCreate'] = async (tasks) => {
+  return async (tasks: CreateTaskProps[]): Promise<OnfleetTask[]> => {
     startLoading?.();
 
     const response = await fetchApi({
@@ -20,6 +20,4 @@ export const useCreateOnFleetTasks = () => {
     stopLoading?.();
     return response;
   };
-
-  return createTasks;
 };
