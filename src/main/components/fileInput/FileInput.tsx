@@ -11,7 +11,7 @@ type Props = {
 export function FileInput({ onChange, title }: Props) {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  const handleCahngeFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.currentTarget;
 
     if (!files) {
@@ -35,7 +35,8 @@ export function FileInput({ onChange, title }: Props) {
         name="file"
         ref={fileInputRef}
         style={{ display: 'none' }}
-        onChange={handleCahngeFileInput}
+        onChange={handleChangeFileInput}
+        value=""
       />
     </>
   );

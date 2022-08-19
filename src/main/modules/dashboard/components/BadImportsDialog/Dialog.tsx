@@ -56,7 +56,13 @@ export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: P
           Failed to import tasks: {failedTasks?.length}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText> Successfully imported tasks: {importedCount}</DialogContentText>
+          <DialogContentText>
+            <div>Successfully imported tasks: {importedCount}. </div>
+            <div>
+              Mandatory fields:{' '}
+              <i>Name, Phone number, Notifications, Street, House number, City, Country</i>
+            </div>
+          </DialogContentText>
           {failedTasks && (
             <Table failedTasks={failedTasks} onCancel={handleClose} onConfirm={handleOnConfirm} />
           )}

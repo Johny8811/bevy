@@ -17,7 +17,7 @@ type Props = {
   children: ReactNode;
 };
 
-const AUTO_HIDE_DURATION = 60000;
+const AUTO_HIDE_DURATION = 10000;
 
 export function SnackBarProvider({ children }: Props) {
   const [snackBarProps, setSnackBarProps] = useState<SnackBarState | null>(null);

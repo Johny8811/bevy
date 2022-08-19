@@ -46,8 +46,7 @@ export function TableFooter({ onConfirm, onCancel }: Omit<TableProps, 'failedTas
               }
 
               openSnackBar({
-                text: `Some mandatory fields are still missing. 
-                Mandatory fields: "Name, Phone number, Notifications, Street, House number, City, Country"`,
+                text: `Some "mandatory" fields are still missing.`,
                 severity: 'error'
               });
             });
