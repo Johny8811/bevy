@@ -12,7 +12,7 @@ import { TableFooter } from './TableFooter';
 export type Props = {
   failedTasks: CreateBatchTasksErrors[];
   onCancel: () => void;
-  // TODO: optimise this, move to separated file
+  // TODO: optimise this, move type to separated file, can be used for transforming data to onFleet shape too
   onConfirm: (
     data: {
       name: string;
