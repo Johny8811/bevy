@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 
 import { transformSheetToTaskData } from '../../utils/onFleet/transformSheeToTaskData';
+import { isDev } from '../../utils/isDev';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 import { TaskData } from '../../types/tasks';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
@@ -38,13 +39,17 @@ export function Dashboard() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Dispatcher: Emil
-          </Typography>
+          {isDev() && (
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Dispatcher: Emil
+            </Typography>
+          )}
           <Stack spacing={2} direction="row">
-            <Button color="inherit" onClick={() => {}}>
-              Export data
-            </Button>
+            {isDev() && (
+              <Button color="inherit" onClick={() => {}}>
+                Export data
+              </Button>
+            )}
             <FileInput title="Upload data" onChange={handleChangeFileInput} />
             <DatePicker
               label="Select date"
@@ -70,7 +75,18 @@ export function Dashboard() {
           </Stack>
         </Toolbar>
       </AppBar>
-      <DeliveryTable />
+      {isDev() ? (
+        <DeliveryTable />
+      ) : (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            py: 4
+          }}>
+          No data
+        </Box>
+      )}
       <BadImportsDialog
         importedCount={result?.importedCount}
         failedTasks={result?.failedTasks}
