@@ -38,6 +38,7 @@ export type RawSheetData = {
   [SheetColumns.INTERNAL_ORDER_NO]?: number;
 };
 
+// Create Batch Tasks Response
 export type CreateBatchTasksError = {
   cause: string | null;
   error: number;
