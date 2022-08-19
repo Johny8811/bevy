@@ -8,7 +8,7 @@ import { TaskData, CreateBatchTasksErrors } from '../../../../types/tasks';
 import { isDev } from '../../../../utils/isDev';
 import { Table } from './Table';
 
-type Props = {
+export type Props = {
   importedCount?: number;
   failedTasks: CreateBatchTasksErrors[] | undefined;
   onImportFixedTasks: (tasks: TaskData[]) => void;
