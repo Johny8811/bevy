@@ -8,12 +8,14 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
-import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 
+import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
+import { TaskData } from '../../types/tasks';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { DeliveryTable } from './components/DeliveryTable';
 import { Dialog as BadImportsDialog } from './components/BadImportsDialog/Dialog';
 import { useCreateTasksFromSheet } from './hooks/useCreateTasksFromSheet';
+import { useCreateTasks } from './hooks/useCreateTasks';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -21,11 +23,12 @@ export function Dashboard() {
     onSuccess: () => navigate('/', { replace: true })
   });
   const { createTasksFromSheet, result } = useCreateTasksFromSheet();
+  const { createTasks } = useCreateTasks();
   const [value, setValue] = useState<Date | null>(null);
 
   const handleChangeFileInput = ({ file }: OnChangeParams) => file && createTasksFromSheet(file);
 
-  const handleOnImportFixedTasks = () => {};
+  const handleOnImportFixedTasks = (tasks: TaskData[]) => createTasks(tasks);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
