@@ -12,7 +12,7 @@ import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput'
 
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { DeliveryTable } from './components/DeliveryTable';
-import { Dialog as BadImportsDialog } from './components/BadImportsDialog';
+import { Dialog as BadImportsDialog } from './components/BadImportsDialog/Dialog';
 import { useCreateTasks } from './hooks/useCreateTasks';
 
 export function Dashboard() {
