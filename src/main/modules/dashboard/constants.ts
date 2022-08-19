@@ -12,7 +12,7 @@ export const TASK_COLUMNS: GridColDef[] = [
   },
   { field: 'recipientNotes', headerName: 'Customer Notes', width: 250, editable: true },
   { field: 'street', headerName: 'Street', width: 150, editable: true },
-  { field: 'number', headerName: 'House number', width: 120, editable: true },
+  { field: 'houseNumber', headerName: 'House number', width: 120, editable: true },
   { field: 'city', headerName: 'City', width: 120, editable: true },
   { field: 'postalCode', headerName: 'Postal code', width: 120, editable: true },
   { field: 'country', headerName: 'Country', width: 150, editable: true },

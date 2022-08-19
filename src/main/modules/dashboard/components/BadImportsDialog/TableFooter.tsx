@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { useGridApiContext } from '@mui/x-data-grid';
 
 import { getGridData } from '../../../../utils/dataGrid/getGridData';
+import { isDev } from '../../../../utils/isDev';
 import { useSnackBar } from '../../../../components/snackBar/SnackbarProvider';
 import { badImportsValidationSchema } from '../../validation/validationSchema';
 import { Props as TableProps } from './Table';
@@ -37,7 +38,13 @@ export function TableFooter({ onConfirm, onCancel }: Omit<TableProps, 'failedTas
                 onConfirm(validationResult);
               }
             })
-            .catch(() => {
+            .catch((validationError) => {
+              if (isDev()) {
+                // TODO: implement logger!
+                // eslint-disable-next-line no-console
+                console.log('==> validationError: ', validationError);
+              }
+
               openSnackBar({
                 text: `Some mandatory fields are still missing. 
                 Mandatory fields: "Name, Phone number, Notifications, Street, House number, City, Country"`,
