@@ -14,6 +14,7 @@ import { isDev } from '../../utils/isDev';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 import { TaskData } from '../../types/tasks';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
+import { useUpdateUserInfo } from '../../integrations/firebase/hooks/useUpdateUserInfo';
 import { DeliveryTable } from './components/DeliveryTable';
 import { Dialog as BadImportsDialog } from './components/BadImportsDialog/Dialog';
 import { useCreateTasks } from './hooks/useCreateTasks';
@@ -25,6 +26,8 @@ export function Dashboard() {
   });
   const { createTasks, result } = useCreateTasks();
   const [value, setValue] = useState<Date | null>(null);
+
+  const updateUserInfo = useUpdateUserInfo();
 
   const handleChangeFileInput = async ({ file }: OnChangeParams) => {
     if (file) {
@@ -43,6 +46,17 @@ export function Dashboard() {
             Name: -
           </Typography>
           <Stack spacing={2} direction="row">
+            <Button
+              color="inherit"
+              onClick={() =>
+                // TODO: open dialog with form to update user data and show existing data if user has some
+                updateUserInfo({
+                  displayName: 'Example Name',
+                  photoURL: 'https://example.com/jane-q-user/profile.jpg'
+                })
+              }>
+              Update user info
+            </Button>
             <FileInput title="Import tasks" onChange={handleChangeFileInput} />
             {isDev() && (
               <Button color="inherit" onClick={() => {}}>
