@@ -47,15 +47,8 @@ const rows = [
 
 export function DeliveryTable() {
   return (
-    <Box sx={{ height: 600, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        checkboxSelection
-        disableSelectionOnClick
-      />
+    <Box sx={{ height: 'calc(100vh - 68px)', width: '100%' }}>
+      <DataGrid rows={rows} columns={columns} checkboxSelection disableSelectionOnClick />
     </Box>
   );
 }
