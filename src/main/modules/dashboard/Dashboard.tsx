@@ -43,12 +43,12 @@ export function Dashboard() {
             Name: -
           </Typography>
           <Stack spacing={2} direction="row">
+            <FileInput title="Import tasks" onChange={handleChangeFileInput} />
             {isDev() && (
               <Button color="inherit" onClick={() => {}}>
                 Export data
               </Button>
             )}
-            <FileInput title="Upload data" onChange={handleChangeFileInput} />
             <DatePicker
               label="Select date"
               value={value}
