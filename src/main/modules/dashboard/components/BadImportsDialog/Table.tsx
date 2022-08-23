@@ -6,7 +6,7 @@ import { CreateRecipientProps } from '@onfleet/node-onfleet/Resources/Recipients
 import { CreateDestinationProps } from '@onfleet/node-onfleet/Resources/Destinations';
 
 import { TaskData, CreateBatchTasksErrors } from '../../../../types/tasks';
-import { TASK_COLUMNS } from '../../constants';
+import { TASK_COLUMNS } from '../../constants/columns';
 import { TableFooter } from './TableFooter';
 
 export type Props = {
