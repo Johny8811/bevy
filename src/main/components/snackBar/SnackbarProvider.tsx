@@ -8,7 +8,7 @@ type SnackBarState = {
 };
 
 type SnackBarProviderType = {
-  openSnackBar: (props: SnackBarState) => void;
+  openSnackBar: (state: SnackBarState) => void;
 };
 
 const SnackBarContext = createContext<SnackBarProviderType | null>(null);
@@ -20,10 +20,10 @@ type Props = {
 const AUTO_HIDE_DURATION = 10000;
 
 export function SnackBarProvider({ children }: Props) {
-  const [snackBarProps, setSnackBarProps] = useState<SnackBarState | null>(null);
+  const [snackBarState, setSnackBarState] = useState<SnackBarState | null>(null);
 
-  const handleOpenSnackBar = (props: SnackBarState) => {
-    setSnackBarProps(props);
+  const handleOpenSnackBar = (state: SnackBarState) => {
+    setSnackBarState(state);
   };
 
   const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
@@ -31,7 +31,7 @@ export function SnackBarProvider({ children }: Props) {
       return;
     }
 
-    setSnackBarProps(null);
+    setSnackBarState(null);
   };
 
   const value = useMemo(() => ({ openSnackBar: handleOpenSnackBar }), []);
@@ -40,12 +40,12 @@ export function SnackBarProvider({ children }: Props) {
     <SnackBarContext.Provider value={value}>
       {children}
       <Snackbar
-        open={!!snackBarProps}
+        open={!!snackBarState}
         autoHideDuration={AUTO_HIDE_DURATION}
         onClose={handleClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-        <MuiAlert onClose={handleClose} severity={snackBarProps?.severity} sx={{ width: '100%' }}>
-          {snackBarProps?.text}
+        <MuiAlert onClose={handleClose} severity={snackBarState?.severity} sx={{ width: '100%' }}>
+          {snackBarState?.text}
         </MuiAlert>
       </Snackbar>
     </SnackBarContext.Provider>
