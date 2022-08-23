@@ -25,9 +25,9 @@ export function Dashboard() {
     onSuccess: () => navigate('/', { replace: true })
   });
   const { createTasks, result } = useCreateTasks();
-  const [value, setValue] = useState<Date | null>(null);
-
   const updateUserInfo = useUpdateUserInfo();
+
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleChangeFileInput = async ({ file }: OnChangeParams) => {
     if (file) {
@@ -65,9 +65,9 @@ export function Dashboard() {
             )}
             <DatePicker
               label="Select date"
-              value={value}
+              value={selectedDate}
               onChange={(newValue) => {
-                setValue(newValue);
+                setSelectedDate(newValue);
               }}
               renderInput={(params) => (
                 <TextField
@@ -88,7 +88,7 @@ export function Dashboard() {
         </Toolbar>
       </AppBar>
       {isDev() ? (
-        <DeliveryTable />
+        <DeliveryTable selectedDay={selectedDate} />
       ) : (
         <Box
           sx={{

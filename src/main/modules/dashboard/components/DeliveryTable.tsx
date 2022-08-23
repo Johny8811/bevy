@@ -1,6 +1,9 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+
+import { useUserTasksQuery } from '../../../queryHooks/useUserTasksQuery';
+import { useUser } from '../../../integrations/firebase/components/UserProvider';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -45,7 +48,20 @@ const rows = [
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 }
 ];
 
-export function DeliveryTable() {
+type Props = {
+  selectedDay: Date | null;
+};
+
+export function DeliveryTable({ selectedDay }: Props) {
+  const { user } = useUser();
+  const userTasksQuery = useUserTasksQuery();
+
+  useEffect(() => {
+    if (user?.uid && selectedDay) {
+      userTasksQuery(user?.uid, selectedDay).then(() => {});
+    }
+  }, [selectedDay]);
+
   return (
     <Box sx={{ height: 'calc(100vh - 68px)', width: '100%' }}>
       <DataGrid rows={rows} columns={columns} checkboxSelection disableSelectionOnClick />
