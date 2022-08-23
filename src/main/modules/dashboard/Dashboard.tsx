@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 
 import { transformSheetToTaskData } from '../../utils/onFleet/transformSheeToTaskData';
-import { isDev } from '../../utils/isDev';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 import { TaskData } from '../../types/tasks';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
@@ -47,7 +46,7 @@ export function Dashboard() {
           </Typography>
           <Stack spacing={2} direction="row">
             <Button
-              color="inherit"
+              variant="contained"
               onClick={() =>
                 // TODO: open dialog with form to update user data and show existing data if user has some
                 updateUserInfo({
@@ -58,11 +57,9 @@ export function Dashboard() {
               Update user info
             </Button>
             <FileInput title="Import tasks" onChange={handleChangeFileInput} />
-            {isDev() && (
-              <Button color="inherit" onClick={() => {}}>
-                Export data
-              </Button>
-            )}
+            <Button variant="contained" onClick={() => {}}>
+              Onfleet export tasks
+            </Button>
             <DatePicker
               label="Select date"
               value={selectedDate}

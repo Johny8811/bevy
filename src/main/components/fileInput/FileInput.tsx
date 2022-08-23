@@ -27,7 +27,7 @@ export function FileInput({ onChange, title }: Props) {
 
   return (
     <>
-      <Button color="inherit" onClick={() => fileInputRef.current?.click()}>
+      <Button variant="contained" onClick={() => fileInputRef.current?.click()}>
         {title}
       </Button>
       <input
