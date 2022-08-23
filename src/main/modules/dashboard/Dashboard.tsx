@@ -15,7 +15,7 @@ import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput'
 import { TaskData } from '../../types/tasks';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { useUpdateUserInfo } from '../../integrations/firebase/hooks/useUpdateUserInfo';
-import { DeliveryTable } from './components/DeliveryTable';
+import { Table as DeliveryTable } from './components/DeliveryTable/Table';
 import { Dialog as BadImportsDialog } from './components/BadImportsDialog/Dialog';
 import { useCreateTasks } from './hooks/useCreateTasks';
 
@@ -87,18 +87,7 @@ export function Dashboard() {
           </Stack>
         </Toolbar>
       </AppBar>
-      {isDev() ? (
-        <DeliveryTable selectedDay={selectedDate} />
-      ) : (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            py: 4
-          }}>
-          No data
-        </Box>
-      )}
+      <DeliveryTable selectedDay={selectedDate} />
       <BadImportsDialog
         importedCount={result?.importedCount}
         failedTasks={result?.failedTasks}
