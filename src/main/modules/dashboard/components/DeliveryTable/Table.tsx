@@ -7,6 +7,7 @@ import { TaskData } from '../../../../types/tasks';
 import { useUser } from '../../../../integrations/firebase/components/UserProvider';
 import { useSnackBar } from '../../../../components/snackBar/SnackbarProvider';
 import { DELIVERY_COLUMNS } from '../../constants/columns';
+import { CustomToolbar } from './Toolbar';
 import { NoData } from './NoData';
 
 type Props = {
@@ -58,7 +59,7 @@ export function Table({ selectedDay }: Props) {
         columns={DELIVERY_COLUMNS}
         checkboxSelection
         disableSelectionOnClick
-        components={{ NoRowsOverlay: NoData }}
+        components={{ Toolbar: CustomToolbar, NoRowsOverlay: NoData }}
       />
     </Box>
   );
