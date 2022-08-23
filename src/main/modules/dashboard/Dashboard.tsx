@@ -14,6 +14,7 @@ import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput'
 import { TaskData } from '../../types/tasks';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { useUpdateUserInfo } from '../../integrations/firebase/hooks/useUpdateUserInfo';
+import { useOnFleetExportTasks } from './hooks/useOnFleetExportTasks';
 import { Table as DeliveryTable } from './components/DeliveryTable/Table';
 import { Dialog as BadImportsDialog } from './components/BadImportsDialog/Dialog';
 import { useCreateTasks } from './hooks/useCreateTasks';
@@ -25,6 +26,7 @@ export function Dashboard() {
   });
   const { createTasks, result } = useCreateTasks();
   const updateUserInfo = useUpdateUserInfo();
+  const onFleetExportTasks = useOnFleetExportTasks();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -57,7 +59,7 @@ export function Dashboard() {
               Update user info
             </Button>
             <FileInput title="Import tasks" onChange={handleChangeFileInput} />
-            <Button variant="contained" onClick={() => {}}>
+            <Button variant="contained" onClick={onFleetExportTasks}>
               Onfleet export tasks
             </Button>
             <DatePicker
