@@ -3,7 +3,7 @@ import { fetchApi } from '../integrations/fetch/fetchApi';
 import { ON_FLEET_TASKS_BATCH_URL } from '../integrations/fetch/endpoints';
 import { useLoading } from '../integrations/fetch/components/LoadingProvider';
 
-export const useCreateOnFleetTasks = () => {
+export const useCreateOnFleetTasksQuery = () => {
   const { startLoading, stopLoading } = useLoading();
 
   return async (tasks: CreateTaskProps[]): Promise<OnfleetTask[]> => {

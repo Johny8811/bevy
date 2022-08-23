@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { OnfleetMetadata } from '@onfleet/node-onfleet/metadata';
 
-import { useCreateOnFleetTasks } from '../../../queryHooks/useCreateOnFleetTasks';
+import { useCreateOnFleetTasksQuery } from '../../../queryHooks/useCreateOnFleetTasksQuery';
 import { TaskData, CreateBatchTasksResponse } from '../../../types/tasks';
 import { transformTaskDataToOnFleetTasks } from '../../../utils/onFleet/transformTaskDataToOnFleetTasks';
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
@@ -16,7 +16,7 @@ export const useCreateTasks = () => {
     'importedCount' | 'failedTasks'
   > | null>(null);
 
-  const createOnFleetTasks = useCreateOnFleetTasks();
+  const createOnFleetTasks = useCreateOnFleetTasksQuery();
 
   // Metadata
   const metadata: OnfleetMetadata[] = [
