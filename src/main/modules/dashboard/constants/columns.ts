@@ -1,6 +1,6 @@
 import { GridColDef } from '@mui/x-data-grid';
 
-export const TASK_COLUMNS: GridColDef[] = [
+export const BAD_IMPORTS_COLUMNS: GridColDef[] = [
   { field: 'name', headerName: 'Name', width: 150, editable: true },
   { field: 'phoneNumber', headerName: 'Phone number', width: 120, editable: true },
   {

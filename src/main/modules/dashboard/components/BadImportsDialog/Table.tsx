@@ -6,7 +6,7 @@ import { CreateRecipientProps } from '@onfleet/node-onfleet/Resources/Recipients
 import { CreateDestinationProps } from '@onfleet/node-onfleet/Resources/Destinations';
 
 import { TaskData, CreateBatchTasksErrors } from '../../../../types/tasks';
-import { TASK_COLUMNS } from '../../constants/columns';
+import { BAD_IMPORTS_COLUMNS } from '../../constants/columns';
 import { TableFooter } from './TableFooter';
 
 export type Props = {
@@ -56,7 +56,7 @@ export function Table({ failedTasks, onCancel, onConfirm }: Props) {
   return (
     <DataGrid
       rows={rows}
-      columns={TASK_COLUMNS}
+      columns={BAD_IMPORTS_COLUMNS}
       disableSelectionOnClick
       autoHeight
       components={{ Footer: TableFooter }}
