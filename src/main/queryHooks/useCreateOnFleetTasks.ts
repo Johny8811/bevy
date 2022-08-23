@@ -1,6 +1,6 @@
 import { CreateTaskProps, OnfleetTask } from '@onfleet/node-onfleet/Resources/Tasks';
 import { fetchApi } from '../integrations/fetch/fetchApi';
-import { OnFleetTasksBatchUrl } from '../integrations/fetch/endpoints';
+import { ON_FLEET_TASKS_BATCH_URL } from '../integrations/fetch/endpoints';
 import { useLoading } from '../integrations/fetch/components/LoadingProvider';
 
 export const useCreateOnFleetTasks = () => {
@@ -10,7 +10,7 @@ export const useCreateOnFleetTasks = () => {
     startLoading?.();
 
     const response = await fetchApi({
-      url: OnFleetTasksBatchUrl,
+      url: ON_FLEET_TASKS_BATCH_URL,
       headers: {
         Authorization: 'Basic YTNkMmFkNThjNmE2MmFmMWNkNjRmNjdkZjZjZTAzYzc6'
       },
