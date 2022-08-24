@@ -8,7 +8,7 @@ import { USER_TASKS } from '../integrations/fetch/endpoints';
 export const useUserTasksQuery = () => {
   const fetchBackend = useFetchBackend();
 
-  return async (userId: string, date: Date): Promise<OnfleetTask[]> => {
+  return (userId: string, date: Date): Promise<OnfleetTask[]> => {
     return fetchBackend({
       method: Methods.get,
       url: `${USER_TASKS}?userId=${userId}&date=${format(date, 'MM/dd/yyyy')}`
