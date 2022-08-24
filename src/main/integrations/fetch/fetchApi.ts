@@ -11,14 +11,23 @@ export type Params = {
   body?: any;
 };
 
+// TODO: improve error statuses. Maybe react query handle?
 export const fetchApi = async ({ url, method = Methods.post, headers, body }: Params) => {
   switch (method) {
     case Methods.get: {
       const response = await fetch(url, { method: Methods.get, headers });
+      if (!response.ok) {
+        const jsonResponse = await response.json();
+        throw new Error(jsonResponse.message);
+      }
       return response.json();
     }
     case Methods.post: {
       const response = await fetch(url, { method: Methods.post, headers, body });
+      if (!response.ok) {
+        const jsonResponse = await response.json();
+        throw new Error(jsonResponse.message);
+      }
       return response.json();
     }
     default: {
