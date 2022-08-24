@@ -3,18 +3,15 @@ export enum Methods {
   post = 'POST'
 }
 
-export const fetchApi = async ({
-  url,
-  method = Methods.post,
-  headers,
-  body
-}: {
+export type Params = {
   url: string;
   method?: Methods;
   headers?: { [key: string]: string };
   // TODO: improve typing
   body?: any;
-}) => {
+};
+
+export const fetchApi = async ({ url, method = Methods.post, headers, body }: Params) => {
   switch (method) {
     case Methods.get: {
       const response = await fetch(url, { method: Methods.get, headers });
