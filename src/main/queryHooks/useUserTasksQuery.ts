@@ -1,22 +1,17 @@
 import { OnfleetTask } from '@onfleet/node-onfleet/Resources/Tasks';
 import { format } from 'date-fns';
 
-import { useLoading } from '../integrations/fetch/components/LoadingProvider';
-import { fetchApi, Methods } from '../integrations/fetch/fetchApi';
+import { Methods } from '../integrations/fetch/fetchApi';
+import { useFetchBackend } from '../integrations/fetch/hooks/useFetchBackend';
 import { USER_TASKS } from '../integrations/fetch/endpoints';
 
 export const useUserTasksQuery = () => {
-  const { startLoading, stopLoading } = useLoading();
+  const fetchBackend = useFetchBackend();
 
   return async (userId: string, date: Date): Promise<OnfleetTask[]> => {
-    startLoading?.();
-
-    const response = await fetchApi({
+    return fetchBackend({
       method: Methods.get,
       url: `${USER_TASKS}?userId=${userId}&date=${format(date, 'MM/dd/yyyy')}`
     });
-
-    stopLoading?.();
-    return response;
   };
 };
