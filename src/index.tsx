@@ -12,6 +12,7 @@ import { LoadingProvider } from './main/integrations/fetch/components/LoadingPro
 import { SnackBarProvider } from './main/components/snackBar/SnackbarProvider';
 import Routing from './main/routing/Routing';
 import { UserProvider } from './main/integrations/firebase/components/UserProvider';
+import { RemoteConfigProvider } from './main/integrations/firebase/components/RemoteConfigProvider';
 import reportWebVitals from './reportWebVitals';
 
 const theme = createTheme({
@@ -33,13 +34,15 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <UserProvider>
-          <LoadingProvider>
-            <SnackBarProvider>
-              <Routing />
-            </SnackBarProvider>
-          </LoadingProvider>
-        </UserProvider>
+        <RemoteConfigProvider>
+          <UserProvider>
+            <LoadingProvider>
+              <SnackBarProvider>
+                <Routing />
+              </SnackBarProvider>
+            </LoadingProvider>
+          </UserProvider>
+        </RemoteConfigProvider>
       </LocalizationProvider>
     </ThemeProvider>
   </React.StrictMode>

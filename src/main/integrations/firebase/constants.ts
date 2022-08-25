@@ -9,3 +9,5 @@ export const FIREBASE_CONFIG_DEV = {
   appId: '1:939982424969:web:647ce5424c0de9d77f6f58',
   measurementId: 'G-ZKECYLRWPJ'
 };
+
+export type ROLES = 'root' | 'dispatcher';
