@@ -18,7 +18,7 @@ export type Props = {
 };
 
 export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: Props) {
-  const [open, setOpen] = useState(!isDev());
+  const [open, setOpen] = useState(isDev());
 
   useEffect(() => {
     if (failedTasks && failedTasks.length > 0) {
