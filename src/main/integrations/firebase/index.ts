@@ -19,3 +19,7 @@ const app = initializeApp(
 export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const remoteConfig = getRemoteConfig(app);
+
+if (isDev()) {
+  remoteConfig.settings.minimumFetchIntervalMillis = 120000; // 2 minutes
+}
