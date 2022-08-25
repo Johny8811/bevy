@@ -11,10 +11,10 @@ import Toolbar from '@mui/material/Toolbar';
 
 import { transformSheetToTaskData } from '../../utils/onFleet/transformSheeToTaskData';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
-import { isDev } from '../../utils/isDev';
 import { TaskData } from '../../types/tasks';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { useUpdateUserInfo } from '../../integrations/firebase/hooks/useUpdateUserInfo';
+import { useHasRole } from '../../integrations/firebase/hooks/useHasRole';
 import { useOnFleetExportTasks } from './hooks/useOnFleetExportTasks';
 import { Table as DeliveryTable } from './components/DeliveryTable/Table';
 import { Dialog as BadImportsDialog } from './components/BadImportsDialog/Dialog';
@@ -28,6 +28,7 @@ export function Dashboard() {
   const { createTasks, result } = useCreateTasks();
   const updateUserInfo = useUpdateUserInfo();
   const onFleetExportTasks = useOnFleetExportTasks();
+  const hasRole = useHasRole();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -48,7 +49,7 @@ export function Dashboard() {
             Name: -
           </Typography>
           <Stack spacing={2} direction="row">
-            {isDev() && (
+            {hasRole('user') && (
               <Button
                 variant="contained"
                 onClick={() =>
@@ -62,27 +63,31 @@ export function Dashboard() {
               </Button>
             )}
             <FileInput onChange={handleChangeFileInput}>Import tasks</FileInput>
-            <Button variant="contained" onClick={onFleetExportTasks}>
-              OnFleet export tasks
-            </Button>
-            <DatePicker
-              label="Select date"
-              value={selectedDate}
-              onChange={(newValue) => {
-                setSelectedDate(newValue);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  sx={{
-                    svg: { color: '#fff' },
-                    input: { color: '#fff' },
-                    label: { color: '#fff' }
-                  }}
-                  color="secondary"
-                />
-              )}
-            />
+            {(hasRole('dispatcher') || hasRole('root')) && (
+              <Button variant="contained" onClick={onFleetExportTasks}>
+                OnFleet - export tasks
+              </Button>
+            )}
+            {(hasRole('user') || hasRole('root')) && (
+              <DatePicker
+                label="Select date"
+                value={selectedDate}
+                onChange={(newValue) => {
+                  setSelectedDate(newValue);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    sx={{
+                      svg: { color: '#fff' },
+                      input: { color: '#fff' },
+                      label: { color: '#fff' }
+                    }}
+                    color="secondary"
+                  />
+                )}
+              />
+            )}
             <Button variant="contained" onClick={signOut}>
               Sign out
             </Button>
