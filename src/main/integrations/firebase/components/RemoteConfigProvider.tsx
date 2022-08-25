@@ -1,8 +1,8 @@
 import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 import { fetchAndActivate, getValue } from 'firebase/remote-config';
 
-import { ROLES } from '../constants';
 import { useLoading } from '../../fetch/components/LoadingProvider';
+import { ROLES } from '../constants';
 import { remoteConfig } from '..';
 
 type Props = {
