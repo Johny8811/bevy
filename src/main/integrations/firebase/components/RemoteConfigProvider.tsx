@@ -22,7 +22,6 @@ export const RemoteConfigContext = createContext<RemoteConfigProviderType | null
 export function RemoteConfigProvider({ children }: Props) {
   const { startLoading, stopLoading } = useLoading();
   const [userRoles, setUserRoles] = useState<UserRoles | null>(null);
-  const [rcFetched, setRcFetched] = useState(false);
 
   useEffect(() => {
     startLoading?.();
@@ -32,7 +31,6 @@ export function RemoteConfigProvider({ children }: Props) {
         const userRolesValue = getValue(remoteConfig, 'userRoles');
         const parsedValueString = JSON.parse(userRolesValue.asString());
         setUserRoles(parsedValueString);
-        setRcFetched(true);
         stopLoading?.();
       })
       .catch(() => {
@@ -45,7 +43,7 @@ export function RemoteConfigProvider({ children }: Props) {
 
   return (
     <RemoteConfigContext.Provider value={providerValueMemoized}>
-      {rcFetched && children}
+      {userRoles && children}
     </RemoteConfigContext.Provider>
   );
 }
