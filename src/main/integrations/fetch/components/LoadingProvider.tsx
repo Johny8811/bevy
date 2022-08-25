@@ -15,11 +15,10 @@ type Props = {
 };
 
 export function LoadingProvider({ children }: Props) {
-  // TODO: make number, startLoading increase, stopLoading decrease
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(0);
 
-  const handleStartLoading = () => setLoading(true);
-  const handleStopLoading = () => setLoading(false);
+  const handleStartLoading = () => setLoading((state) => state + 1);
+  const handleStopLoading = () => setLoading((state) => (state > 0 ? state - 1 : 0));
 
   const value = useMemo(
     () => ({
@@ -31,7 +30,11 @@ export function LoadingProvider({ children }: Props) {
 
   return (
     <LoadingContext.Provider value={value}>
-      {loading ? <LinearProgress /> : <Box sx={{ height: 4, backgroundColor: 'primary.main' }} />}
+      {loading > 0 ? (
+        <LinearProgress />
+      ) : (
+        <Box sx={{ height: 4, backgroundColor: 'primary.main' }} />
+      )}
       {children}
     </LoadingContext.Provider>
   );
