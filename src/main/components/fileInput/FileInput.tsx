@@ -1,14 +1,14 @@
-import * as React from 'react';
+import React, { ReactNode } from 'react';
 import Button from '@mui/material/Button';
 
 export type OnChangeParams = Partial<{ files: FileList; file: File }>;
 
 type Props = {
-  title: string;
   onChange: (o: OnChangeParams) => void;
+  children: ReactNode;
 };
 
-export function FileInput({ onChange, title }: Props) {
+export function FileInput({ onChange, children }: Props) {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleChangeFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +28,7 @@ export function FileInput({ onChange, title }: Props) {
   return (
     <>
       <Button variant="contained" onClick={() => fileInputRef.current?.click()}>
-        {title}
+        {children}
       </Button>
       <input
         type="file"

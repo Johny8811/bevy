@@ -58,12 +58,12 @@ export function Dashboard() {
                     photoURL: 'https://example.com/jane-q-user/profile.jpg'
                   })
                 }>
-                Update user info
+                Change password
               </Button>
             )}
-            <FileInput title="Import tasks" onChange={handleChangeFileInput} />
+            <FileInput onChange={handleChangeFileInput}>Import tasks</FileInput>
             <Button variant="contained" onClick={onFleetExportTasks}>
-              Onfleet export tasks
+              OnFleet export tasks
             </Button>
             <DatePicker
               label="Select date"
