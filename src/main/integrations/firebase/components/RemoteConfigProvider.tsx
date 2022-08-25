@@ -2,6 +2,7 @@ import React, { createContext, ReactNode, useContext, useEffect, useMemo, useSta
 import { fetchAndActivate, getValue } from 'firebase/remote-config';
 
 import { ROLES } from '../constants';
+import { useLoading } from '../../fetch/components/LoadingProvider';
 import { remoteConfig } from '..';
 
 type Props = {
@@ -19,16 +20,23 @@ type RemoteConfigProviderType = {
 export const RemoteConfigContext = createContext<RemoteConfigProviderType | null>(null);
 
 export function RemoteConfigProvider({ children }: Props) {
+  const { startLoading, stopLoading } = useLoading();
   const [userRoles, setUserRoles] = useState<UserRoles | null>(null);
+  const [rcFetched, setRcFetched] = useState(false);
 
   useEffect(() => {
+    startLoading?.();
+
     fetchAndActivate(remoteConfig)
       .then(() => {
         const userRolesValue = getValue(remoteConfig, 'userRoles');
         const parsedValueString = JSON.parse(userRolesValue.asString());
         setUserRoles(parsedValueString);
+        setRcFetched(true);
+        stopLoading?.();
       })
       .catch(() => {
+        stopLoading?.();
         // TODO: log error while loading remote config
       });
   }, []);
@@ -36,9 +44,8 @@ export function RemoteConfigProvider({ children }: Props) {
   const providerValueMemoized = useMemo(() => ({ userRoles }), [userRoles]);
 
   return (
-    // @ts-ignore
     <RemoteConfigContext.Provider value={providerValueMemoized}>
-      {children}
+      {rcFetched && children}
     </RemoteConfigContext.Provider>
   );
 }

@@ -34,15 +34,15 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <RemoteConfigProvider>
-          <UserProvider>
-            <LoadingProvider>
+        <LoadingProvider>
+          <RemoteConfigProvider>
+            <UserProvider>
               <SnackBarProvider>
                 <Routing />
               </SnackBarProvider>
-            </LoadingProvider>
-          </UserProvider>
-        </RemoteConfigProvider>
+            </UserProvider>
+          </RemoteConfigProvider>
+        </LoadingProvider>
       </LocalizationProvider>
     </ThemeProvider>
   </React.StrictMode>
