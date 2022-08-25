@@ -10,4 +10,4 @@ export const FIREBASE_CONFIG_DEV = {
   measurementId: 'G-ZKECYLRWPJ'
 };
 
-export type ROLES = 'root' | 'dispatcher';
+export type ROLES = 'root' | 'dispatcher' | 'user';

@@ -13,7 +13,7 @@ type UserRoles = {
 };
 
 type RemoteConfigProviderType = {
-  userRoles: UserRoles;
+  userRoles: UserRoles | null;
 };
 
 export const RemoteConfigContext = createContext<RemoteConfigProviderType | null>(null);
@@ -24,7 +24,7 @@ export function RemoteConfigProvider({ children }: Props) {
   useEffect(() => {
     fetchAndActivate(remoteConfig)
       .then(() => {
-        const userRolesValue = getValue(remoteConfig, 'roles');
+        const userRolesValue = getValue(remoteConfig, 'userRoles');
         const parsedValueString = JSON.parse(userRolesValue.asString());
         setUserRoles(parsedValueString);
       })
