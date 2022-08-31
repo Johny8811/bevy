@@ -4,7 +4,7 @@ export type ParamsList = {
 }[];
 
 // TODO: add test
-export const buildUrlQuery = (paramsList: ParamsList) =>
+export const buildUrlQueryParams = (paramsList: ParamsList) =>
   paramsList.reduce((result, param) => {
     const isResultEmpty = result.length !== 0;
     return `${result}${isResultEmpty ? '&' : ''}${param.param}=${param.value}`;
