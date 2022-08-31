@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useUserTasksQuery } from '../../../queryHooks/useUserTasksQuery';
-import { useNextDayTasksQuery } from '../../../queryHooks/useNextDayTasksQuery';
+import { useTasksTomorrowQuery } from '../../../queryHooks/useTasksTomorrowQuery';
 
 import { useHasRole } from '../../../integrations/firebase/hooks/useHasRole';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
@@ -11,6 +11,7 @@ import { useUser } from '../../../integrations/firebase/components/UserProvider'
 export const useDeliveryTableData = (selectedDay: Date | null) => {
   const { user } = useUser();
   const userTasksQuery = useUserTasksQuery();
+  const nextDayTasksQuery = useTasksTomorrowQuery();
 
   const nextDayTasksQuery = useNextDayTasksQuery();
   const { openSnackBar } = useSnackBar();

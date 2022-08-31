@@ -4,7 +4,7 @@ import { useFetchBackend } from '../integrations/fetch/hooks/useFetchBackend';
 import { Methods } from '../integrations/fetch/fetchApi';
 import { TASKS_TOMORROW } from '../integrations/fetch/endpoints';
 
-export const useNextDayTasksQuery = () => {
+export const useTasksTomorrowQuery = () => {
   const fetchBackend = useFetchBackend();
 
   return (): Promise<OnfleetTask[]> => {
