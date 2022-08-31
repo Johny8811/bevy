@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 
 import { Methods } from '../integrations/fetch/fetchApi';
 import { useFetchBackend } from '../integrations/fetch/hooks/useFetchBackend';
-import { USER_TASKS } from '../integrations/fetch/endpoints';
+import { TASKS } from '../integrations/fetch/endpoints';
 
 export const useUserTasksQuery = () => {
   const fetchBackend = useFetchBackend();
@@ -11,7 +11,7 @@ export const useUserTasksQuery = () => {
   return (userId: string, date: Date): Promise<OnfleetTask[]> => {
     return fetchBackend({
       method: Methods.get,
-      url: `${USER_TASKS}?userId=${userId}&date=${format(date, 'MM/dd/yyyy')}`
+      url: `${TASKS}?userId=${userId}&date=${format(date, 'MM/dd/yyyy')}`
     });
   };
 };
