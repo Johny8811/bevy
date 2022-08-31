@@ -10,6 +10,6 @@ const BE_URL_DEV = 'http://localhost:5001/bevy-bbf67/us-central1/tasks';
 const BE_URL_PROD = 'https://us-central1-bevy-bbf67.cloudfunctions.net/tasks';
 const BASE_URL = isDev() ? BE_URL_DEV : BE_URL_PROD;
 
-export const USER_TASKS = `${BASE_URL}/user`;
-export const NEXT_DAY_TASKS = `${BASE_URL}/nextDay`;
+export const USER_TASKS = BASE_URL;
+export const NEXT_DAY_TASKS = `${BASE_URL}/tomorrow`;
 export const ON_FLEET_EXPORT_TASKS_TO_DB = `${BASE_URL}/onFleet/export/saveToDb`;
