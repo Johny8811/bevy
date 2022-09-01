@@ -25,7 +25,7 @@ export function Dashboard() {
   const signOut = useSignOut({
     onSuccess: () => navigate('/', { replace: true })
   });
-  const { createTasks, result } = useCreateTasks();
+  const { createTasks, createTasksResult } = useCreateTasks();
   const updateUserInfo = useUpdateUserInfo();
   const onFleetExportTasks = useOnFleetExportTasks();
   const hasRole = useHasRole();
@@ -96,8 +96,8 @@ export function Dashboard() {
       </AppBar>
       <DeliveryTable selectedDay={selectedDate} />
       <BadImportsDialog
-        importedCount={result?.tasks.length}
-        failedTasks={result?.errors}
+        importedCount={createTasksResult?.tasks.length}
+        failedTasks={createTasksResult?.errors}
         onImportFixedTasks={handleOnImportFixedTasks}
       />
     </Box>

@@ -26,26 +26,26 @@ export const useCreateTasks = () => {
 
   const createTasks = async (tasks: TaskData[]) => {
     const onFleetTasks = transformTaskDataToOnFleetTasks(tasks, metadata);
-    const response =
+    const res =
       // FIXME: we have to re-type response here, because of bad onFleet typing - check onFleet types
       (await createOnFleetTasks(onFleetTasks)) as unknown as CreateBatchTasksResponse;
 
-    if (response.errors.length === 0) {
+    if (res.errors.length === 0) {
       openSnackBar({
-        text: `${response.tasks.length} tasks was successfully created.`,
+        text: `${res.tasks.length} tasks was successfully created.`,
         severity: 'success'
       });
     } else {
       openSnackBar({
-        text: `Some tasks was not imported (${response.errors.length})`,
+        text: `Some tasks was not imported (${res.errors.length})`,
         severity: 'error'
       });
-      setResult(response);
+      setResult(res);
     }
   };
 
   return {
-    result,
+    createTasksResult: result,
     createTasks
   };
 };
