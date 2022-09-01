@@ -7,6 +7,7 @@ import { useHasRole } from '../../../integrations/firebase/hooks/useHasRole';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
 import { TaskData } from '../../../types/tasks';
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
+import { mapOnFleetTasksToDeliveryTable } from '../utils/mapOnFleetTasksToDeliveryTable';
 
 export const useDeliveryTableData = (selectedDay: Date | null) => {
   const { user } = useUser();
@@ -24,34 +25,24 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
     | []
   >([]);
 
-  const transformTasks = (tasks: OnfleetTask[]) => {
-    return tasks.map((task) => ({
-      id: task.id,
-      name: task.recipients[0]?.name,
-      phoneNumber: task.recipients[0]?.phone,
-      street: task.destination.address.street,
-      houseNumber: task.destination.address.number,
-      city: task.destination.address.city,
-      country: task.destination.address.country,
-      quantity: task.quantity
-    }));
-  };
+  const handleMapAndSetTasks = (tasks: OnfleetTask[]) =>
+    setUserTasks(mapOnFleetTasksToDeliveryTable(tasks));
 
   const handleFetchTasks = async () => {
     try {
       if (hasRole('dispatcher')) {
         const tasks = await tasksTomorrowQuery();
-        setUserTasks(transformTasks(tasks));
+        handleMapAndSetTasks(tasks);
       }
 
       if (hasRole('root') && selectedDay) {
         const tasks = await tasksQuery(selectedDay);
-        setUserTasks(transformTasks(tasks));
+        handleMapAndSetTasks(tasks);
       }
 
       if (hasRole('user') && selectedDay) {
         const tasks = await tasksQuery(selectedDay, user?.uid);
-        setUserTasks(transformTasks(tasks));
+        handleMapAndSetTasks(tasks);
       }
     } catch (e) {
       // TODO: log error
