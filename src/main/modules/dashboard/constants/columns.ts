@@ -1,8 +1,8 @@
 import { GridColDef } from '@mui/x-data-grid';
 
 export const BAD_IMPORTS_COLUMNS: GridColDef[] = [
-  { field: 'name', headerName: 'Name', width: 150, editable: true },
-  { field: 'phoneNumber', headerName: 'Phone number', width: 120, editable: true },
+  { field: 'name', headerName: 'Name', width: 250, editable: true },
+  { field: 'phoneNumber', headerName: 'Phone number', width: 150, editable: true },
   {
     field: 'skipSMSNotifications',
     headerName: 'Notification',
@@ -22,8 +22,8 @@ export const BAD_IMPORTS_COLUMNS: GridColDef[] = [
 ];
 
 export const DELIVERY_COLUMNS: GridColDef[] = [
-  { field: 'name', headerName: 'Name', width: 150, editable: true },
-  { field: 'phoneNumber', headerName: 'Phone number', width: 120, editable: true },
+  { field: 'name', headerName: 'Name', width: 250, editable: true },
+  { field: 'phoneNumber', headerName: 'Phone number', width: 150, editable: true },
   { field: 'street', headerName: 'Street', width: 150, editable: true },
   { field: 'houseNumber', headerName: 'House number', width: 120, editable: true },
   { field: 'city', headerName: 'City', width: 120, editable: true },
