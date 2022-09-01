@@ -10,10 +10,13 @@ import { useNavigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 
 import { transformSheetToTaskData } from '../../utils/onFleet/transformSheeToTaskData';
+import { isDev } from '../../utils/isDev';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 import { TaskData } from '../../types/tasks';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { useUpdateUserInfo } from '../../integrations/firebase/hooks/useUpdateUserInfo';
+import { useUserRoles } from '../../integrations/firebase/hooks/useUserRoles';
+import { useUser } from '../../integrations/firebase/components/UserProvider';
 import { useHasRole } from '../../integrations/firebase/hooks/useHasRole';
 import { useOnFleetExportTasks } from './hooks/useOnFleetExportTasks';
 import { Table as DeliveryTable } from './components/DeliveryTable/Table';
@@ -29,6 +32,8 @@ export function Dashboard() {
   const updateUserInfo = useUpdateUserInfo();
   const onFleetExportTasks = useOnFleetExportTasks();
   const hasRole = useHasRole();
+  const { user } = useUser();
+  const userRoles = useUserRoles();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -46,7 +51,8 @@ export function Dashboard() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Name: -
+            Name: {user?.displayName || user?.email || '-'}{' '}
+            {isDev() && `| Roles: ${userRoles?.join(',')}`}
           </Typography>
           <Stack spacing={2} direction="row">
             {hasRole('user') && (
