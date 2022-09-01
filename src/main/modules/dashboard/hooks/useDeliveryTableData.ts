@@ -17,7 +17,7 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
   const tasksQuery = useTasksQuery();
   const tasksTomorrowQuery = useTasksTomorrowQuery();
 
-  const [userTasks, setUserTasks] = useState<
+  const [tasks, setTasks] = useState<
     | ({ id: string } & Pick<
         TaskData,
         'name' | 'phoneNumber' | 'street' | 'houseNumber' | 'city' | 'country' | 'quantity'
@@ -25,24 +25,24 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
     | []
   >([]);
 
-  const handleMapAndSetTasks = (tasks: OnfleetTask[]) =>
-    setUserTasks(mapOnFleetTasksToDeliveryTable(tasks));
+  const handleMapAndSetTasks = (onFleetTask: OnfleetTask[]) =>
+    setTasks(mapOnFleetTasksToDeliveryTable(onFleetTask));
 
-  const handleFetchTasks = async () => {
+  const fetchTasks = async () => {
     try {
       if (hasRole('dispatcher')) {
-        const tasks = await tasksTomorrowQuery();
-        handleMapAndSetTasks(tasks);
+        const data = await tasksTomorrowQuery();
+        handleMapAndSetTasks(data);
       }
 
       if (hasRole('root') && selectedDay) {
-        const tasks = await tasksQuery(selectedDay);
-        handleMapAndSetTasks(tasks);
+        const data = await tasksQuery(selectedDay);
+        handleMapAndSetTasks(data);
       }
 
       if (hasRole('user') && selectedDay) {
-        const tasks = await tasksQuery(selectedDay, user?.uid);
-        handleMapAndSetTasks(tasks);
+        const data = await tasksQuery(selectedDay, user?.uid);
+        handleMapAndSetTasks(data);
       }
     } catch (e) {
       // TODO: log error
@@ -54,8 +54,8 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
   };
 
   useEffect(() => {
-    handleFetchTasks();
+    fetchTasks();
   }, [selectedDay]);
 
-  return userTasks;
+  return tasks;
 };
