@@ -11,7 +11,7 @@ import { Table } from './Table';
 // TODO: improve development
 import { EXAMPLE_IMPORT_ERRORS } from './devTableData';
 
-export type Props = {
+type Props = {
   importedCount?: number;
   failedTasks: CreateBatchTasksErrors[] | undefined;
   onImportFixedTasks: (tasks: TaskData[]) => void;
