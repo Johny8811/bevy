@@ -28,7 +28,6 @@ export const DELIVERY_COLUMNS: GridColDef[] = [
   { field: 'houseNumber', headerName: 'House number', width: 120 },
   { field: 'city', headerName: 'City', width: 120 },
   { field: 'country', headerName: 'Country', width: 150 },
-  { field: 'completeAfter', headerName: 'Deliver after', width: 150 },
-  { field: 'completeBefore', headerName: 'Deliver before', width: 150 },
+  { field: 'estimatedCompletionTime', headerName: 'Estimated completion time', width: 200 },
   { field: 'quantity', headerName: 'Quantity', width: 100 }
 ];

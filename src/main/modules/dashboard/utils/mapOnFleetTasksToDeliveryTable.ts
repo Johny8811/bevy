@@ -11,7 +11,7 @@ export const mapOnFleetTasksToDeliveryTable = (tasks: GetTaskResult[]) =>
     houseNumber: task.destination.address.number,
     city: task.destination.address.city,
     country: task.destination.address.country,
-    completeAfter: formatToDateAndTime(task.completeAfter),
-    completeBefore: formatToDateAndTime(task.completeBefore),
+    estimatedCompletionTime:
+      task.estimatedCompletionTime && formatToDateAndTime(task.estimatedCompletionTime),
     quantity: task.quantity
   }));
