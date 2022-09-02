@@ -1,4 +1,4 @@
-import { OnfleetTask } from '@onfleet/node-onfleet/Resources/Tasks';
+import { GetTaskResult } from '@onfleet/node-onfleet/Resources/Tasks';
 import { format } from 'date-fns';
 
 import { Methods } from '../integrations/fetch/fetchApi';
@@ -9,7 +9,7 @@ import { buildUrlQueryParams } from '../utils/buildUrlQueryParams';
 export const useTasksQuery = () => {
   const fetchBackend = useFetchBackend();
 
-  return (date: Date, userId?: string): Promise<OnfleetTask[]> => {
+  return (date: Date, userId?: string): Promise<GetTaskResult[]> => {
     const queryParams = buildUrlQueryParams([
       {
         param: 'date',

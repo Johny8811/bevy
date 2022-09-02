@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { OnfleetTask } from '@onfleet/node-onfleet/Resources/Tasks';
+import { GetTaskResult } from '@onfleet/node-onfleet/Resources/Tasks';
 
 import { useTasksQuery } from '../../../queryHooks/useTasksQuery';
 import { useTasksTomorrowQuery } from '../../../queryHooks/useTasksTomorrowQuery';
@@ -25,7 +25,7 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
     | []
   >([]);
 
-  const handleMapAndSetTasks = (onFleetTask: OnfleetTask[]) =>
+  const handleMapAndSetTasks = (onFleetTask: GetTaskResult[]) =>
     setTasks(mapOnFleetTasksToDeliveryTable(onFleetTask));
 
   const fetchTasks = async () => {
