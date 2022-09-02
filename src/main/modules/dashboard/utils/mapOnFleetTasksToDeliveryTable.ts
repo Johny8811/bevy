@@ -1,5 +1,7 @@
 import { OnfleetTask } from '@onfleet/node-onfleet/Resources/Tasks';
 
+import { formatToDateAndTime } from '../../../utils/formatDates';
+
 export const mapOnFleetTasksToDeliveryTable = (tasks: OnfleetTask[]) =>
   tasks.map((task) => ({
     id: task.id,
@@ -9,5 +11,7 @@ export const mapOnFleetTasksToDeliveryTable = (tasks: OnfleetTask[]) =>
     houseNumber: task.destination.address.number,
     city: task.destination.address.city,
     country: task.destination.address.country,
+    completeAfter: formatToDateAndTime(task.completeAfter),
+    completeBefore: formatToDateAndTime(task.completeBefore),
     quantity: task.quantity
   }));

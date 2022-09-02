@@ -22,11 +22,13 @@ export const BAD_IMPORTS_COLUMNS: GridColDef[] = [
 ];
 
 export const DELIVERY_COLUMNS: GridColDef[] = [
-  { field: 'name', headerName: 'Name', width: 250, editable: true },
-  { field: 'phoneNumber', headerName: 'Phone number', width: 150, editable: true },
-  { field: 'street', headerName: 'Street', width: 150, editable: true },
-  { field: 'houseNumber', headerName: 'House number', width: 120, editable: true },
-  { field: 'city', headerName: 'City', width: 120, editable: true },
-  { field: 'country', headerName: 'Country', width: 150, editable: true },
-  { field: 'quantity', headerName: 'Quantity', width: 100, editable: true }
+  { field: 'name', headerName: 'Name', width: 250 },
+  { field: 'phoneNumber', headerName: 'Phone number', width: 150 },
+  { field: 'street', headerName: 'Street', width: 150 },
+  { field: 'houseNumber', headerName: 'House number', width: 120 },
+  { field: 'city', headerName: 'City', width: 120 },
+  { field: 'country', headerName: 'Country', width: 150 },
+  { field: 'completeAfter', headerName: 'Deliver after', width: 150 },
+  { field: 'completeBefore', headerName: 'Deliver before', width: 150 },
+  { field: 'quantity', headerName: 'Quantity', width: 100 }
 ];
