@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { GetTaskResult } from '@onfleet/node-onfleet/Resources/Tasks';
 
 import { useTasksQuery } from '../../../queryHooks/useTasksQuery';
 import { useTasksTomorrowQuery } from '../../../queryHooks/useTasksTomorrowQuery';
 import { useHasRole } from '../../../integrations/firebase/hooks/useHasRole';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
-import { TaskData } from '../../../types/tasks';
+import { TaskData, OurOnFleetTask } from '../../../types/tasks';
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
 import { mapOnFleetTasksToDeliveryTable } from '../utils/mapOnFleetTasksToDeliveryTable';
 
@@ -25,7 +24,7 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
     | []
   >([]);
 
-  const handleMapAndSetTasks = (onFleetTask: GetTaskResult[]) =>
+  const handleMapAndSetTasks = (onFleetTask: OurOnFleetTask[]) =>
     setTasks(mapOnFleetTasksToDeliveryTable(onFleetTask));
 
   const fetchTasks = async () => {

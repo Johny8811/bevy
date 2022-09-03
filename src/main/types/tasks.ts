@@ -1,4 +1,8 @@
-import { OnfleetTask, CreateTaskProps } from '@onfleet/node-onfleet/Resources/Tasks';
+import {
+  OnfleetTask,
+  CreateTaskProps,
+  UpdateTaskResult
+} from '@onfleet/node-onfleet/Resources/Tasks';
 
 export type TaskData = {
   name: string;
@@ -14,6 +18,14 @@ export type TaskData = {
   completeBefore: number | undefined;
   quantity: number | undefined;
 };
+
+// TODO: investigate onFleet types, module "@onfleet/node-onfleet" has bad type coverage of onFleet api
+export type OurOnFleetTask = {
+  slot: {
+    start: number;
+    end: number;
+  } | null;
+} & UpdateTaskResult;
 
 export enum SheetColumns {
   CUSTOMER_NAME = 'Customer_name',

@@ -1,13 +1,12 @@
-import { GetTaskResult } from '@onfleet/node-onfleet/Resources/Tasks';
-
 import { useFetchBackend } from '../integrations/fetch/hooks/useFetchBackend';
 import { Methods } from '../integrations/fetch/fetchApi';
 import { TASKS_TOMORROW } from '../integrations/fetch/endpoints';
+import { OurOnFleetTask } from '../types/tasks';
 
 export const useTasksTomorrowQuery = () => {
   const fetchBackend = useFetchBackend();
 
-  return (): Promise<GetTaskResult[]> => {
+  return (): Promise<OurOnFleetTask[]> => {
     return fetchBackend({
       method: Methods.get,
       url: `${TASKS_TOMORROW}`

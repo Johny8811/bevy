@@ -1,8 +1,7 @@
-import { GetTaskResult } from '@onfleet/node-onfleet/Resources/Tasks';
-
 import { formatToDateAndTime } from '../../../utils/formatDates';
+import { OurOnFleetTask } from '../../../types/tasks';
 
-export const mapOnFleetTasksToDeliveryTable = (tasks: GetTaskResult[]) =>
+export const mapOnFleetTasksToDeliveryTable = (tasks: OurOnFleetTask[]) =>
   tasks.map((task) => ({
     id: task.id,
     name: task.recipients[0]?.name,
