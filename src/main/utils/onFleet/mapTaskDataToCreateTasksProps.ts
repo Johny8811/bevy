@@ -2,7 +2,7 @@ import { CreateTaskProps } from '@onfleet/node-onfleet/Resources/Tasks';
 import { OnfleetMetadata } from '@onfleet/node-onfleet/metadata';
 import { TaskData } from '../../types/tasks';
 
-export const transformTaskDataToOnFleetTasks = (
+export const mapTaskDataToCreateTasksProps = (
   tasks: TaskData[],
   metadata: OnfleetMetadata[]
 ): CreateTaskProps[] => {

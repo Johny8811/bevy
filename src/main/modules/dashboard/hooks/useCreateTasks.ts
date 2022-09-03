@@ -3,7 +3,7 @@ import { OnfleetMetadata } from '@onfleet/node-onfleet/metadata';
 
 import { useOnFleetCreateTasksQuery } from '../../../queryHooks/useOnFleetCreateTasksQuery';
 import { TaskData, CreateBatchTasksResponse } from '../../../types/tasks';
-import { transformTaskDataToOnFleetTasks } from '../../../utils/onFleet/transformTaskDataToOnFleetTasks';
+import { mapTaskDataToCreateTasksProps } from '../../../utils/onFleet/mapTaskDataToCreateTasksProps';
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
 
@@ -25,7 +25,7 @@ export const useCreateTasks = () => {
   ];
 
   const createTasks = async (tasks: TaskData[]) => {
-    const onFleetTasks = transformTaskDataToOnFleetTasks(tasks, metadata);
+    const onFleetTasks = mapTaskDataToCreateTasksProps(tasks, metadata);
     const res =
       // FIXME: we have to re-type response here, because of bad onFleet typing - check onFleet types
       (await createOnFleetTasks(onFleetTasks)) as unknown as CreateBatchTasksResponse;
