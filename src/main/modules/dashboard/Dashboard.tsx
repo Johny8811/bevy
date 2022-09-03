@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 
-import { transformSheetToTaskData } from '../../utils/onFleet/transformSheeToTaskData';
+import { mapSheetToTaskData } from '../../utils/onFleet/mapSheetToTaskData';
 import { isDev } from '../../utils/isDev';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 import { TaskData } from '../../types/tasks';
@@ -39,7 +39,7 @@ export function Dashboard() {
 
   const handleChangeFileInput = async ({ file }: OnChangeParams) => {
     if (file) {
-      const tasks = await transformSheetToTaskData(file);
+      const tasks = await mapSheetToTaskData(file);
       await createTasks(tasks);
     }
   };

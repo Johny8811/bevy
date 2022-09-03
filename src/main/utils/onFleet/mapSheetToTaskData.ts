@@ -3,7 +3,7 @@ import { TaskData, RawSheetData, SheetColumns } from '../../types/tasks';
 
 import { excelDateToJSDate } from '../excelDateToJSDate';
 
-export const transformSheetToTaskData = async (tasksXlsx: File): Promise<TaskData[]> => {
+export const mapSheetToTaskData = async (tasksXlsx: File): Promise<TaskData[]> => {
   const buff = await tasksXlsx.arrayBuffer();
   const workbook = read(buff);
 
