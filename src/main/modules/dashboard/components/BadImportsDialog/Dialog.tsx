@@ -17,8 +17,10 @@ type Props = {
   onImportFixedTasks: (tasks: TaskData[]) => void;
 };
 
+const ENABLE_DEV_BAD_IMPORTS_DIALOG = false;
+
 export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: Props) {
-  const [open, setOpen] = useState(isDev());
+  const [open, setOpen] = useState(ENABLE_DEV_BAD_IMPORTS_DIALOG && isDev());
 
   useEffect(() => {
     if (failedTasks && failedTasks.length > 0) {
@@ -43,7 +45,7 @@ export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: P
 
   return (
     <div>
-      {isDev() && (
+      {ENABLE_DEV_BAD_IMPORTS_DIALOG && isDev() && (
         <Button variant="contained" onClick={handleClickOpen}>
           Open bad imports dialog
         </Button>
@@ -63,7 +65,7 @@ export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: P
             Mandatory fields:{' '}
             <i>Name, Phone number, Notifications, Street, House number, City, Country</i>
           </DialogContentText>
-          {isDev() && (
+          {ENABLE_DEV_BAD_IMPORTS_DIALOG && isDev() && (
             <Table
               failedTasks={EXAMPLE_IMPORT_ERRORS}
               onCancel={handleClose}
