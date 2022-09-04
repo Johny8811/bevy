@@ -1,4 +1,7 @@
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
+
+import { formatToDateAndTime, formatToTime } from '../../../utils/formatDates';
+import { valueOrDash } from '../../../utils/valueOrDash';
 
 export const BAD_IMPORTS_COLUMNS: GridColDef[] = [
   { field: 'name', headerName: 'Name', width: 250, editable: true },
@@ -22,12 +25,71 @@ export const BAD_IMPORTS_COLUMNS: GridColDef[] = [
 ];
 
 export const DELIVERY_COLUMNS: GridColDef[] = [
-  { field: 'name', headerName: 'Name', width: 250 },
-  { field: 'phoneNumber', headerName: 'Phone number', width: 150 },
+  {
+    field: 'name',
+    headerName: 'Name',
+    width: 250,
+    valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
+  },
+  {
+    field: 'phoneNumber',
+    headerName: 'Phone number',
+    width: 150,
+    valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
+  },
+  {
+    field: 'recipientNotes',
+    headerName: 'Customer Notes',
+    width: 250,
+    valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
+  },
   { field: 'street', headerName: 'Street', width: 150 },
-  { field: 'houseNumber', headerName: 'House number', width: 120 },
-  { field: 'city', headerName: 'City', width: 120 },
+  { field: 'city', headerName: 'City', width: 150 },
+  { field: 'postalCode', headerName: 'Postal code', width: 120 },
   { field: 'country', headerName: 'Country', width: 150 },
-  { field: 'estimatedCompletionTime', headerName: 'Estimated completion time', width: 200 },
-  { field: 'quantity', headerName: 'Quantity', width: 100 }
+  {
+    field: 'completeAfter',
+    headerName: 'Deliver after',
+    width: 150,
+    valueFormatter: ({ value }: GridValueFormatterParams<number>) => formatToDateAndTime(value)
+  },
+  {
+    field: 'completeBefore',
+    headerName: 'Deliver before',
+    width: 150,
+    valueFormatter: ({ value }: GridValueFormatterParams<number>) => formatToDateAndTime(value)
+  },
+  { field: 'quantity', headerName: 'Quantity', width: 100 },
+  /*
+  // will be implemented
+  { field: 'payment', headerName: 'payment', width: 100 },
+  { field: 'cashOnDeliver', headerName: 'Cash on deliver', width: 100 },
+  { field: 'internalOrderNo', headerName: 'Internal order no', width: 100 },
+  */
+  {
+    field: 'estimatedArrivalTime',
+    headerName: 'Estimated arrival time',
+    width: 200,
+    valueFormatter: ({ value }: GridValueFormatterParams<number | null>) =>
+      valueOrDash(value, (v) => formatToDateAndTime(v))
+  },
+  {
+    field: 'slot',
+    headerName: 'Slot',
+    width: 150,
+    // TODO: type GridValueGetterParams
+    valueGetter: ({ row }) =>
+      valueOrDash(row.slot, (slot) => `${formatToTime(slot.start)} - ${formatToTime(slot.end)}`)
+  },
+  {
+    field: 'deliveredAt',
+    headerName: 'Delivered at',
+    width: 150,
+    valueFormatter: ({ value }: GridValueFormatterParams<number | null>) =>
+      valueOrDash(value, (v) => formatToDateAndTime(v))
+  }
+  /*
+  // will be implemented
+  { field: 'order', headerName: 'Order', width: 100 }
+  */
 ];

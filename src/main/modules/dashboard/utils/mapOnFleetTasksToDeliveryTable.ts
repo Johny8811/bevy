@@ -1,4 +1,3 @@
-import { formatToDateAndTime } from '../../../utils/formatDates';
 import { OurOnFleetTask } from '../../../types/tasks';
 
 export const mapOnFleetTasksToDeliveryTable = (tasks: OurOnFleetTask[]) =>
@@ -6,11 +5,15 @@ export const mapOnFleetTasksToDeliveryTable = (tasks: OurOnFleetTask[]) =>
     id: task.id,
     name: task.recipients[0]?.name,
     phoneNumber: task.recipients[0]?.phone,
+    recipientNotes: task.recipients[0]?.notes,
     street: task.destination.address.street,
-    houseNumber: task.destination.address.number,
     city: task.destination.address.city,
+    postalCode: task.destination.address.postalCode,
     country: task.destination.address.country,
-    estimatedCompletionTime:
-      task.estimatedCompletionTime && formatToDateAndTime(task.estimatedCompletionTime),
-    quantity: task.quantity
+    completeAfter: task.completeAfter,
+    completeBefore: task.completeBefore,
+    quantity: task.quantity,
+    estimatedArrivalTime: task.estimatedArrivalTime,
+    slot: task.slot,
+    deliveredAt: task.completionDetails.time
   }));

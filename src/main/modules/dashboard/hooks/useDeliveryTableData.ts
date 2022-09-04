@@ -19,8 +19,18 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
   const [tasks, setTasks] = useState<
     | ({ id: string } & Pick<
         TaskData,
-        'name' | 'phoneNumber' | 'street' | 'houseNumber' | 'city' | 'country' | 'quantity'
-      >)[]
+        | 'name'
+        | 'phoneNumber'
+        | 'recipientNotes'
+        | 'street'
+        | 'city'
+        | 'postalCode'
+        | 'country'
+        | 'completeAfter'
+        | 'completeBefore'
+        | 'quantity'
+      > &
+        Pick<OurOnFleetTask, 'estimatedArrivalTime' | 'slot'>)[]
     | []
   >([]);
 
