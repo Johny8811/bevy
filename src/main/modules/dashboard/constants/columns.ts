@@ -2,6 +2,7 @@ import { GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
 
 import { formatToDateAndTime, formatToTime } from '../../../utils/formatDates';
 import { valueOrDash } from '../../../utils/valueOrDash';
+import { OurOnFleetTask } from '../../../types/tasks';
 
 export const BAD_IMPORTS_COLUMNS: GridColDef[] = [
   { field: 'name', headerName: 'Name', width: 250, editable: true },
@@ -29,18 +30,21 @@ export const DELIVERY_COLUMNS: GridColDef[] = [
     field: 'name',
     headerName: 'Name',
     width: 250,
+    // TODO: use OurOnFleetTask['...'] for typing
     valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
   },
   {
     field: 'phoneNumber',
     headerName: 'Phone number',
     width: 150,
+    // TODO: use OurOnFleetTask['...'] for typing
     valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
   },
   {
     field: 'recipientNotes',
     headerName: 'Customer Notes',
     width: 250,
+    // TODO: use OurOnFleetTask['...'] for typing
     valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
   },
   { field: 'street', headerName: 'Street', width: 150 },
@@ -51,13 +55,15 @@ export const DELIVERY_COLUMNS: GridColDef[] = [
     field: 'completeAfter',
     headerName: 'Deliver after',
     width: 150,
-    valueFormatter: ({ value }: GridValueFormatterParams<number>) => formatToDateAndTime(value)
+    valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['completeAfter']>) =>
+      formatToDateAndTime(value)
   },
   {
     field: 'completeBefore',
     headerName: 'Deliver before',
     width: 150,
-    valueFormatter: ({ value }: GridValueFormatterParams<number>) => formatToDateAndTime(value)
+    valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['completeBefore']>) =>
+      formatToDateAndTime(value)
   },
   { field: 'quantity', headerName: 'Quantity', width: 100 },
   /*
@@ -70,7 +76,7 @@ export const DELIVERY_COLUMNS: GridColDef[] = [
     field: 'estimatedArrivalTime',
     headerName: 'Estimated arrival time',
     width: 200,
-    valueFormatter: ({ value }: GridValueFormatterParams<number | null>) =>
+    valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['estimatedArrivalTime']>) =>
       valueOrDash(value, (v) => formatToDateAndTime(v))
   },
   {
@@ -85,7 +91,9 @@ export const DELIVERY_COLUMNS: GridColDef[] = [
     field: 'deliveredAt',
     headerName: 'Delivered at',
     width: 150,
-    valueFormatter: ({ value }: GridValueFormatterParams<number | null>) =>
+    valueFormatter: ({
+      value
+    }: GridValueFormatterParams<OurOnFleetTask['completionDetails']['time']>) =>
       valueOrDash(value, (v) => formatToDateAndTime(v))
   }
   /*
