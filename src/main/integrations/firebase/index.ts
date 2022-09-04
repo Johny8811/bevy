@@ -7,15 +7,10 @@ import { getRemoteConfig } from 'firebase/remote-config';
 
 import { isDev } from '../../utils/isDev';
 
-import { FIREBASE_CONFIG_DEV } from './constants';
+import { FIREBASE_CONFIG_DEV, FIREBASE_CONFIG_PROD } from './constants';
 
 // Initialize Firebase
-const app = initializeApp(
-  isDev()
-    ? // TODO: add production config
-      FIREBASE_CONFIG_DEV
-    : FIREBASE_CONFIG_DEV
-);
+const app = initializeApp(isDev() ? FIREBASE_CONFIG_DEV : FIREBASE_CONFIG_PROD);
 export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const remoteConfig = getRemoteConfig(app);
