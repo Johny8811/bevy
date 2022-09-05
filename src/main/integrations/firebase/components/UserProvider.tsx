@@ -3,6 +3,7 @@ import { User, onAuthStateChanged } from 'firebase/auth';
 
 import { useLoading } from '../../fetch/components/LoadingProvider';
 import { auth } from '..';
+import { ChangePasswordDialog } from './ChangePasswordDialog';
 
 type Props = {
   children: ReactNode;
@@ -10,14 +11,20 @@ type Props = {
 
 type UserProviderType = {
   user: User | null;
+  openChangePasswordDialog: () => void;
 };
 
 export const UserContext = createContext<UserProviderType | null>(null);
 
 export function UserProvider({ children }: Props) {
   const { startLoading, stopLoading } = useLoading();
+
   const [user, setUser] = useState<User | null>(null);
   const [userLoaded, setUserLoaded] = useState(false);
+  const [changePasswordOpened, setChangePasswordOpened] = useState(true);
+
+  const handleCloseChangePasswordDialog = () => setChangePasswordOpened(false);
+  const handleOpenChangePasswordDialog = () => setChangePasswordOpened(true);
 
   useEffect(() => {
     startLoading?.();
@@ -29,11 +36,18 @@ export function UserProvider({ children }: Props) {
     });
   }, []);
 
-  const providerValueMemoized = useMemo(() => ({ user }), [user]);
+  const providerValueMemoized = useMemo(
+    () => ({ user, openChangePasswordDialog: handleOpenChangePasswordDialog }),
+    [user]
+  );
 
   return (
     <UserContext.Provider value={providerValueMemoized}>
       {userLoaded && children}
+      <ChangePasswordDialog
+        changePasswordOpened={changePasswordOpened}
+        onCloseDialog={handleCloseChangePasswordDialog}
+      />
     </UserContext.Provider>
   );
 }
