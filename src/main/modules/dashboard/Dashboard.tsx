@@ -14,7 +14,6 @@ import { isDev } from '../../utils/isDev';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
 import { TaskData } from '../../types/tasks';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
-import { useUpdateUserInfo } from '../../integrations/firebase/hooks/useUpdateUserInfo';
 import { useUserRoles } from '../../integrations/firebase/hooks/useUserRoles';
 import { useUser } from '../../integrations/firebase/components/UserProvider';
 import { useHasRole } from '../../integrations/firebase/hooks/useHasRole';
@@ -29,10 +28,9 @@ export function Dashboard() {
     onSuccess: () => navigate('/', { replace: true })
   });
   const { createTasks, createTasksResult } = useCreateTasks();
-  const updateUserInfo = useUpdateUserInfo();
   const onFleetExportTasks = useOnFleetExportTasks();
   const hasRole = useHasRole();
-  const { user } = useUser();
+  const { user, openChangePasswordDialog } = useUser();
   const userRoles = useUserRoles();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -56,15 +54,7 @@ export function Dashboard() {
           </Typography>
           <Stack spacing={2} direction="row">
             {hasRole('user') && (
-              <Button
-                variant="contained"
-                onClick={() =>
-                  // TODO: open dialog with form to update user data and show existing data if user has some
-                  updateUserInfo({
-                    displayName: 'Example Name',
-                    photoURL: 'https://example.com/jane-q-user/profile.jpg'
-                  })
-                }>
+              <Button variant="contained" onClick={openChangePasswordDialog}>
                 Change password
               </Button>
             )}
