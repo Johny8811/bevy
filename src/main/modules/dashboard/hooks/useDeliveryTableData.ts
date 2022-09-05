@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { useTasksQuery } from '../../../queryHooks/useTasksQuery';
+import { useWorkersQuery } from '../../../queryHooks/useWorkersQuery';
 import { useTasksTomorrowQuery } from '../../../queryHooks/useTasksTomorrowQuery';
 import { useHasRole } from '../../../integrations/firebase/hooks/useHasRole';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
 import { TaskData, OurOnFleetTask } from '../../../types/tasks';
+import { OnFleetWorkers } from '../../../types/workers';
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
 import { mapOnFleetTasksToDeliveryTable } from '../utils/mapOnFleetTasksToDeliveryTable';
 
@@ -15,6 +17,7 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
 
   const tasksQuery = useTasksQuery();
   const tasksTomorrowQuery = useTasksTomorrowQuery();
+  const workersQuery = useWorkersQuery();
 
   const [tasks, setTasks] = useState<
     | ({ id: string } & Pick<
@@ -34,24 +37,26 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
     | []
   >([]);
 
-  const handleMapAndSetTasks = (onFleetTask: OurOnFleetTask[]) =>
-    setTasks(mapOnFleetTasksToDeliveryTable(onFleetTask));
+  const handleMapAndSetTasks = (onFleetTask: OurOnFleetTask[], workers: OnFleetWorkers) =>
+    setTasks(mapOnFleetTasksToDeliveryTable(onFleetTask, workers));
 
   const fetchTasks = async () => {
     try {
+      const workers = await workersQuery();
+
       if (hasRole('dispatcher')) {
         const data = await tasksTomorrowQuery();
-        handleMapAndSetTasks(data);
+        handleMapAndSetTasks(data, workers);
       }
 
       if (hasRole('root') && selectedDay) {
         const data = await tasksQuery(selectedDay);
-        handleMapAndSetTasks(data);
+        handleMapAndSetTasks(data, workers);
       }
 
       if (hasRole('user') && selectedDay) {
         const data = await tasksQuery(selectedDay, user?.uid);
-        handleMapAndSetTasks(data);
+        handleMapAndSetTasks(data, workers);
       }
     } catch (e) {
       // TODO: log error
