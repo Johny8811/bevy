@@ -30,7 +30,7 @@ export function RemoteConfigProvider({ children }: Props) {
     fetchAndActivate(remoteConfig)
       .then(() => {
         // TODO: log: fetched
-        const userRolesValue = getValue(remoteConfig, 'userRoles');
+        const userRolesValue = getValue(remoteConfig, 'usersRoles');
         const parsedValueString = JSON.parse(userRolesValue.asString());
         setUsersRoles(parsedValueString);
         stopLoading?.();
