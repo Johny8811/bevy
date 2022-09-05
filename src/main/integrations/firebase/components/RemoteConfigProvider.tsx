@@ -1,5 +1,6 @@
 import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 import { fetchAndActivate, getValue } from 'firebase/remote-config';
+import { User } from 'firebase/auth';
 
 import { useLoading } from '../../fetch/components/LoadingProvider';
 import { ROLES } from '../constants';
@@ -9,19 +10,19 @@ type Props = {
   children: ReactNode;
 };
 
-type UserRoles = {
-  [key: string]: ROLES[];
+type UsersRoles = {
+  [key: User['uid']]: ROLES[];
 };
 
 type RemoteConfigProviderType = {
-  userRoles: UserRoles | null;
+  usersRoles: UsersRoles | null;
 };
 
 export const RemoteConfigContext = createContext<RemoteConfigProviderType | null>(null);
 
 export function RemoteConfigProvider({ children }: Props) {
   const { startLoading, stopLoading } = useLoading();
-  const [userRoles, setUserRoles] = useState<UserRoles | null>(null);
+  const [usersRoles, setUsersRoles] = useState<UsersRoles | null>(null);
 
   useEffect(() => {
     startLoading?.();
@@ -31,20 +32,21 @@ export function RemoteConfigProvider({ children }: Props) {
         // TODO: log: fetched
         const userRolesValue = getValue(remoteConfig, 'userRoles');
         const parsedValueString = JSON.parse(userRolesValue.asString());
-        setUserRoles(parsedValueString);
+        setUsersRoles(parsedValueString);
         stopLoading?.();
       })
       .catch(() => {
+        // TODO: log error
         stopLoading?.();
-        // TODO: log error while loading remote config
+        setUsersRoles({});
       });
   }, []);
 
-  const providerValueMemoized = useMemo(() => ({ userRoles }), [userRoles]);
+  const providerValueMemoized = useMemo(() => ({ usersRoles }), [usersRoles]);
 
   return (
     <RemoteConfigContext.Provider value={providerValueMemoized}>
-      {userRoles && children}
+      {usersRoles && children}
     </RemoteConfigContext.Provider>
   );
 }
