@@ -4,6 +4,7 @@ import { isDev } from '../../utils/isDev';
 const ON_FLEET_URL = 'https://onfleet.com/api/v2';
 
 export const ON_FLEET_TASKS_BATCH_URL = `${ON_FLEET_URL}/tasks/batch`;
+export const ON_FLEET_WORKERS = `${ON_FLEET_URL}/workers`;
 
 // Our BE
 const BE_URL_DEV = 'http://localhost:5001/bevy-bbf67/us-central1/tasks';
