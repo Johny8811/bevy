@@ -3,6 +3,7 @@ import { GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
 import { formatToDateAndTime, formatToTime } from '../../../utils/formatDates';
 import { valueOrDash } from '../../../utils/valueOrDash';
 import { OurOnFleetTask } from '../../../types/tasks';
+import { OnFleetWorker } from '../../../types/workers';
 
 export const BAD_IMPORTS_COLUMNS: GridColDef[] = [
   { field: 'name', headerName: 'Name', width: 250, editable: true },
@@ -51,6 +52,20 @@ export const DELIVERY_COLUMNS: GridColDef[] = [
   { field: 'city', headerName: 'City', width: 150 },
   { field: 'postalCode', headerName: 'Postal code', width: 120 },
   { field: 'country', headerName: 'Country', width: 150 },
+  {
+    field: 'workerName',
+    headerName: 'Worker name',
+    width: 150,
+    valueFormatter: ({ value }: GridValueFormatterParams<OnFleetWorker['name']>) =>
+      valueOrDash(value)
+  },
+  {
+    field: 'workerPhone',
+    headerName: 'Worker phone',
+    width: 150,
+    valueFormatter: ({ value }: GridValueFormatterParams<OnFleetWorker['phone']>) =>
+      valueOrDash(value)
+  },
   {
     field: 'completeAfter',
     headerName: 'Deliver after',
