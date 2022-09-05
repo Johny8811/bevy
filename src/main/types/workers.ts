@@ -1,3 +1,5 @@
 import { OnfleetWorker } from '@onfleet/node-onfleet/Resources/Workers';
 
-export type OnFleetWorkers = Pick<OnfleetWorker, 'id' | 'name' | 'phone'>;
+export type OnFleetWorker = Pick<OnfleetWorker, 'id' | 'name' | 'phone'>;
+
+export type OnFleetWorkers = OnFleetWorker[];
