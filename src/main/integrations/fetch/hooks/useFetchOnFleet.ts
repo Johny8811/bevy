@@ -12,7 +12,7 @@ export const useFetchOnFleet = () => {
       ...params,
       headers: {
         ...params.headers,
-        Authorization: 'Basic YTNkMmFkNThjNmE2MmFmMWNkNjRmNjdkZjZjZTAzYzc6'
+        Authorization: 'Basic OWUxMTE4Mjg0N2M1NTgzOWFmNTUwMGIwOTg4OWI5ZWY='
       }
     });
 
