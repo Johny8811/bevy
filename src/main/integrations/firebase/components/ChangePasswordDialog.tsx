@@ -7,18 +7,22 @@ import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 
+import { ChangePasswordState } from './UserProvider';
+
 type Props = {
-  changePasswordOpened: boolean;
+  changePasswordState: ChangePasswordState | null;
   onCloseDialog: () => void;
 };
 
-export function ChangePasswordDialog({ changePasswordOpened, onCloseDialog }: Props) {
+export function ChangePasswordDialog({ changePasswordState, onCloseDialog }: Props) {
   return (
-    <Dialog open={changePasswordOpened} onClose={onCloseDialog}>
+    <Dialog open={!!changePasswordState} onClose={onCloseDialog}>
       <DialogTitle>Change password</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          You need to update your password because this is the first time you are singing in.
+          {changePasswordState?.firstTime
+            ? 'You need to update your password because this is the first time you are singing in.'
+            : ''}
         </DialogContentText>
         <TextField
           autoFocus

@@ -5,6 +5,10 @@ import { useLoading } from '../../fetch/components/LoadingProvider';
 import { auth } from '..';
 import { ChangePasswordDialog } from './ChangePasswordDialog';
 
+export type ChangePasswordState = {
+  firstTime: boolean;
+};
+
 type Props = {
   children: ReactNode;
 };
@@ -21,10 +25,10 @@ export function UserProvider({ children }: Props) {
 
   const [user, setUser] = useState<User | null>(null);
   const [userLoaded, setUserLoaded] = useState(false);
-  const [changePasswordOpened, setChangePasswordOpened] = useState(true);
+  const [changePasswordState, setChangePasswordState] = useState<ChangePasswordState | null>(null);
 
-  const handleCloseChangePasswordDialog = () => setChangePasswordOpened(false);
-  const handleOpenChangePasswordDialog = () => setChangePasswordOpened(true);
+  const handleCloseChangePasswordDialog = () => setChangePasswordState(null);
+  const handleOpenChangePasswordDialog = () => setChangePasswordState({ firstTime: false });
 
   useEffect(() => {
     startLoading?.();
@@ -37,7 +41,10 @@ export function UserProvider({ children }: Props) {
   }, []);
 
   const providerValueMemoized = useMemo(
-    () => ({ user, openChangePasswordDialog: handleOpenChangePasswordDialog }),
+    () => ({
+      user,
+      openChangePasswordDialog: handleOpenChangePasswordDialog
+    }),
     [user]
   );
 
@@ -45,7 +52,7 @@ export function UserProvider({ children }: Props) {
     <UserContext.Provider value={providerValueMemoized}>
       {userLoaded && children}
       <ChangePasswordDialog
-        changePasswordOpened={changePasswordOpened}
+        changePasswordState={changePasswordState}
         onCloseDialog={handleCloseChangePasswordDialog}
       />
     </UserContext.Provider>
