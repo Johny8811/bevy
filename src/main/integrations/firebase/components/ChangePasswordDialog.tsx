@@ -16,7 +16,7 @@ type Props = {
 
 export function ChangePasswordDialog({ changePasswordState, onCloseDialog }: Props) {
   return (
-    <Dialog open={!!changePasswordState} onClose={onCloseDialog}>
+    <Dialog open={!!changePasswordState} onClose={onCloseDialog} fullWidth>
       <DialogTitle>Change password</DialogTitle>
       <DialogContent>
         <DialogContentText>

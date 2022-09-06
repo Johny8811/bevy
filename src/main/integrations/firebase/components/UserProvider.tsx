@@ -1,5 +1,6 @@
 import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
+import { isEqual } from 'date-fns';
 
 import { useLoading } from '../../fetch/components/LoadingProvider';
 import { auth } from '..';
@@ -28,6 +29,7 @@ export function UserProvider({ children }: Props) {
   const [changePasswordState, setChangePasswordState] = useState<ChangePasswordState | null>(null);
 
   const handleCloseChangePasswordDialog = () => setChangePasswordState(null);
+  const handleOpenChangePasswordDialogFirstTime = () => setChangePasswordState({ firstTime: true });
   const handleOpenChangePasswordDialog = () => setChangePasswordState({ firstTime: false });
 
   useEffect(() => {
@@ -37,6 +39,19 @@ export function UserProvider({ children }: Props) {
       setUser(signedUser || null);
       setUserLoaded(true);
       stopLoading?.();
+
+      // FIXME: we access prop that is not accessible by type,
+      //  in future we need to improve the flag to know if user has already updated the password
+      if (
+        isEqual(
+          // @ts-ignore
+          Number(signedUser?.reloadUserInfo.createdAt),
+          // @ts-ignore
+          signedUser?.reloadUserInfo.passwordUpdatedAt
+        )
+      ) {
+        handleOpenChangePasswordDialogFirstTime();
+      }
     });
   }, []);
 
