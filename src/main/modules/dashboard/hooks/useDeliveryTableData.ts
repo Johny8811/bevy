@@ -19,6 +19,7 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
   const tasksTomorrowQuery = useTasksTomorrowQuery();
   const workersQuery = useWorkersQuery();
 
+  const [workers, setWorkers] = useState<OnFleetWorkers | null>();
   const [tasks, setTasks] = useState<
     | ({ id: string } & Pick<
         TaskData,
@@ -37,39 +38,50 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
     | []
   >([]);
 
-  const handleMapAndSetTasks = (onFleetTask: OurOnFleetTask[], workers: OnFleetWorkers) =>
-    setTasks(mapOnFleetTasksToDeliveryTable(onFleetTask, workers));
-
-  const fetchTasks = async () => {
-    try {
-      const workers = await workersQuery();
-
-      if (hasRole('dispatcher')) {
-        const data = await tasksTomorrowQuery();
-        handleMapAndSetTasks(data, workers);
-      }
-
-      if (hasRole('root') && selectedDay) {
-        const data = await tasksQuery(selectedDay);
-        handleMapAndSetTasks(data, workers);
-      }
-
-      if (hasRole('user') && selectedDay) {
-        const data = await tasksQuery(selectedDay, user?.uid);
-        handleMapAndSetTasks(data, workers);
-      }
-    } catch (e) {
-      // TODO: log error
-      openSnackBar({
-        text: `Something went wrong while getting data`,
-        severity: 'error'
-      });
+  // TODO: uuuufff... remove and optimise this shit! one route with different params can handle all cases
+  const fetchTasks = async (): Promise<OurOnFleetTask[]> => {
+    if (hasRole('dispatcher')) {
+      return tasksTomorrowQuery();
     }
+
+    if (hasRole('root') && selectedDay) {
+      return tasksQuery(selectedDay);
+    }
+
+    if (hasRole('user') && selectedDay) {
+      return tasksQuery(selectedDay, user?.uid);
+    }
+
+    return new Promise((resolve) => {
+      resolve([]);
+    });
   };
 
   useEffect(() => {
-    fetchTasks();
-  }, [selectedDay]);
+    if (workers) {
+      fetchTasks()
+        .then((onFleetTasks) => setTasks(mapOnFleetTasksToDeliveryTable(onFleetTasks, workers)))
+        .catch(() => {
+          // TODO: log error
+          openSnackBar({
+            text: `Something went wrong while getting data`,
+            severity: 'error'
+          });
+        });
+    }
+  }, [selectedDay, workers]);
+
+  useEffect(() => {
+    workersQuery()
+      .then((data) => setWorkers(data))
+      .catch(() => {
+        // TODO: log error
+        openSnackBar({
+          text: `Something went wrong while getting data`,
+          severity: 'error'
+        });
+      });
+  }, []);
 
   return tasks;
 };
