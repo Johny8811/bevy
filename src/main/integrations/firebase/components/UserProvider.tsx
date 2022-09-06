@@ -4,7 +4,7 @@ import { isEqual } from 'date-fns';
 
 import { useLoading } from '../../fetch/components/LoadingProvider';
 import { auth } from '..';
-import { ChangePasswordDialog } from './ChangePasswordDialog';
+import { Dialog as ChangePasswordDialog } from './changePassword/Dialog';
 
 export type ChangePasswordState = {
   firstTime: boolean;

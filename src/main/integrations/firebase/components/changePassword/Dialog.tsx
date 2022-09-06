@@ -1,22 +1,22 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
+import MuiDialog from '@mui/material/Dialog';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 
-import { ChangePasswordState } from './UserProvider';
+import { ChangePasswordState } from '../UserProvider';
 
 type Props = {
   changePasswordState: ChangePasswordState | null;
   onCloseDialog: () => void;
 };
 
-export function ChangePasswordDialog({ changePasswordState, onCloseDialog }: Props) {
+export function Dialog({ changePasswordState, onCloseDialog }: Props) {
   return (
-    <Dialog open={!!changePasswordState} onClose={onCloseDialog} fullWidth>
+    <MuiDialog open={!!changePasswordState} onClose={onCloseDialog} fullWidth>
       <DialogTitle>Change password</DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -38,6 +38,6 @@ export function ChangePasswordDialog({ changePasswordState, onCloseDialog }: Pro
         <Button onClick={onCloseDialog}>Cancel</Button>
         <Button onClick={() => {}}>Change password</Button>
       </DialogActions>
-    </Dialog>
+    </MuiDialog>
   );
 }
