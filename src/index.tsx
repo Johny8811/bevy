@@ -14,6 +14,7 @@ import Routing from './main/routing/Routing';
 import { UserProvider } from './main/integrations/firebase/components/UserProvider';
 import { RemoteConfigProvider } from './main/integrations/firebase/components/RemoteConfigProvider';
 import reportWebVitals from './reportWebVitals';
+import { DialogProvider } from './main/components/dialogProvider/DialogProvider';
 
 const theme = createTheme({
   palette: {
@@ -38,7 +39,9 @@ root.render(
           <LoadingProvider>
             <RemoteConfigProvider>
               <UserProvider>
-                <Routing />
+                <DialogProvider>
+                  <Routing />
+                </DialogProvider>
               </UserProvider>
             </RemoteConfigProvider>
           </LoadingProvider>

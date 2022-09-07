@@ -11,7 +11,7 @@ type DialogProviderType = {};
 
 export const DialogContext = createContext<DialogProviderType | null>(null);
 
-export function UserProvider({ children }: Props) {
+export function DialogProvider({ children }: Props) {
   const [dialogsState, setDialogsState] = useState<DialogsState>([]);
 
   const handleOpenDialog = (dialog: DialogState) => setDialogsState((s) => [...s, dialog]);
