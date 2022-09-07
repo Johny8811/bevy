@@ -7,18 +7,20 @@ type Props = {
   children: ReactNode;
 };
 
-type DialogProviderType = {};
+type DialogProviderType = {
+  openDialog: (state: DialogState) => void;
+};
 
 export const DialogContext = createContext<DialogProviderType | null>(null);
 
 export function DialogProvider({ children }: Props) {
   const [dialogsState, setDialogsState] = useState<DialogsState>([]);
 
-  const handleOpenDialog = (dialog: DialogState) => setDialogsState((s) => [...s, dialog]);
+  const handleOpenDialog = (state: DialogState) => setDialogsState((s) => [...s, state]);
   const handleCloseDialog = (name: DialogsNames) =>
     setDialogsState((s) => s.filter((v) => v.name !== name));
 
-  const providerValueMemoized = useMemo(() => ({}), []);
+  const providerValueMemoized = useMemo(() => ({ openDialog: handleOpenDialog }), []);
 
   const updateUserInfoData = useMemo(
     () => dialogsState.find((s) => s.name === DialogsNames.UpdateUserInfo),
@@ -37,7 +39,7 @@ export const useDialog = () => {
   const dialogContext = useContext(DialogContext);
 
   if (!dialogContext) {
-    throw new Error('calling useUser out of DialogContext');
+    throw new Error('calling useDialog out of DialogContext');
   }
 
   return dialogContext;
