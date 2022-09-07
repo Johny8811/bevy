@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import MuiDialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -8,16 +8,20 @@ import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 
+import { DialogsNames } from './types';
+
 type Props = {
   open: boolean;
+  onCloseDialog: (name: DialogsNames) => void;
 };
 
-export function UpdateUserInfoDialog({ open }: Props) {
-  const onCloseDialog = () => {};
+export function UpdateUserInfoDialog({ open, onCloseDialog }: Props) {
   const handleSubmit = () => {};
 
+  const handleCloseDialog = useCallback(() => onCloseDialog(DialogsNames.UpdateUserInfo), []);
+
   return (
-    <MuiDialog open={open} onClose={onCloseDialog} fullWidth>
+    <MuiDialog open={open} onClose={handleCloseDialog} fullWidth>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <DialogTitle>Change password</DialogTitle>
         <DialogContent>
@@ -40,7 +44,7 @@ export function UpdateUserInfoDialog({ open }: Props) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={onCloseDialog}>Cancel</Button>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
           <Button variant="contained" type="submit">
             Save
           </Button>

@@ -28,7 +28,7 @@ export function DialogProvider({ children }: Props) {
   return (
     <DialogContext.Provider value={providerValueMemoized}>
       {children}
-      <UpdateUserInfoDialog open={!!updateUserInfoData} />
+      <UpdateUserInfoDialog open={!!updateUserInfoData} onCloseDialog={handleCloseDialog} />
     </DialogContext.Provider>
   );
 }
