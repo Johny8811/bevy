@@ -15,14 +15,33 @@ type Props = {
   onCloseDialog: () => void;
 };
 
-export function Dialog({ changePasswordState, onCloseDialog }: Props) {
-  const [newPasswordError /* , setNewPasswordError */] = useState(false);
-  const [newPasswordAgainError /* , setNewPasswordAgainError */] = useState(false);
+const MIN_PASSWORD_LENGTH = 8;
 
+export function Dialog({ changePasswordState, onCloseDialog }: Props) {
+  const [passwordTooShort, setPasswordTooShort] = useState(false);
+  const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    const newPassword = data.get('newPassword') as string;
+    const confirmPassword = data.get('confirmPassword') as string;
+
+    if (newPassword.length < MIN_PASSWORD_LENGTH) {
+      setPasswordTooShort(true);
+      return;
+    }
+    setPasswordTooShort(false);
+
+    if (newPassword !== confirmPassword) {
+      setPasswordsDontMatch(true);
+      return;
+    }
+    setPasswordsDontMatch(false);
+
+    // TODO: update password
   };
 
   return (
@@ -44,19 +63,25 @@ export function Dialog({ changePasswordState, onCloseDialog }: Props) {
             type={showPassword ? 'text' : 'password'}
             id="newPassword"
             autoComplete="current-password"
-            error={newPasswordError}
+            error={passwordTooShort}
+            helperText={passwordTooShort && 'Please enter at least 8 characters'}
+            onChange={(event) => {
+              if (event.target.value.length > MIN_PASSWORD_LENGTH) {
+                setPasswordTooShort(false);
+              }
+            }}
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="newPasswordAgain"
-            label="New Password Again"
+            name="confirmPassword"
+            label="Confirm Password"
             type={showPassword ? 'text' : 'password'}
-            id="newPasswordAgain"
+            id="confirmPassword"
             autoComplete="current-password"
-            error={newPasswordAgainError}
-            // helperText={'ble' || undefined}
+            error={passwordsDontMatch}
+            helperText={passwordsDontMatch && "Password don't match"}
           />
         </DialogContent>
         <DialogActions>
