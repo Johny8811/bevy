@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import MuiDialog from '@mui/material/Dialog';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -19,9 +19,9 @@ type Props = {
 const MIN_PASSWORD_LENGTH = 8;
 
 export function Dialog({ changePasswordState, onCloseDialog }: Props) {
+  const [showPassword, setShowPassword] = useState(false);
   const [passwordTooShort, setPasswordTooShort] = useState(false);
   const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const updateUserPassword = useUpdateUserPassword();
 
@@ -48,6 +48,8 @@ export function Dialog({ changePasswordState, onCloseDialog }: Props) {
 
     onCloseDialog();
   };
+
+  useEffect(() => setShowPassword(false), [changePasswordState]);
 
   return (
     <MuiDialog open={!!changePasswordState} onClose={onCloseDialog} fullWidth>
