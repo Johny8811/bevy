@@ -9,6 +9,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 
 import { DialogsNames } from './types';
+import { useSnackBar } from '../snackBar/SnackbarProvider';
 
 type Props = {
   open: boolean;
@@ -16,9 +17,27 @@ type Props = {
 };
 
 export function UpdateUserInfoDialog({ open, onCloseDialog }: Props) {
-  const handleSubmit = () => {};
+  const { openSnackBar } = useSnackBar();
 
   const handleCloseDialog = useCallback(() => onCloseDialog(DialogsNames.UpdateUserInfo), []);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    const displayName = data.get('displayName') as string;
+    const photoURL = data.get('photoURL') as string;
+
+    if (displayName || photoURL) {
+      // todo: save values
+      handleCloseDialog();
+    } else {
+      openSnackBar({
+        severity: 'warning',
+        text: 'There is nothing to save'
+      });
+    }
+  };
 
   return (
     <MuiDialog open={open} onClose={handleCloseDialog} fullWidth>
