@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import MuiDialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -18,6 +18,7 @@ type Props = {
 
 export function UpdateUserInfoDialog({ open, onCloseDialog }: Props) {
   const { openSnackBar } = useSnackBar();
+  const [uidError, setUidError] = useState(false);
 
   const handleCloseDialog = useCallback(() => onCloseDialog(DialogsNames.UpdateUserInfo), []);
 
@@ -25,8 +26,14 @@ export function UpdateUserInfoDialog({ open, onCloseDialog }: Props) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
+    const uid = data.get('uid') as string;
     const displayName = data.get('displayName') as string;
     const photoURL = data.get('photoURL') as string;
+
+    if (!uid) {
+      setUidError(true);
+      return;
+    }
 
     if (displayName || photoURL) {
       // todo: save values
@@ -45,6 +52,17 @@ export function UpdateUserInfoDialog({ open, onCloseDialog }: Props) {
         <DialogTitle>Change password</DialogTitle>
         <DialogContent>
           <DialogContentText>Update user info</DialogContentText>
+          <TextField
+            margin="normal"
+            fullWidth
+            name="uid"
+            label="User ID"
+            type="text"
+            id="uid"
+            error={uidError}
+            helperText={uidError && 'User ID is required'}
+            onChange={() => setUidError((v) => v && !v)}
+          />
           <TextField
             margin="normal"
             fullWidth
