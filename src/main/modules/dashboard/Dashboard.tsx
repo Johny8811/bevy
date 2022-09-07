@@ -18,8 +18,8 @@ import { useUserRoles } from '../../integrations/firebase/hooks/useUserRoles';
 import { useUser } from '../../integrations/firebase/components/UserProvider';
 import { useHasRole } from '../../integrations/firebase/hooks/useHasRole';
 import { useOnFleetExportTasks } from './hooks/useOnFleetExportTasks';
-import { Table as DeliveryTable } from './components/DeliveryTable/Table';
-import { Dialog as BadImportsDialog } from './components/BadImportsDialog/Dialog';
+import { Table as DeliveryTable } from './components/deliveryTable/Table';
+import { Dialog as BadImportsDialog } from './components/badImportsDialog/Dialog';
 import { useCreateTasks } from './hooks/useCreateTasks';
 
 export function Dashboard() {
