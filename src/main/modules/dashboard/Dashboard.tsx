@@ -16,7 +16,9 @@ import { TaskData } from '../../types/tasks';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { useUserRoles } from '../../integrations/firebase/hooks/useUserRoles';
 import { useUser } from '../../integrations/firebase/components/UserProvider';
+import { useDialog } from '../../components/dialogProvider/DialogProvider';
 import { useHasRole } from '../../integrations/firebase/hooks/useHasRole';
+import { DialogsNames } from '../../components/dialogProvider/types';
 import { useOnFleetExportTasks } from './hooks/useOnFleetExportTasks';
 import { Table as DeliveryTable } from './components/deliveryTable/Table';
 import { Dialog as BadImportsDialog } from './components/badImportsDialog/Dialog';
@@ -32,6 +34,7 @@ export function Dashboard() {
   const hasRole = useHasRole();
   const { user, openChangePasswordDialog } = useUser();
   const userRoles = useUserRoles();
+  const { openDialog } = useDialog();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -53,17 +56,24 @@ export function Dashboard() {
             {isDev() && `| Roles: ${userRoles?.join(',')}`}
           </Typography>
           <Stack spacing={2} direction="row">
+            {hasRole('root') && (
+              <Button
+                variant="contained"
+                onClick={() => openDialog({ name: DialogsNames.UpdateUserInfo })}>
+                Update user info
+              </Button>
+            )}
             {hasRole('user') && (
               <Button variant="contained" onClick={openChangePasswordDialog}>
                 Change password
               </Button>
             )}
-            <FileInput onChange={handleChangeFileInput}>Import tasks</FileInput>
             {(hasRole('dispatcher') || hasRole('root')) && (
               <Button variant="contained" onClick={onFleetExportTasks}>
                 OnFleet - export tasks
               </Button>
             )}
+            <FileInput onChange={handleChangeFileInput}>Import tasks</FileInput>
             {(hasRole('user') || hasRole('root')) && (
               <DatePicker
                 label="Select date"
