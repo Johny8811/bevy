@@ -8,12 +8,16 @@ import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 
-export function UpdateUserInfoDialog() {
+type Props = {
+  open: boolean;
+};
+
+export function UpdateUserInfoDialog({ open }: Props) {
   const onCloseDialog = () => {};
   const handleSubmit = () => {};
 
   return (
-    <MuiDialog open={false} onClose={onCloseDialog} fullWidth>
+    <MuiDialog open={open} onClose={onCloseDialog} fullWidth>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <DialogTitle>Change password</DialogTitle>
         <DialogContent>
