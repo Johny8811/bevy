@@ -6,8 +6,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Box from '@mui/material/Box';
-
 import TextField from '@mui/material/TextField';
+
+import { useUpdateUserPassword } from '../../hooks/useUpdateUserPassword';
 import { ChangePasswordState } from '../UserProvider';
 
 type Props = {
@@ -22,7 +23,9 @@ export function Dialog({ changePasswordState, onCloseDialog }: Props) {
   const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const updateUserPassword = useUpdateUserPassword();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -41,7 +44,9 @@ export function Dialog({ changePasswordState, onCloseDialog }: Props) {
     }
     setPasswordsDontMatch(false);
 
-    // TODO: update password
+    await updateUserPassword(newPassword);
+
+    onCloseDialog();
   };
 
   return (
