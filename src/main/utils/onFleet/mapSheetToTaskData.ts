@@ -16,7 +16,7 @@ export const mapSheetToTaskData = async (tasksXlsx: File): Promise<TaskData[]> =
     const name = `${data[SheetColumns.CUSTOMER_NAME]} ${quantity}ks`;
     const phoneNumber = data[SheetColumns.TEL_NUMBER]?.toString() || '';
     const recipientNotes = data[SheetColumns.CUSTOMER_NOTE];
-    const skipSMSNotifications = data[SheetColumns.NOTIFICATION];
+    const skipSMSNotifications = !data[SheetColumns.NOTIFICATION];
 
     // Destination
     const houseNumber = data[SheetColumns.HOUSE_NUMBER]?.toString() || '';
