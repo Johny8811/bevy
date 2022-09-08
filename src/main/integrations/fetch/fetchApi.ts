@@ -1,6 +1,7 @@
 export enum Methods {
   get = 'GET',
-  post = 'POST'
+  post = 'POST',
+  put = 'PUT'
 }
 
 export type Params = {
@@ -13,6 +14,8 @@ export type Params = {
 
 // TODO: improve error statuses. Maybe react query handle?
 export const fetchApi = async ({ url, method = Methods.post, headers, body }: Params) => {
+  const bodyStringified = JSON.stringify(body);
+
   switch (method) {
     case Methods.get: {
       const response = await fetch(url, { method: Methods.get, headers });
@@ -23,7 +26,15 @@ export const fetchApi = async ({ url, method = Methods.post, headers, body }: Pa
       return response.json();
     }
     case Methods.post: {
-      const response = await fetch(url, { method: Methods.post, headers, body });
+      const response = await fetch(url, { method: Methods.post, headers, body: bodyStringified });
+      if (!response.ok) {
+        const jsonResponse = await response.json();
+        throw new Error(jsonResponse.message);
+      }
+      return response.json();
+    }
+    case Methods.put: {
+      const response = await fetch(url, { method: Methods.put, headers, body: bodyStringified });
       if (!response.ok) {
         const jsonResponse = await response.json();
         throw new Error(jsonResponse.message);
