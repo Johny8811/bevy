@@ -16,6 +16,7 @@ export type Params = {
 export const fetchApi = async ({ url, method = Methods.post, headers, body }: Params) => {
   const bodyStringified = JSON.stringify(body);
 
+  // TODO: remove redundant code while handling response
   switch (method) {
     case Methods.get: {
       const response = await fetch(url, { method: Methods.get, headers });
@@ -39,6 +40,14 @@ export const fetchApi = async ({ url, method = Methods.post, headers, body }: Pa
         const jsonResponse = await response.json();
         throw new Error(jsonResponse.message);
       }
+
+      // TODO: think of this, it is right? How to properly handle response without content?
+      if (response.status === 204) {
+        return new Promise((resolve) => {
+          resolve(undefined);
+        });
+      }
+
       return response.json();
     }
     default: {
