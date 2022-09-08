@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 
 import { DialogsNames } from './types';
 import { useSnackBar } from '../snackBar/SnackbarProvider';
+import { useUpdateUserInfoQuery } from '../../queryHooks/useUpdateUserInfoQuery';
 
 type Props = {
   open: boolean;
@@ -19,10 +20,11 @@ type Props = {
 export function UpdateUserInfoDialog({ open, onCloseDialog }: Props) {
   const { openSnackBar } = useSnackBar();
   const [uidError, setUidError] = useState(false);
+  const updateUserInfoQuery = useUpdateUserInfoQuery();
 
   const handleCloseDialog = useCallback(() => onCloseDialog(DialogsNames.UpdateUserInfo), []);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -36,8 +38,13 @@ export function UpdateUserInfoDialog({ open, onCloseDialog }: Props) {
     }
 
     if (displayName || photoURL) {
-      // todo: save values
+      await updateUserInfoQuery({ userId: uid, displayName, photoURL });
+
       handleCloseDialog();
+      openSnackBar({
+        severity: 'success',
+        text: 'User data successfully updated'
+      });
     } else {
       openSnackBar({
         severity: 'warning',
