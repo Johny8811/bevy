@@ -16,7 +16,8 @@ export const useFetchBackend = () => {
       headers: {
         ...params.headers,
         Authorization: `Bearer ${accessToken}`
-      }
+      },
+      body: JSON.stringify(params.body)
     });
 
     stopLoading?.();

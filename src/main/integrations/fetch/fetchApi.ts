@@ -14,8 +14,6 @@ export type Params = {
 
 // TODO: improve error statuses. Maybe react query handle?
 export const fetchApi = async ({ url, method = Methods.post, headers, body }: Params) => {
-  const bodyStringified = JSON.stringify(body);
-
   // TODO: remove redundant code while handling response
   switch (method) {
     case Methods.get: {
@@ -27,7 +25,7 @@ export const fetchApi = async ({ url, method = Methods.post, headers, body }: Pa
       return response.json();
     }
     case Methods.post: {
-      const response = await fetch(url, { method: Methods.post, headers, body: bodyStringified });
+      const response = await fetch(url, { method: Methods.post, headers, body });
       if (!response.ok) {
         const jsonResponse = await response.json();
         throw new Error(jsonResponse.message);
@@ -35,7 +33,7 @@ export const fetchApi = async ({ url, method = Methods.post, headers, body }: Pa
       return response.json();
     }
     case Methods.put: {
-      const response = await fetch(url, { method: Methods.put, headers, body: bodyStringified });
+      const response = await fetch(url, { method: Methods.put, headers, body });
       if (!response.ok) {
         const jsonResponse = await response.json();
         throw new Error(jsonResponse.message);
