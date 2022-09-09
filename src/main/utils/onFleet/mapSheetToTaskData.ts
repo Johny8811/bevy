@@ -3,7 +3,10 @@ import { TaskData, RawSheetData, SheetColumns } from '../../types/tasks';
 
 import { excelDateToJSDate } from '../excelDateToJSDate';
 
-export const mapSheetToTaskData = async (tasksXlsx: File): Promise<TaskData[]> => {
+export const mapSheetToTaskData = async (
+  tasksXlsx: File,
+  userNamePrefix?: string | null
+): Promise<TaskData[]> => {
   const buff = await tasksXlsx.arrayBuffer();
   const workbook = read(buff);
 
@@ -13,7 +16,9 @@ export const mapSheetToTaskData = async (tasksXlsx: File): Promise<TaskData[]> =
   return parsedSheetData.map((data) => {
     // Recipients
     const quantity = data[SheetColumns.QUANTITY] || 1;
-    const name = `${data[SheetColumns.CUSTOMER_NAME]} ${quantity}ks`;
+    const name = `${userNamePrefix ? `${userNamePrefix} - ` : ''}${
+      data[SheetColumns.CUSTOMER_NAME]
+    } ${quantity}ks`;
     const phoneNumber = data[SheetColumns.TEL_NUMBER]?.toString() || '';
     const recipientNotes = data[SheetColumns.CUSTOMER_NOTE];
     const skipSMSNotifications = !data[SheetColumns.NOTIFICATION];

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -38,12 +38,15 @@ export function Dashboard() {
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-  const handleChangeFileInput = async ({ file }: OnChangeParams) => {
-    if (file) {
-      const tasks = await mapSheetToTaskData(file);
-      await createTasks(tasks);
-    }
-  };
+  const handleChangeFileInput = useCallback(
+    async ({ file }: OnChangeParams) => {
+      if (file) {
+        const tasks = await mapSheetToTaskData(file, user?.displayName);
+        await createTasks(tasks);
+      }
+    },
+    [user?.displayName]
+  );
 
   const handleOnImportFixedTasks = (tasks: TaskData[]) => createTasks(tasks);
 
