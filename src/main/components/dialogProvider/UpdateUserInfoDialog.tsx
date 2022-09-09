@@ -8,9 +8,9 @@ import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 
-import { DialogsNames } from './types';
-import { useSnackBar } from '../snackBar/SnackbarProvider';
 import { useUpdateUserInfoQuery } from '../../queryHooks/useUpdateUserInfoQuery';
+import { useSnackBar } from '../snackBar/SnackbarProvider';
+import { DialogsNames } from './types';
 
 type Props = {
   open: boolean;
