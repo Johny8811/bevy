@@ -25,6 +25,7 @@ export type OurOnFleetTask = {
     start: number;
     end: number;
   } | null;
+  order: number | null;
 } & UpdateTaskResult;
 
 export enum SheetColumns {

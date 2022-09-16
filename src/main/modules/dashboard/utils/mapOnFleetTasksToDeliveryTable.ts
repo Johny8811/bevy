@@ -14,10 +14,11 @@ export const mapOnFleetTasksToDeliveryTable = (tasks: OurOnFleetTask[], workers:
     // TODO: optimise
     workerName: workers.find((w) => w.id === task.worker)?.name,
     workerPhone: workers.find((w) => w.id === task.worker)?.phone,
+    estimatedArrivalTime: task.estimatedArrivalTime,
+    order: task.order,
     completeAfter: task.completeAfter,
     completeBefore: task.completeBefore,
     quantity: task.quantity,
-    estimatedArrivalTime: task.estimatedArrivalTime,
     slot: task.slot,
     deliveredAt: task.completionDetails.time
   }));
