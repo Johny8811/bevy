@@ -4,14 +4,22 @@ import TextField from '@mui/material/TextField';
 
 import { useHasRole } from '../../../integrations/firebase/hooks/useHasRole';
 
-type Props = {
-  startDate: Date | null;
-  endDate: Date | null;
-  onStartDateChange: (date: Date | null) => void;
-  onEndDateChange: (date: Date | null) => void;
+export type DateRange = {
+  completeAfter: Date | null;
+  completeBefore: Date | null;
 };
 
-export function SelectDateRange({ startDate, endDate, onStartDateChange, onEndDateChange }: Props) {
+type Props = {
+  onCompleteAfterChange: (date: Date | null) => void;
+  onCompleteBeforeChange: (date: Date | null) => void;
+} & DateRange;
+
+export function SelectDateRange({
+  completeAfter,
+  completeBefore,
+  onCompleteAfterChange,
+  onCompleteBeforeChange
+}: Props) {
   const hasRole = useHasRole();
 
   return (
@@ -19,8 +27,8 @@ export function SelectDateRange({ startDate, endDate, onStartDateChange, onEndDa
       {(hasRole('user') || hasRole('root')) && (
         <DatePicker
           label={hasRole('root') ? 'Start date' : 'Select date'}
-          value={startDate}
-          onChange={onStartDateChange}
+          value={completeAfter}
+          onChange={onCompleteAfterChange}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -37,8 +45,8 @@ export function SelectDateRange({ startDate, endDate, onStartDateChange, onEndDa
       {hasRole('root') && (
         <DatePicker
           label="Select date"
-          value={endDate}
-          onChange={onEndDateChange}
+          value={completeBefore}
+          onChange={onCompleteBeforeChange}
           renderInput={(params) => (
             <TextField
               {...params}

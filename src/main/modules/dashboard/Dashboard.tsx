@@ -3,8 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
@@ -22,6 +20,7 @@ import { DialogsNames } from '../../components/dialogProvider/types';
 import { useOnFleetExportTasks } from './hooks/useOnFleetExportTasks';
 import { Table as DeliveryTable } from './components/deliveryTable/Table';
 import { Dialog as BadImportsDialog } from './components/badImportsDialog/Dialog';
+import { SelectDateRange, DateRange } from './components/SelectDateRange';
 import { useCreateTasks } from './hooks/useCreateTasks';
 
 export function Dashboard() {
@@ -36,7 +35,8 @@ export function Dashboard() {
   const userRoles = useUserRoles();
   const { openDialog } = useDialog();
 
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [completeAfter, setCompleteAfter] = useState<DateRange['completeAfter']>(null);
+  const [completeBefore, setCompleteBefore] = useState<DateRange['completeBefore']>(null);
 
   const handleChangeFileInput = useCallback(
     async ({ file }: OnChangeParams) => {
@@ -76,33 +76,19 @@ export function Dashboard() {
               </Button>
             )}
             <FileInput onChange={handleChangeFileInput}>Import tasks</FileInput>
-            {(hasRole('user') || hasRole('root')) && (
-              <DatePicker
-                label="Select date"
-                value={selectedDate}
-                onChange={(newValue) => {
-                  setSelectedDate(newValue);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    sx={{
-                      svg: { color: '#fff' },
-                      input: { color: '#fff' },
-                      label: { color: '#fff' }
-                    }}
-                    color="secondary"
-                  />
-                )}
-              />
-            )}
+            <SelectDateRange
+              completeAfter={completeAfter}
+              completeBefore={completeBefore}
+              onCompleteAfterChange={setCompleteAfter}
+              onCompleteBeforeChange={setCompleteBefore}
+            />
             <Button variant="contained" onClick={signOut}>
               Sign out
             </Button>
           </Stack>
         </Toolbar>
       </AppBar>
-      <DeliveryTable selectedDay={selectedDate} />
+      <DeliveryTable completeAfter={completeAfter} completeBefore={completeBefore} />
       <BadImportsDialog
         importedCount={createTasksResult?.tasks.length}
         failedTasks={createTasksResult?.errors}

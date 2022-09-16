@@ -9,8 +9,9 @@ import { TaskData, OurOnFleetTask } from '../../../types/tasks';
 import { OnFleetWorkers } from '../../../types/workers';
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
 import { mapOnFleetTasksToDeliveryTable } from '../utils/mapOnFleetTasksToDeliveryTable';
+import { DateRange } from '../components/SelectDateRange';
 
-export const useDeliveryTableData = (selectedDay: Date | null) => {
+export const useDeliveryTableData = ({ completeAfter, completeBefore }: DateRange) => {
   const { user } = useUser();
   const { openSnackBar } = useSnackBar();
   const hasRole = useHasRole();
@@ -44,12 +45,12 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
       return tasksTomorrowQuery();
     }
 
-    if (hasRole('root') && selectedDay) {
-      return tasksQuery(selectedDay);
+    if (hasRole('root') && completeAfter && completeBefore) {
+      return tasksQuery({ completeAfter, completeBefore });
     }
 
-    if (hasRole('user') && selectedDay) {
-      return tasksQuery(selectedDay, user?.uid);
+    if (hasRole('user') && completeAfter) {
+      return tasksQuery({ completeAfter, userId: user?.uid });
     }
 
     return new Promise((resolve) => {
@@ -69,7 +70,7 @@ export const useDeliveryTableData = (selectedDay: Date | null) => {
           });
         });
     }
-  }, [selectedDay, workers]);
+  }, [completeAfter, completeBefore, workers]);
 
   useEffect(() => {
     workersQuery()

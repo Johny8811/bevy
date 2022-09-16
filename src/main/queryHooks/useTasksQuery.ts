@@ -22,11 +22,11 @@ export const useTasksQuery = () => {
   }: TasksQueryParams): Promise<OurOnFleetTask[]> => {
     const queryParams = buildUrlQueryParams([
       {
-        param: 'startDate',
+        param: 'completeAfter',
         value: format(completeAfter, 'MM/dd/yyyy')
       },
       completeBefore && {
-        param: 'endDate',
+        param: 'completeBefore',
         value: format(completeBefore, 'MM/dd/yyyy')
       },
       userId
