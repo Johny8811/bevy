@@ -2,7 +2,7 @@ type Param = {
   param: string;
   value: string | number | boolean;
 };
-export type ParamsList = (Param | undefined)[];
+export type ParamsList = (Param | undefined | null)[];
 
 // TODO: add test
 export const buildUrlQueryParams = (paramsList: ParamsList) =>
