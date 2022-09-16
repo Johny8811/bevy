@@ -66,6 +66,12 @@ export const DELIVERY_COLUMNS: GridColDef[] = [
     valueFormatter: ({ value }: GridValueFormatterParams<OnFleetWorker['phone']>) =>
       valueOrDash(value)
   },
+  /*
+  // will be implemented
+  { field: 'payment', headerName: 'payment', width: 100 },
+  { field: 'cashOnDeliver', headerName: 'Cash on deliver', width: 100 },
+  { field: 'internalOrderNo', headerName: 'Internal order no', width: 100 },
+  */
   {
     field: 'estimatedArrivalTime',
     headerName: 'Estimated arrival time',
@@ -73,7 +79,6 @@ export const DELIVERY_COLUMNS: GridColDef[] = [
     valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['estimatedArrivalTime']>) =>
       valueOrDash(value, (v) => formatToDateAndTime(v))
   },
-  { field: 'order', headerName: 'Order', width: 100 },
   {
     field: 'completeAfter',
     headerName: 'Deliver after',
@@ -89,6 +94,14 @@ export const DELIVERY_COLUMNS: GridColDef[] = [
       formatToDateAndTime(value)
   },
   { field: 'quantity', headerName: 'Quantity', width: 100 },
+  {
+    field: 'estimatedArrivalTime',
+    headerName: 'Estimated arrival time',
+    width: 200,
+    valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['estimatedArrivalTime']>) =>
+      valueOrDash(value, (v) => formatToDateAndTime(v))
+  },
+  { field: 'order', headerName: 'Order', width: 100 },
   {
     field: 'slot',
     headerName: 'Slot',
