@@ -73,13 +73,6 @@ export const DELIVERY_COLUMNS: GridColDef[] = [
   { field: 'internalOrderNo', headerName: 'Internal order no', width: 100 },
   */
   {
-    field: 'estimatedArrivalTime',
-    headerName: 'Estimated arrival time',
-    width: 200,
-    valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['estimatedArrivalTime']>) =>
-      valueOrDash(value, (v) => formatToDateAndTime(v))
-  },
-  {
     field: 'completeAfter',
     headerName: 'Deliver after',
     width: 150,
