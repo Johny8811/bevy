@@ -1,5 +1,12 @@
+**0.1.5**
+
+**Changes**
+- Improve development environment
+- Remove display name from header bar
+- Add possibility to search tasks by date range for root user
+
 **0.1.4**
--
+
 **Changes**
 - connected update user info modal to backend
 - fixes
