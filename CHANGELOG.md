@@ -1,3 +1,10 @@
+**0.2.0**
+
+**Changes**
+- Added dark mode
+- Turned off source map in production
+- Common fixes
+
 **0.1.6**
 
 **Changes**
