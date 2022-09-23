@@ -94,7 +94,13 @@ export const DELIVERY_COLUMNS: GridColDef[] = [
     valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['estimatedArrivalTime']>) =>
       valueOrDash(value, (v) => formatToDateAndTime(v))
   },
-  { field: 'order', headerName: 'Order', width: 100 },
+  {
+    field: 'order',
+    headerName: 'Order',
+    width: 100,
+    valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['order']>) =>
+      valueOrDash(value)
+  },
   {
     field: 'slot',
     headerName: 'Slot',
