@@ -39,7 +39,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "deploy:hosting": "yarn build && firebase deploy --only hosting",
+    "deploy:hosting": "yarn build && firebase deploy --only hosting:portal",
     "emulator:start": "firebase emulators:start"
   },
   "eslintConfig": {

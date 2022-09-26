@@ -3,6 +3,14 @@
     "default": "bevy-bbf67",
     "prod": "bevy-c8798"
   },
-  "targets": {},
+  "targets": {
+    "bevy-c8798": {
+      "hosting": {
+        "portal": [
+          "bevy-c8798"
+        ]
+      }
+    }
+  },
   "etags": {}
 }
