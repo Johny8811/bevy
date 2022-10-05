@@ -1,13 +1,13 @@
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const FIREBASE_CONFIG_DEV = {
-  apiKey: 'AIzaSyBbUkEoHXiW77RVnKmT8iiBvJKCiuQ0E70',
-  authDomain: 'bevy-bbf67.firebaseapp.com',
-  projectId: 'bevy-bbf67',
-  storageBucket: 'bevy-bbf67.appspot.com',
-  messagingSenderId: '939982424969',
-  appId: '1:939982424969:web:647ce5424c0de9d77f6f58',
-  measurementId: 'G-ZKECYLRWPJ'
+  apiKey: 'AIzaSyBcnOC7gnX9Dlx-4ScUncAEyHbOrgZ0o2w',
+  authDomain: 'bevy-dev.firebaseapp.com',
+  projectId: 'bevy-dev',
+  storageBucket: 'bevy-dev.appspot.com',
+  messagingSenderId: '736484553162',
+  appId: '1:736484553162:web:ec5da01fcbd98642441f33',
+  measurementId: 'G-5VWBK8DW0Q'
 };
 
 export const FIREBASE_CONFIG_PROD = {
