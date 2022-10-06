@@ -21,6 +21,18 @@ export const mapTaskDataToCreateTasksProps = (
       completeBefore,
       quantity
     } = task;
+    const address = {
+      number: houseNumber,
+      street,
+      city,
+      postalCode,
+      country
+    };
+    // we pass address also to task notes, onFleet sometimes incorrectly recognise address
+    const taskNotes = `Destination:
+      ${houseNumber} ${street}
+      ${city} ${country} ${postalCode}
+    `;
 
     return {
       recipients: [
@@ -31,15 +43,8 @@ export const mapTaskDataToCreateTasksProps = (
           skipSMSNotifications
         }
       ],
-      destination: {
-        address: {
-          number: houseNumber,
-          street,
-          city,
-          postalCode,
-          country
-        }
-      },
+      destination: { address },
+      notes: taskNotes,
       completeAfter,
       completeBefore,
       quantity,
