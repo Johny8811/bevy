@@ -1,3 +1,9 @@
+**0.4.0**
+
+**Changes**
+- add possibility to EXCEL export
+- adjust tasks importing
+
 **0.2.0**
 
 **Changes**
