@@ -1,12 +1,20 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarContainerProps } from '@mui/x-data-grid';
 
 import { DELIVERY_COLUMNS } from '../../constants/columns';
 import { useDeliveryTableData } from '../../hooks/useDeliveryTableData';
-import { CustomToolbar } from './Toolbar';
-import { NoData } from './NoData';
 import { DateRange } from '../SelectDateRange';
+import { NoData } from './NoData';
+import { CustomGridToolbarExport } from './CustomGridToolbarExport';
+
+function CustomToolbar(props: GridToolbarContainerProps) {
+  return (
+    <GridToolbarContainer {...props}>
+      <CustomGridToolbarExport />
+    </GridToolbarContainer>
+  );
+}
 
 type Props = DateRange;
 
