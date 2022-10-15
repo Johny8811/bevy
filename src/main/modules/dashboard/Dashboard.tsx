@@ -55,7 +55,8 @@ export function Dashboard() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Name: {user?.email || '-'} {isDev() && `| Roles: ${userRoles?.join(',')}`}
+            Name: {user?.email || '-'}{' '}
+            {isDev() && `| Roles: ${userRoles?.join(',')}, Name: ${user?.displayName || '-'}`}
           </Typography>
           <Stack spacing={2} direction="row">
             {hasRole('root') && (

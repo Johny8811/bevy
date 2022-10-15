@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { SnackBarProvider } from './components/snackBar/SnackbarProvider';
 import { LoadingProvider } from './integrations/fetch/components/LoadingProvider';
@@ -12,6 +13,8 @@ import { RemoteConfigProvider } from './integrations/firebase/components/RemoteC
 import { UserProvider } from './integrations/firebase/components/UserProvider';
 import { DialogProvider } from './components/dialogProvider/DialogProvider';
 import Routing from './routing/Routing';
+
+const queryClient = new QueryClient();
 
 export function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -40,17 +43,19 @@ export function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <SnackBarProvider>
-            <LoadingProvider>
-              <RemoteConfigProvider>
-                <UserProvider>
-                  <DialogProvider>
-                    <Routing />
-                  </DialogProvider>
-                </UserProvider>
-              </RemoteConfigProvider>
-            </LoadingProvider>
-          </SnackBarProvider>
+          <QueryClientProvider client={queryClient}>
+            <SnackBarProvider>
+              <LoadingProvider>
+                <RemoteConfigProvider>
+                  <UserProvider>
+                    <DialogProvider>
+                      <Routing />
+                    </DialogProvider>
+                  </UserProvider>
+                </RemoteConfigProvider>
+              </LoadingProvider>
+            </SnackBarProvider>
+          </QueryClientProvider>
         </LocalizationProvider>
       </ThemeProvider>
     </React.StrictMode>
