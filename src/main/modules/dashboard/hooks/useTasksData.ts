@@ -8,10 +8,10 @@ import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
 import { TaskData, OurOnFleetTask } from '../../../types/tasks';
 import { OnFleetWorkers } from '../../../types/workers';
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
-import { mapOnFleetTasksToDeliveryTable } from '../utils/mapOnFleetTasksToDeliveryTable';
+import { mapOnFleetTasksToTasks } from '../utils/mapOnFleetTasksToTasks';
 import { DateRange } from '../components/SelectDateRange';
 
-export const useDeliveryTableData = ({ completeAfter, completeBefore }: DateRange) => {
+export const useTasksData = ({ completeAfter, completeBefore }: DateRange) => {
   const { user } = useUser();
   const { openSnackBar } = useSnackBar();
   const hasRole = useHasRole();
@@ -61,7 +61,7 @@ export const useDeliveryTableData = ({ completeAfter, completeBefore }: DateRang
   useEffect(() => {
     if (workers) {
       fetchTasks()
-        .then((onFleetTasks) => setTasks(mapOnFleetTasksToDeliveryTable(onFleetTasks, workers)))
+        .then((onFleetTasks) => setTasks(mapOnFleetTasksToTasks(onFleetTasks, workers)))
         .catch(() => {
           // TODO: log error
           openSnackBar({

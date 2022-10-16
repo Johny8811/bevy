@@ -26,7 +26,7 @@ export const BAD_IMPORTS_COLUMNS: GridColDef[] = [
   { field: 'quantity', headerName: 'Quantity', width: 100, editable: true }
 ];
 
-export const DELIVERY_COLUMNS: GridColDef[] = [
+export const TASKS_TABLE_COLUMNS: GridColDef[] = [
   {
     field: 'name',
     headerName: 'Name',

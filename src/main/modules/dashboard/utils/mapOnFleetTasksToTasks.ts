@@ -1,7 +1,7 @@
 import { OurOnFleetTask } from '../../../types/tasks';
 import { OnFleetWorkers } from '../../../types/workers';
 
-export const mapOnFleetTasksToDeliveryTable = (tasks: OurOnFleetTask[], workers: OnFleetWorkers) =>
+export const mapOnFleetTasksToTasks = (tasks: OurOnFleetTask[], workers: OnFleetWorkers) =>
   tasks.map((task) => ({
     id: task.id,
     name: task.recipients[0]?.name,
