@@ -7,9 +7,9 @@ import { buildUrlQueryParams } from '../utils/buildUrlQueryParams';
 import { OurOnFleetTask } from '../types/tasks';
 
 type TasksQueryParams = {
-  completeAfter: Date;
+  completeAfter?: Date;
   completeBefore?: Date;
-  userId?: string;
+  userId: string;
 };
 
 export const useTasksQuery = () => {
@@ -21,7 +21,7 @@ export const useTasksQuery = () => {
     userId
   }: TasksQueryParams): Promise<OurOnFleetTask[]> => {
     const queryParams = buildUrlQueryParams([
-      {
+      completeAfter && {
         param: 'completeAfter',
         value: format(completeAfter, 'MM/dd/yyyy')
       },
@@ -29,12 +29,10 @@ export const useTasksQuery = () => {
         param: 'completeBefore',
         value: format(completeBefore, 'MM/dd/yyyy')
       },
-      userId
-        ? {
-            param: 'userId',
-            value: userId
-          }
-        : undefined
+      {
+        param: 'userId',
+        value: userId
+      }
     ]);
 
     return fetchBackend({

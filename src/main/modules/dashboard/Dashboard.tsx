@@ -18,7 +18,7 @@ import { useDialog } from '../../components/dialogProvider/DialogProvider';
 import { useHasRole } from '../../integrations/firebase/hooks/useHasRole';
 import { DialogsNames } from '../../components/dialogProvider/types';
 import { useOnFleetExportTasks } from './hooks/useOnFleetExportTasks';
-import { Table as DeliveryTable } from './components/deliveryTable/Table';
+import { Table as TasksTable } from './components/tasksTable/Table';
 import { Dialog as BadImportsDialog } from './components/badImportsDialog/Dialog';
 import { SelectDateRange, DateRange } from './components/SelectDateRange';
 import { useCreateTasks } from './hooks/useCreateTasks';
@@ -55,7 +55,8 @@ export function Dashboard() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Name: {user?.email || '-'} {isDev() && `| Roles: ${userRoles?.join(',')}`}
+            Name: {user?.email || '-'}{' '}
+            {isDev() && `| Roles: ${userRoles?.join(',')}, Name: ${user?.displayName || '-'}`}
           </Typography>
           <Stack spacing={2} direction="row">
             {hasRole('root') && (
@@ -88,7 +89,7 @@ export function Dashboard() {
           </Stack>
         </Toolbar>
       </AppBar>
-      <DeliveryTable completeAfter={completeAfter} completeBefore={completeBefore} />
+      <TasksTable completeAfter={completeAfter} completeBefore={completeBefore} />
       <BadImportsDialog
         importedCount={createTasksResult?.tasks.length}
         failedTasks={createTasksResult?.errors}

@@ -2,22 +2,20 @@ import { useEffect, useState } from 'react';
 
 import { useTasksQuery } from '../../../queryHooks/useTasksQuery';
 import { useWorkersQuery } from '../../../queryHooks/useWorkersQuery';
-import { useTasksTomorrowQuery } from '../../../queryHooks/useTasksTomorrowQuery';
 import { useHasRole } from '../../../integrations/firebase/hooks/useHasRole';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
 import { TaskData, OurOnFleetTask } from '../../../types/tasks';
 import { OnFleetWorkers } from '../../../types/workers';
 import { useUser } from '../../../integrations/firebase/components/UserProvider';
-import { mapOnFleetTasksToDeliveryTable } from '../utils/mapOnFleetTasksToDeliveryTable';
+import { mapOnFleetTasksToTasks } from '../utils/mapOnFleetTasksToTasks';
 import { DateRange } from '../components/SelectDateRange';
 
-export const useDeliveryTableData = ({ completeAfter, completeBefore }: DateRange) => {
+export const useTasksData = ({ completeAfter, completeBefore }: DateRange) => {
   const { user } = useUser();
   const { openSnackBar } = useSnackBar();
   const hasRole = useHasRole();
 
   const tasksQuery = useTasksQuery();
-  const tasksTomorrowQuery = useTasksTomorrowQuery();
   const workersQuery = useWorkersQuery();
 
   const [workers, setWorkers] = useState<OnFleetWorkers | null>();
@@ -41,16 +39,18 @@ export const useDeliveryTableData = ({ completeAfter, completeBefore }: DateRang
 
   // TODO: uuuufff... remove and optimise this shit! one route with different params can handle all cases
   const fetchTasks = async (): Promise<OurOnFleetTask[]> => {
-    if (hasRole('dispatcher')) {
-      return tasksTomorrowQuery();
+    const userId = user?.uid;
+
+    if (userId && hasRole('dispatcher')) {
+      return tasksQuery({ userId });
     }
 
-    if (hasRole('root') && completeAfter && completeBefore) {
-      return tasksQuery({ completeAfter, completeBefore });
+    if (userId && hasRole('root') && completeAfter && completeBefore) {
+      return tasksQuery({ completeAfter, completeBefore, userId });
     }
 
-    if (hasRole('user') && completeAfter) {
-      return tasksQuery({ completeAfter, userId: user?.uid });
+    if (userId && hasRole('user') && completeAfter) {
+      return tasksQuery({ completeAfter, userId });
     }
 
     return new Promise((resolve) => {
@@ -61,7 +61,7 @@ export const useDeliveryTableData = ({ completeAfter, completeBefore }: DateRang
   useEffect(() => {
     if (workers) {
       fetchTasks()
-        .then((onFleetTasks) => setTasks(mapOnFleetTasksToDeliveryTable(onFleetTasks, workers)))
+        .then((onFleetTasks) => setTasks(mapOnFleetTasksToTasks(onFleetTasks, workers)))
         .catch(() => {
           // TODO: log error
           openSnackBar({

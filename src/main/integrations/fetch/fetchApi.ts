@@ -12,42 +12,39 @@ export type Params = {
   body?: any;
 };
 
-// TODO: improve error statuses. Maybe react query handle?
+async function handleResponse(response: Response) {
+  if (response.status === 204) {
+    return new Promise((resolve) => {
+      resolve(null);
+    });
+  }
+
+  const jsonParsed = await response.json();
+
+  if (!response.ok) {
+    throw new Error(jsonParsed.message);
+  }
+
+  return jsonParsed;
+}
+
 export const fetchApi = async ({ url, method = Methods.post, headers, body }: Params) => {
-  // TODO: remove redundant code while handling response
   switch (method) {
     case Methods.get: {
       const response = await fetch(url, { method: Methods.get, headers });
-      if (!response.ok) {
-        const jsonResponse = await response.json();
-        throw new Error(jsonResponse.message);
-      }
-      return response.json();
+      return handleResponse(response);
     }
+
     case Methods.post: {
       const response = await fetch(url, { method: Methods.post, headers, body });
-      if (!response.ok) {
-        const jsonResponse = await response.json();
-        throw new Error(jsonResponse.message);
-      }
-      return response.json();
+      return handleResponse(response);
     }
+
     case Methods.put: {
       const response = await fetch(url, { method: Methods.put, headers, body });
-      if (!response.ok) {
-        const jsonResponse = await response.json();
-        throw new Error(jsonResponse.message);
-      }
-
-      // TODO: think of this, it is right? How to properly handle response without content?
-      if (response.status === 204) {
-        return new Promise((resolve) => {
-          resolve(undefined);
-        });
-      }
-
-      return response.json();
+      return handleResponse(response);
     }
+
     default: {
       return new Promise((resolve, reject) => {
         reject(new Error('Fetch method has to be set.'));
