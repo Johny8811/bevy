@@ -41,16 +41,18 @@ export const useTasksData = ({ completeAfter, completeBefore }: DateRange) => {
 
   // TODO: uuuufff... remove and optimise this shit! one route with different params can handle all cases
   const fetchTasks = async (): Promise<OurOnFleetTask[]> => {
-    if (hasRole('dispatcher')) {
-      return tasksTomorrowQuery();
+    const userId = user?.uid;
+
+    if (userId && hasRole('dispatcher')) {
+      return tasksQuery({ userId });
     }
 
-    if (hasRole('root') && completeAfter && completeBefore) {
-      return tasksQuery({ completeAfter, completeBefore });
+    if (userId && hasRole('root') && completeAfter && completeBefore) {
+      return tasksQuery({ completeAfter, completeBefore, userId });
     }
 
-    if (hasRole('user') && completeAfter) {
-      return tasksQuery({ completeAfter, userId: user?.uid });
+    if (userId && hasRole('user') && completeAfter) {
+      return tasksQuery({ completeAfter, userId });
     }
 
     return new Promise((resolve) => {

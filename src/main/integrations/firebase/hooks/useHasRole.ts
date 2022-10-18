@@ -9,7 +9,7 @@ export const useHasRole = () => {
   return (role: ROLES) => {
     if (usersRoles && user) {
       // TODO: investigate typing https://bobbyhadz.com/blog/typescript-element-implicitly-has-any-type-expression
-      const roles = usersRoles[user?.uid] ? usersRoles[user?.uid] : [];
+      const roles = usersRoles[user?.uid] ? usersRoles[user.uid] : [];
 
       if (role === 'user' && roles.length === 0) {
         return true;
