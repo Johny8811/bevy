@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { useTasksQuery } from '../../../queryHooks/useTasksQuery';
 import { useWorkersQuery } from '../../../queryHooks/useWorkersQuery';
-import { useTasksTomorrowQuery } from '../../../queryHooks/useTasksTomorrowQuery';
 import { useHasRole } from '../../../integrations/firebase/hooks/useHasRole';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
 import { TaskData, OurOnFleetTask } from '../../../types/tasks';
@@ -17,7 +16,6 @@ export const useTasksData = ({ completeAfter, completeBefore }: DateRange) => {
   const hasRole = useHasRole();
 
   const tasksQuery = useTasksQuery();
-  const tasksTomorrowQuery = useTasksTomorrowQuery();
   const workersQuery = useWorkersQuery();
 
   const [workers, setWorkers] = useState<OnFleetWorkers | null>();
