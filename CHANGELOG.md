@@ -1,8 +1,14 @@
-**0.4.0**
+**1.0.0**
 
 **Changes**
-- add possibility to EXCEL export
-- adjust tasks importing
+- Remove redundant "useTasksTomorrowQuery" query
+- Use "useTasksQuery" to get tasks for all user roles
+
+**0.3.0**
+
+**Changes**
+- Add possibility to EXCEL export
+- Adjust tasks importing
 
 **0.2.0**
 
