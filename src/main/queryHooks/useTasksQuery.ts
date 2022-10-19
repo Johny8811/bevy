@@ -7,19 +7,14 @@ import { buildUrlQueryParams } from '../utils/buildUrlQueryParams';
 import { OurOnFleetTask } from '../types/tasks';
 
 type TasksQueryParams = {
-  completeAfter?: Date;
-  completeBefore?: Date;
-  userId: string;
+  completeAfter: Date | null;
+  completeBefore: Date | null;
 };
 
 export const useTasksQuery = () => {
   const fetchBackend = useFetchBackend();
 
-  return ({
-    completeAfter,
-    completeBefore,
-    userId
-  }: TasksQueryParams): Promise<OurOnFleetTask[]> => {
+  return ({ completeAfter, completeBefore }: TasksQueryParams): Promise<OurOnFleetTask[]> => {
     const queryParams = buildUrlQueryParams([
       completeAfter && {
         param: 'completeAfter',
@@ -28,10 +23,6 @@ export const useTasksQuery = () => {
       completeBefore && {
         param: 'completeBefore',
         value: format(completeBefore, 'MM/dd/yyyy')
-      },
-      {
-        param: 'userId',
-        value: userId
       }
     ]);
 

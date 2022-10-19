@@ -6,12 +6,10 @@ import { useHasRole } from '../../../integrations/firebase/hooks/useHasRole';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
 import { TaskData, OurOnFleetTask } from '../../../types/tasks';
 import { OnFleetWorkers } from '../../../types/workers';
-import { useUser } from '../../../integrations/firebase/components/UserProvider';
 import { mapOnFleetTasksToTasks } from '../utils/mapOnFleetTasksToTasks';
 import { DateRange } from '../components/SelectDateRange';
 
 export const useTasksData = ({ completeAfter, completeBefore }: DateRange) => {
-  const { user } = useUser();
   const { openSnackBar } = useSnackBar();
   const hasRole = useHasRole();
 
@@ -39,18 +37,16 @@ export const useTasksData = ({ completeAfter, completeBefore }: DateRange) => {
 
   // TODO: uuuufff... remove and optimise this shit! one route with different params can handle all cases
   const fetchTasks = async (): Promise<OurOnFleetTask[]> => {
-    const userId = user?.uid;
-
-    if (userId && hasRole('dispatcher')) {
-      return tasksQuery({ userId });
+    if (hasRole('dispatcher')) {
+      return tasksQuery({ completeAfter, completeBefore });
     }
 
-    if (userId && hasRole('root') && completeAfter && completeBefore) {
-      return tasksQuery({ completeAfter, completeBefore, userId });
+    if (hasRole('root') && completeAfter && completeBefore) {
+      return tasksQuery({ completeAfter, completeBefore });
     }
 
-    if (userId && hasRole('user') && completeAfter) {
-      return tasksQuery({ completeAfter, userId });
+    if (hasRole('user') && completeAfter) {
+      return tasksQuery({ completeAfter, completeBefore });
     }
 
     return new Promise((resolve) => {
