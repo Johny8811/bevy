@@ -29,6 +29,8 @@ async function handleResponse(response: Response) {
 }
 
 export const fetchApi = async ({ url, method = Methods.post, headers, body }: Params) => {
+  const bodyString = body && JSON.stringify(body);
+
   switch (method) {
     case Methods.get: {
       const response = await fetch(url, { method: Methods.get, headers });
@@ -36,12 +38,12 @@ export const fetchApi = async ({ url, method = Methods.post, headers, body }: Pa
     }
 
     case Methods.post: {
-      const response = await fetch(url, { method: Methods.post, headers, body });
+      const response = await fetch(url, { method: Methods.post, headers, body: bodyString });
       return handleResponse(response);
     }
 
     case Methods.put: {
-      const response = await fetch(url, { method: Methods.put, headers, body });
+      const response = await fetch(url, { method: Methods.put, headers, body: bodyString });
       return handleResponse(response);
     }
 
