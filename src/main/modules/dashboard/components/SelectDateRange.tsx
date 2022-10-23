@@ -14,6 +14,7 @@ type Props = {
   onCompleteBeforeChange: (date: Date | null) => void;
 } & DateRange;
 
+// TODO: move to common components for better reusable
 export function SelectDateRange({
   completeAfter,
   completeBefore,
