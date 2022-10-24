@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { Methods, fetchApi } from '../integrations/fetch/fetchApi';
 import { useFetchParams } from '../integrations/fetch/hooks/useFetchParams';
-import { TASKS } from '../integrations/fetch/endpoints';
+import { TASKS_GET_TASKS } from '../integrations/fetch/endpoints';
 import { buildUrlQueryParams } from '../utils/buildUrlQueryParams';
 
 const QUERY_NAME = 'tasks';
@@ -36,7 +36,7 @@ export const useTasksQueryV2 = (
       ]);
       const fetchParams = await getParamsWithAuthorization({
         method: Methods.get,
-        url: `${TASKS}?${queryParams}`
+        url: `${TASKS_GET_TASKS}?${queryParams}`
       });
 
       return fetchApi(fetchParams);

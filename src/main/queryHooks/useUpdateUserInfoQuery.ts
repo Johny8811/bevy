@@ -15,7 +15,6 @@ export const useUpdateUserInfoQuery = () => {
     return fetchBackend({
       method: Methods.put,
       url: UPDATE_USER_INFO,
-      // TODO: why our backend need to stringify body and onFleet no?
       body
     });
   };
