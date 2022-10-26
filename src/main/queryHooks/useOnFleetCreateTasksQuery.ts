@@ -1,15 +1,17 @@
-import { CreateTaskProps, OnfleetTask } from '@onfleet/node-onfleet/Resources/Tasks';
+import { OnfleetTask } from '@onfleet/node-onfleet/Resources/Tasks';
 
-import { useFetchOnFleet } from '../integrations/fetch/hooks/useFetchOnFleet';
-import { ON_FLEET_TASKS_BATCH_URL } from '../integrations/fetch/endpoints';
+import { useFetchBackend } from '../integrations/fetch/hooks/useFetchBackend';
+import { TASKS_BATCH_CREATE } from '../integrations/fetch/endpoints';
+import { CreateTaskProps } from '../types/tasks';
 
+// TODO: rename
 export const useOnFleetCreateTasksQuery = () => {
-  const fetchOnFleet = useFetchOnFleet();
+  const fetchBackend = useFetchBackend();
 
   return (tasks: CreateTaskProps[]): Promise<OnfleetTask[]> => {
-    return fetchOnFleet({
-      url: ON_FLEET_TASKS_BATCH_URL,
-      body: JSON.stringify({ tasks })
+    return fetchBackend({
+      url: TASKS_BATCH_CREATE,
+      body: tasks
     });
   };
 };

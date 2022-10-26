@@ -10,7 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { mapSheetToTaskData } from '../../utils/onFleet/mapSheetToTaskData';
 import { isDev } from '../../utils/isDev';
 import { FileInput, OnChangeParams } from '../../components/fileInput/FileInput';
-import { TaskData } from '../../types/tasks';
+import { CreateTaskProps } from '../../types/tasks';
 import { useSignOut } from '../../integrations/firebase/hooks/useSignOut';
 import { useUserRoles } from '../../integrations/firebase/hooks/useUserRoles';
 import { useUser } from '../../integrations/firebase/components/UserProvider';
@@ -20,7 +20,7 @@ import { DialogsNames } from '../../components/dialogProvider/types';
 import { useOnFleetExportTasks } from './hooks/useOnFleetExportTasks';
 import { Table as TasksTable } from './components/tasksTable/Table';
 import { Dialog as BadImportsDialog } from './components/badImportsDialog/Dialog';
-import { SelectDateRange, DateRange } from './components/SelectDateRange';
+import { DateRange, SelectDateRange } from './components/SelectDateRange';
 import { useCreateTasks } from './hooks/useCreateTasks';
 
 export function Dashboard() {
@@ -48,7 +48,7 @@ export function Dashboard() {
     [user?.displayName]
   );
 
-  const handleOnImportFixedTasks = (tasks: TaskData[]) => createTasks(tasks);
+  const handleOnImportFixedTasks = (tasks: CreateTaskProps[]) => createTasks(tasks);
 
   return (
     <Box sx={{ flexGrow: 1 }}>

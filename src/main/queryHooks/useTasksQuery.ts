@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 
 import { Methods } from '../integrations/fetch/fetchApi';
 import { useFetchBackend } from '../integrations/fetch/hooks/useFetchBackend';
-import { TASKS } from '../integrations/fetch/endpoints';
+import { TASKS_GET_TASKS } from '../integrations/fetch/endpoints';
 import { buildUrlQueryParams } from '../utils/buildUrlQueryParams';
 import { OurOnFleetTask } from '../types/tasks';
 
@@ -28,7 +28,7 @@ export const useTasksQuery = () => {
 
     return fetchBackend({
       method: Methods.get,
-      url: `${TASKS}?${queryParams}`
+      url: `${TASKS_GET_TASKS}?${queryParams}`
     });
   };
 };

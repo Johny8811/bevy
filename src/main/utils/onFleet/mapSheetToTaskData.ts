@@ -1,12 +1,12 @@
 import { read, utils } from 'xlsx';
-import { TaskData, RawSheetData, SheetColumns } from '../../types/tasks';
+import { CreateTaskProps, RawSheetData, SheetColumns } from '../../types/tasks';
 
 import { excelDateToJSDate } from '../excelDateToJSDate';
 
 export const mapSheetToTaskData = async (
   tasksXlsx: File,
   userNamePrefix?: string | null
-): Promise<TaskData[]> => {
+): Promise<CreateTaskProps[]> => {
   const buff = await tasksXlsx.arrayBuffer();
   const workbook = read(buff);
 
@@ -19,12 +19,12 @@ export const mapSheetToTaskData = async (
     const name = `${userNamePrefix ? `${userNamePrefix} - ` : ''}${
       data[SheetColumns.CUSTOMER_NAME]
     } ${quantity}ks`;
-    const phoneNumber = data[SheetColumns.TEL_NUMBER]?.toString() || '';
-    const recipientNotes = data[SheetColumns.CUSTOMER_NOTE];
+    const phone = data[SheetColumns.TEL_NUMBER]?.toString() || '';
+    const recipientNote = data[SheetColumns.CUSTOMER_NOTE];
     const skipSMSNotifications = !data[SheetColumns.NOTIFICATION];
 
     // Destination
-    const houseNumber = data[SheetColumns.HOUSE_NUMBER]?.toString() || '';
+    const number = data[SheetColumns.HOUSE_NUMBER]?.toString() || '';
     const street = data[SheetColumns.STREET] || '';
     const city = data[SheetColumns.CITY] || '';
     const postalCode = data[SheetColumns.POSTAL_CODE]?.toString();
@@ -41,15 +41,23 @@ export const mapSheetToTaskData = async (
         : undefined;
 
     return {
-      name,
-      phoneNumber,
-      recipientNotes,
-      skipSMSNotifications,
-      houseNumber,
-      street,
-      city,
-      postalCode,
-      country,
+      recipients: [
+        {
+          name,
+          phone,
+          notes: recipientNote,
+          skipSMSNotifications
+        }
+      ],
+      destination: {
+        address: {
+          number,
+          street,
+          city,
+          postalCode,
+          country
+        }
+      },
       completeAfter,
       completeBefore,
       quantity

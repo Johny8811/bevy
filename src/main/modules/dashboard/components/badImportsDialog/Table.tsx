@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { head } from 'lodash';
-import { CreateRecipientProps } from '@onfleet/node-onfleet/Resources/Recipients';
-import { CreateDestinationProps } from '@onfleet/node-onfleet/Resources/Destinations';
 
-import { TaskData, CreateBatchTasksErrors } from '../../../../types/tasks';
+import { CreateTaskProps, CreateBatchTasksErrors } from '../../../../types/tasks';
 import { formatToDateAndTime } from '../../../../utils/formatDates';
 import { BAD_IMPORTS_COLUMNS } from '../../constants/columns';
 import { TableFooter } from './TableFooter';
@@ -12,7 +10,7 @@ import { TableFooter } from './TableFooter';
 export type Props = {
   failedTasks: CreateBatchTasksErrors[];
   onCancel: () => void;
-  onConfirm: (tasks: TaskData[]) => void;
+  onConfirm: (tasks: CreateTaskProps[]) => void;
 };
 
 export function Table({ failedTasks, onCancel, onConfirm }: Props) {
@@ -22,8 +20,8 @@ export function Table({ failedTasks, onCancel, onConfirm }: Props) {
   useEffect(() => {
     const failedTasksRows = failedTasks.map((failedTask, index) => {
       // FIXME: improve this types!
-      const recipient = head(failedTask.task.recipients as CreateRecipientProps[]);
-      const { address } = failedTask.task.destination as CreateDestinationProps;
+      const recipient = head(failedTask.task.recipients);
+      const { address } = failedTask.task.destination;
 
       return {
         id: index,

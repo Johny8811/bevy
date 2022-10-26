@@ -5,7 +5,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import React, { useEffect, useState } from 'react';
 
-import { TaskData, CreateBatchTasksErrors } from '../../../../types/tasks';
+import { CreateTaskProps, CreateBatchTasksErrors } from '../../../../types/tasks';
 import { isDev } from '../../../../utils/isDev';
 import { Table } from './Table';
 // TODO: improve development
@@ -14,7 +14,7 @@ import { EXAMPLE_IMPORT_ERRORS } from './devTableData';
 type Props = {
   importedCount?: number;
   failedTasks: CreateBatchTasksErrors[] | undefined;
-  onImportFixedTasks: (tasks: TaskData[]) => void;
+  onImportFixedTasks: (tasks: CreateTaskProps[]) => void;
 };
 
 const ENABLE_DEV_BAD_IMPORTS_DIALOG = false;
@@ -38,7 +38,7 @@ export function Dialog({ importedCount = 0, failedTasks, onImportFixedTasks }: P
     }
   };
 
-  const handleOnConfirm = (tasks: TaskData[]) => {
+  const handleOnConfirm = (tasks: CreateTaskProps[]) => {
     setOpen(false);
     onImportFixedTasks(tasks);
   };

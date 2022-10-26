@@ -1,8 +1,4 @@
-import {
-  OnfleetTask,
-  CreateTaskProps,
-  UpdateTaskResult
-} from '@onfleet/node-onfleet/Resources/Tasks';
+import { OnfleetTask, UpdateTaskResult } from '@onfleet/node-onfleet/Resources/Tasks';
 
 export type TaskData = {
   name: string;
@@ -66,6 +62,49 @@ export type RawSheetData = {
   [SheetColumns.INTERNAL_ORDER_NO]?: number;
 };
 
+//
+export type Recipient = {
+  name: string;
+  phone: string;
+  notes?: string | undefined;
+  skipSMSNotifications: boolean | undefined;
+};
+
+export type Address = {
+  apartment?: string | undefined;
+  state?: string | undefined;
+  postalCode?: string | undefined;
+  country: string;
+  city: string;
+  street: string;
+  number: string;
+};
+
+export type Task = {
+  id: string;
+  recipients: Recipient[];
+  destination: { address: Address };
+  completeAfter: number | undefined;
+  completeBefore: number | undefined;
+  quantity: number | undefined;
+
+  estimatedArrivalTime: number;
+  order: number | null;
+  slot: {
+    start: number;
+    end: number;
+  } | null;
+  deliveredAt: number | null;
+};
+
+export type Tasks = Task[];
+
+// TODO: rename to "CreateTaskProps"
+export type CreateTaskProps = Pick<
+  Task,
+  'recipients' | 'destination' | 'completeAfter' | 'completeBefore' | 'quantity'
+>;
+
 // Create Batch Tasks Response
 export type CreateBatchTasksError = {
   cause: string | null;
@@ -76,10 +115,7 @@ export type CreateBatchTasksError = {
 
 export type CreateBatchTasksErrors = {
   error: CreateBatchTasksError;
-  task: Pick<
-    CreateTaskProps,
-    'destination' | 'recipients' | 'completeAfter' | 'completeBefore' | 'quantity' | 'metadata'
-  >;
+  task: CreateTaskProps;
 };
 
 export type CreateBatchTasksResponse = {

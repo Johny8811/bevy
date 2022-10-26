@@ -35,7 +35,32 @@ export function TableFooter({ onConfirm, onCancel }: Omit<TableProps, 'failedTas
             .validate(transformData)
             .then((validationResult) => {
               if (validationResult) {
-                onConfirm(validationResult);
+                // TODO: if in some weird universe, this frontend will be used for BEVY, this
+                //  has to be rewritten
+                onConfirm(
+                  validationResult.map((result) => ({
+                    recipients: [
+                      {
+                        name: result.name,
+                        phone: result.phoneNumber,
+                        notes: result.recipientNotes,
+                        skipSMSNotifications: result.skipSMSNotifications
+                      }
+                    ],
+                    destination: {
+                      address: {
+                        number: result.houseNumber,
+                        street: result.street,
+                        city: result.city,
+                        postalCode: result.postalCode,
+                        country: result.country
+                      }
+                    },
+                    completeAfter: result.completeAfter,
+                    completeBefore: result.completeBefore,
+                    quantity: result.quantity
+                  }))
+                );
               }
             })
             .catch((validationError) => {
