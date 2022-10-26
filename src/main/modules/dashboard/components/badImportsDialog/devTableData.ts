@@ -27,15 +27,7 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687156200000,
-      quantity: 1,
-      metadata: [
-        {
-          name: 'User ID',
-          type: 'string',
-          visibility: ['api'],
-          value: 'AcBKj7mq58gO3pOlM6AYXUah0yS2'
-        }
-      ]
+      quantity: 1
     }
   },
   {
@@ -64,15 +56,7 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687156200000,
-      quantity: 1,
-      metadata: [
-        {
-          name: 'User ID',
-          type: 'string',
-          visibility: ['api'],
-          value: 'AcBKj7mq58gO3pOlM6AYXUah0yS2'
-        }
-      ]
+      quantity: 1
     }
   },
   {
@@ -101,15 +85,7 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687156200000,
-      quantity: 1,
-      metadata: [
-        {
-          name: 'User ID',
-          type: 'string',
-          visibility: ['api'],
-          value: 'AcBKj7mq58gO3pOlM6AYXUah0yS2'
-        }
-      ]
+      quantity: 1
     }
   },
   {
@@ -139,15 +115,7 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687156200000,
-      quantity: 1,
-      metadata: [
-        {
-          name: 'User ID',
-          type: 'string',
-          visibility: ['api'],
-          value: 'AcBKj7mq58gO3pOlM6AYXUah0yS2'
-        }
-      ]
+      quantity: 1
     }
   },
   {
@@ -177,15 +145,7 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687150800000,
-      quantity: 1,
-      metadata: [
-        {
-          name: 'User ID',
-          type: 'string',
-          visibility: ['api'],
-          value: 'AcBKj7mq58gO3pOlM6AYXUah0yS2'
-        }
-      ]
+      quantity: 1
     }
   },
   {
@@ -215,15 +175,7 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687150800000,
-      quantity: 1,
-      metadata: [
-        {
-          name: 'User ID',
-          type: 'string',
-          visibility: ['api'],
-          value: 'AcBKj7mq58gO3pOlM6AYXUah0yS2'
-        }
-      ]
+      quantity: 1
     }
   }
 ];
