@@ -1,3 +1,11 @@
+**2.0.0**
+
+**Changes**
+- Remove onFleet implementation from frontend
+- Remade endpoints to new BE structure
+- Unite date & time formats
+- Improvements
+
 **1.0.0**
 
 **Changes**
