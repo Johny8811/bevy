@@ -3,6 +3,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 
 import { useHasRole } from '../../../integrations/firebase/hooks/useHasRole';
+import { DATE_FORMAT } from '../../../utils/formatDates';
 
 export type DateRange = {
   completeAfter: Date | null;
@@ -41,6 +42,7 @@ export function SelectDateRange({
               color="secondary"
             />
           )}
+          inputFormat={DATE_FORMAT}
         />
       )}
       {hasRole('root') && (
@@ -59,6 +61,7 @@ export function SelectDateRange({
               color="secondary"
             />
           )}
+          inputFormat={DATE_FORMAT}
         />
       )}
     </>
