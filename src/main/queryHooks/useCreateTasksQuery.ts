@@ -4,8 +4,7 @@ import { useFetchBackend } from '../integrations/fetch/hooks/useFetchBackend';
 import { TASKS_BATCH_CREATE } from '../integrations/fetch/endpoints';
 import { CreateTaskProps } from '../types/tasks';
 
-// TODO: rename
-export const useOnFleetCreateTasksQuery = () => {
+export const useCreateTasksQuery = () => {
   const fetchBackend = useFetchBackend();
 
   return (tasks: CreateTaskProps[]): Promise<OnfleetTask[]> => {

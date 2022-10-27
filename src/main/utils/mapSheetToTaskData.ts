@@ -1,7 +1,7 @@
 import { read, utils } from 'xlsx';
-import { CreateTaskProps, RawSheetData, SheetColumns } from '../../types/tasks';
+import { CreateTaskProps, RawSheetData, SheetColumns } from '../types/tasks';
 
-import { excelDateToJSDate } from '../excelDateToJSDate';
+import { excelDateToJSDate } from './excelDateToJSDate';
 
 export const mapSheetToTaskData = async (
   tasksXlsx: File,
