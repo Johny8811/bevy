@@ -12,7 +12,7 @@ export const useCreateTasks = () => {
 
   const createTasks = async (tasks: CreateTaskProps[]) => {
     const res =
-      // FIXME: we have to re-type response here, because of bad onFleet typing - check onFleet types
+      // FIXME: we have to re-type response here, because of bad typing
       (await createTasksQuery(tasks)) as unknown as CreateBatchTasksResponse;
 
     if (res.errors.length === 0) {

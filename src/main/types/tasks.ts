@@ -15,7 +15,7 @@ export type TaskData = {
   quantity: number | undefined;
 };
 
-// TODO: investigate onFleet types, module "@onfleet/node-onfleet" has bad type coverage of onFleet api
+// TODO: replace with "Task" type
 export type OurOnFleetTask = {
   slot: {
     start: number;

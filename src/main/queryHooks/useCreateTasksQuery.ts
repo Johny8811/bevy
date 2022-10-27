@@ -7,6 +7,7 @@ import { CreateTaskProps } from '../types/tasks';
 export const useCreateTasksQuery = () => {
   const fetchBackend = useFetchBackend();
 
+  // FIXME: bad response type
   return (tasks: CreateTaskProps[]): Promise<OnfleetTask[]> => {
     return fetchBackend({
       url: TASKS_BATCH_CREATE,
