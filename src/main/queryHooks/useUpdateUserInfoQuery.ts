@@ -6,6 +6,7 @@ type Body = {
   userId: string;
   displayName: string;
   photoURL: string;
+  email: string;
 };
 
 export const useUpdateUserInfoQuery = () => {

@@ -31,14 +31,15 @@ export function UpdateUserInfoDialog({ open, onCloseDialog }: Props) {
     const uid = data.get('uid') as string;
     const displayName = data.get('displayName') as string;
     const photoURL = data.get('photoURL') as string;
+    const email = data.get('email') as string;
 
     if (!uid) {
       setUidError(true);
       return;
     }
 
-    if (displayName || photoURL) {
-      await updateUserInfoQuery({ userId: uid, displayName, photoURL });
+    if (displayName || photoURL || email) {
+      await updateUserInfoQuery({ userId: uid, displayName, photoURL, email });
 
       handleCloseDialog();
       openSnackBar({
@@ -86,6 +87,7 @@ export function UpdateUserInfoDialog({ open, onCloseDialog }: Props) {
             type="text"
             id="photoURL"
           />
+          <TextField margin="normal" fullWidth name="email" label="Email" type="email" id="email" />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Cancel</Button>
