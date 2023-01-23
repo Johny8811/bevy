@@ -37,6 +37,7 @@ export enum SheetColumns {
   DELIVER_AFTER = 'Deliver_after',
   DELIVER_BEFORE = 'Deliver_before',
   QUANTITY = 'Quantity',
+  PICKUP_TASK = 'Pickup_task',
   // currently not used
   PAYMENT = 'Payment',
   CASH_ON_DELIVER = 'Cash_on_deliver',
@@ -56,6 +57,7 @@ export type RawSheetData = {
   [SheetColumns.DELIVER_AFTER]?: number;
   [SheetColumns.DELIVER_BEFORE]?: number;
   [SheetColumns.QUANTITY]?: number;
+  [SheetColumns.PICKUP_TASK]?: boolean;
   // -- define types of these items
   [SheetColumns.PAYMENT]?: number;
   [SheetColumns.CASH_ON_DELIVER]?: number;
@@ -87,6 +89,7 @@ export type Task = {
   completeAfter: number | undefined;
   completeBefore: number | undefined;
   quantity: number | undefined;
+  pickupTask: boolean;
 
   estimatedArrivalTime: number;
   order: number | null;
@@ -102,7 +105,7 @@ export type Tasks = Task[];
 // TODO: rename to "CreateTaskProps"
 export type CreateTaskProps = Pick<
   Task,
-  'recipients' | 'destination' | 'completeAfter' | 'completeBefore' | 'quantity'
+  'recipients' | 'destination' | 'completeAfter' | 'completeBefore' | 'quantity' | 'pickupTask'
 >;
 
 // Create Batch Tasks Response

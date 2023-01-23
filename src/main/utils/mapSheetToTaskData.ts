@@ -40,6 +40,8 @@ export const mapSheetToTaskData = async (
         ? excelDateToJSDate(data[SheetColumns.DELIVER_BEFORE] as number).getTime()
         : undefined;
 
+    const pickupTask = data[SheetColumns.PICKUP_TASK] || false;
+
     return {
       recipients: [
         {
@@ -60,7 +62,8 @@ export const mapSheetToTaskData = async (
       },
       completeAfter,
       completeBefore,
-      quantity
+      quantity,
+      pickupTask
     };
   });
 };
