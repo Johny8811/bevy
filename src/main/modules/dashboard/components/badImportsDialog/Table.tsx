@@ -38,7 +38,8 @@ export function Table({ failedTasks, onCancel, onConfirm }: Props) {
           failedTask.task.completeAfter && formatToDateAndTime(failedTask.task.completeAfter),
         completeBefore:
           failedTask.task.completeBefore && formatToDateAndTime(failedTask.task.completeBefore),
-        quantity: failedTask.task.quantity
+        quantity: failedTask.task.quantity,
+        pickupTask: failedTask.task.pickupTask
       };
     });
 

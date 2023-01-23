@@ -3,6 +3,7 @@ import { isDev } from '../../utils/isDev';
 const LOCAL_DEVELOPMENT = true;
 
 const BE_URL_DEV_LOCAL = 'http://localhost:5001/bevy-dev/europe-west3';
+// const BE_URL_DEV_LOCAL = 'http://localhost:5001/bevy-c8798/europe-west3';
 const BE_URL_DEV = 'https://europe-west3-bevy-dev.cloudfunctions.net';
 const BE_URL_PROD = 'https://europe-west3-bevy-c8798.cloudfunctions.net';
 

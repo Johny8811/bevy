@@ -58,7 +58,8 @@ export function TableFooter({ onConfirm, onCancel }: Omit<TableProps, 'failedTas
                     },
                     completeAfter: result.completeAfter,
                     completeBefore: result.completeBefore,
-                    quantity: result.quantity
+                    quantity: result.quantity,
+                    pickupTask: false
                   }))
                 );
               }

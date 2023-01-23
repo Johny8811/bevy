@@ -27,7 +27,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687156200000,
-      quantity: 1
+      quantity: 1,
+      pickupTask: false
     }
   },
   {
@@ -56,7 +57,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687156200000,
-      quantity: 1
+      quantity: 1,
+      pickupTask: false
     }
   },
   {
@@ -85,7 +87,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687156200000,
-      quantity: 1
+      quantity: 1,
+      pickupTask: false
     }
   },
   {
@@ -115,7 +118,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687156200000,
-      quantity: 1
+      quantity: 1,
+      pickupTask: false
     }
   },
   {
@@ -145,7 +149,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687150800000,
-      quantity: 1
+      quantity: 1,
+      pickupTask: false
     }
   },
   {
@@ -175,7 +180,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
       ],
       completeAfter: 1687143600000,
       completeBefore: 1687150800000,
-      quantity: 1
+      quantity: 1,
+      pickupTask: false
     }
   }
 ];
