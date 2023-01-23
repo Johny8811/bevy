@@ -4,13 +4,13 @@ export const badImportsValidationSchema = array().of(
   object().shape({
     name: string().required(),
     phoneNumber: string().required(),
-    skipSMSNotifications: boolean(),
-    recipientNotes: string(),
     street: string().required(),
     houseNumber: string().required(),
     city: string().required(),
-    postalCode: string(),
     country: string().required(),
+    skipSMSNotifications: boolean(),
+    recipientNotes: string(),
+    postalCode: string(),
     completeAfter: number(),
     completeBefore: number(),
     quantity: number()

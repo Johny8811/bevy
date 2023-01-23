@@ -28,6 +28,13 @@ export const BAD_IMPORTS_COLUMNS: GridColDef[] = [
 
 export const TASKS_TABLE_COLUMNS: GridColDef[] = [
   {
+    field: 'shortId',
+    headerName: 'Short Id',
+    width: 150,
+    // TODO: use OurOnFleetTask['...'] for typing
+    valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
+  },
+  {
     field: 'name',
     headerName: 'Name',
     width: 250,

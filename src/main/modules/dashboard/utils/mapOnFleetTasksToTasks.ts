@@ -4,6 +4,7 @@ import { OnFleetWorkers } from '../../../types/workers';
 export const mapOnFleetTasksToTasks = (tasks: OurOnFleetTask[], workers: OnFleetWorkers) =>
   tasks.map((task) => ({
     id: task.id,
+    shortId: task.shortId,
     name: task.recipients[0]?.name,
     phoneNumber: task.recipients[0]?.phone,
     recipientNotes: task.recipients[0]?.notes,
