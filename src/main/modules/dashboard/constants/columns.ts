@@ -56,6 +56,7 @@ export const TASKS_TABLE_COLUMNS: GridColDef[] = [
     valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
   },
   { field: 'street', headerName: 'Street', width: 150 },
+  { field: 'number', headerName: 'Number', width: 150 },
   { field: 'city', headerName: 'City', width: 150 },
   { field: 'postalCode', headerName: 'Postal code', width: 120 },
   { field: 'country', headerName: 'Country', width: 150 },

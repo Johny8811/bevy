@@ -9,6 +9,7 @@ export const mapOnFleetTasksToTasks = (tasks: OurOnFleetTask[], workers: OnFleet
     phoneNumber: task.recipients[0]?.phone,
     recipientNotes: task.recipients[0]?.notes,
     street: task.destination.address.street,
+    number: task.destination.address.number,
     city: task.destination.address.city,
     postalCode: task.destination.address.postalCode,
     country: task.destination.address.country,
