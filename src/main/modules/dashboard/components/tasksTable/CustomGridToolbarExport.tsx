@@ -90,7 +90,7 @@ function AggregatedAddressExportMenuItem(dateRange: DateRange) {
                 // @ts-ignore
                 d.uniqAddress.map((a) => ({
                   name: a.recipients[0]?.name,
-                  phoneNumber: a.recipients[0]?.phoneNumber,
+                  phoneNumber: a.recipients[0]?.phone,
                   street: a.destination.address.street,
                   number: a.destination.address.number,
                   city: a.destination.address.city,
