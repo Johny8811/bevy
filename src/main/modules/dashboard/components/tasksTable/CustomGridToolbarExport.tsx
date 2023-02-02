@@ -13,6 +13,9 @@ import { writeFileXLSX, utils } from 'xlsx';
 import { formatToDateAndTime } from '../../../../utils/formatDates';
 import { getGridData } from '../../../../utils/dataGrid/getGridData';
 import { useAggregatedTasksQuery } from '../../../../queryHooks/useAggregatedTasksQuery';
+import { useHasRole } from '../../../../integrations/firebase/hooks/useHasRole';
+
+import { DateRange } from '../SelectDateRange';
 
 function ExcelExportMenuItem(props: GridExportMenuItemProps<{}>) {
   const apiRef = useGridApiContext();
@@ -46,8 +49,8 @@ function ExcelExportMenuItem(props: GridExportMenuItemProps<{}>) {
   );
 }
 
-function AggregatedAddressExportMenuItem() {
-  const getAggregatedTasks = useAggregatedTasksQuery();
+function AggregatedAddressExportMenuItem(dateRange: DateRange) {
+  const getAggregatedTasks = useAggregatedTasksQuery(dateRange);
 
   return (
     <MenuItem
@@ -118,13 +121,21 @@ function AggregatedAddressExportMenuItem() {
   );
 }
 
-export function CustomGridToolbarExport(props: ButtonProps) {
+export function CustomGridToolbarExport({
+  buttonProps,
+  dateRange
+}: {
+  dateRange: DateRange;
+  buttonProps?: ButtonProps;
+}) {
+  const hasRole = useHasRole();
+
   return (
-    <GridToolbarExportContainer {...props}>
+    <GridToolbarExportContainer {...buttonProps}>
       <GridCsvExportMenuItem />
       <ExcelExportMenuItem />
       <GridPrintExportMenuItem />
-      <AggregatedAddressExportMenuItem />
+      {hasRole('root') && <AggregatedAddressExportMenuItem {...dateRange} />}
     </GridToolbarExportContainer>
   );
 }

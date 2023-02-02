@@ -8,10 +8,16 @@ import { DateRange } from '../SelectDateRange';
 import { NoData } from './NoData';
 import { CustomGridToolbarExport } from './CustomGridToolbarExport';
 
-function CustomToolbar(props: GridToolbarContainerProps) {
+function CustomToolbar({
+  gridContainerProps,
+  dateRange
+}: {
+  gridContainerProps: GridToolbarContainerProps;
+  dateRange: DateRange;
+}) {
   return (
-    <GridToolbarContainer {...props}>
-      <CustomGridToolbarExport />
+    <GridToolbarContainer {...gridContainerProps}>
+      <CustomGridToolbarExport dateRange={dateRange} />
     </GridToolbarContainer>
   );
 }
@@ -19,6 +25,7 @@ function CustomToolbar(props: GridToolbarContainerProps) {
 type Props = DateRange;
 
 export function Table(props: Props) {
+  const { completeAfter, completeBefore } = props;
   const tasksData = useTasksData(props);
 
   return (
@@ -29,6 +36,11 @@ export function Table(props: Props) {
         checkboxSelection
         disableSelectionOnClick
         components={{ Toolbar: CustomToolbar, NoRowsOverlay: NoData }}
+        componentsProps={{
+          toolbar: {
+            dateRange: { completeAfter, completeBefore }
+          }
+        }}
       />
     </Box>
   );
