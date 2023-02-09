@@ -125,3 +125,18 @@ export type CreateBatchTasksResponse = {
   errors: CreateBatchTasksErrors[];
   tasks: OnfleetTask[];
 };
+
+// Aggregated Tasks
+export interface Id {
+  street: string;
+  number: string;
+  city: string;
+  completeAfter: number;
+}
+
+export interface AggregatedTask {
+  _id: Id;
+  uniqAddress: OurOnFleetTask[];
+}
+
+export type AggregatedTasks = AggregatedTask[];

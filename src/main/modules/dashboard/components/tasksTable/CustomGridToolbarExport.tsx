@@ -58,7 +58,10 @@ function AggregatedAddressExportMenuItem(dateRange: DateRange) {
         getAggregatedTasks()
           .then((data) => {
             const formattedData = data
-              // @ts-ignore
+              .filter((v) => v.uniqAddress)
+              .sort((a, b) => {
+                return a.uniqAddress.length - b.uniqAddress.length;
+              })
               .map((d) => [
                 {
                   name: undefined,
@@ -87,7 +90,6 @@ function AggregatedAddressExportMenuItem(dateRange: DateRange) {
                   workerName: undefined,
                   workerPhone: undefined
                 },
-                // @ts-ignore
                 d.uniqAddress.map((a) => ({
                   name: a.recipients[0]?.name,
                   phoneNumber: a.recipients[0]?.phone,
@@ -101,13 +103,15 @@ function AggregatedAddressExportMenuItem(dateRange: DateRange) {
                   country: a.destination.address.country,
                   postalCode: a.destination.address.postalCode,
                   shortId: a.shortId,
-                  deliveredAt: a.deliveredAt,
+                  deliveredAt: a.completionDetails.time
+                    ? formatToDateAndTime(a.completionDetails.time)
+                    : undefined,
                   estimatedArrivalTime: a.estimatedArrivalTime
                     ? formatToDateAndTime(a.estimatedArrivalTime)
                     : undefined,
                   order: a.order,
                   quantity: a.quantity,
-                  recipientNotes: a.recipients[0]?.recipientNotes,
+                  recipientNotes: a.recipients[0]?.notes,
                   slot: a.slot,
                   workerName: undefined,
                   workerPhone: undefined
