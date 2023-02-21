@@ -13,6 +13,7 @@ const BASE_URL = isDev() ? DEV_BASE : BE_URL_PROD;
 export const ON_FLEET_EXPORT_TASKS_TO_DB = `${BASE_URL}/onFleet-exportTasksToDb`;
 export const ON_FLEET_GET_WORKERS = `${BASE_URL}/onFleet-getWorkers`;
 export const TASKS_GET_TASKS = `${BASE_URL}/tasks-getTasks`;
+export const TASKS_GET_TASKS_BY_DAY_NAME = `${BASE_URL}/tasks-getTasksByDayName`;
 export const TASKS_GET_AGGREGATED_TASKS = `${BASE_URL}/tasks-getAggregatedTasks`;
 export const TASKS_BATCH_CREATE = `${BASE_URL}/tasks-batchCreate`;
 export const UPDATE_USER_INFO = `${BASE_URL}/user-updateUser`;
