@@ -17,11 +17,11 @@ import { useUser } from '../../integrations/firebase/components/UserProvider';
 import { useDialog } from '../../components/dialogProvider/DialogProvider';
 import { useHasRole } from '../../integrations/firebase/hooks/useHasRole';
 import { DialogsNames } from '../../components/dialogProvider/types';
-import { useTasksByDayNameQuery } from '../../queryHooks/useTasksByDayNameQuery';
 import { useOnFleetExportTasks } from './hooks/useOnFleetExportTasks';
 import { Table as TasksTable } from './components/tasksTable/Table';
 import { Dialog as BadImportsDialog } from './components/badImportsDialog/Dialog';
 import { DateRange, SelectDateRange } from './components/SelectDateRange';
+import { YesterdayTasksExport } from './components/YesterdayTasksExport';
 import { useCreateTasks } from './hooks/useCreateTasks';
 
 export function Dashboard() {
@@ -35,7 +35,6 @@ export function Dashboard() {
   const { user, openChangePasswordDialog } = useUser();
   const userRoles = useUserRoles();
   const { openDialog } = useDialog();
-  const tasksByDayNameQuery = useTasksByDayNameQuery();
 
   const [completeAfter, setCompleteAfter] = useState<DateRange['completeAfter']>(null);
   const [completeBefore, setCompleteBefore] = useState<DateRange['completeBefore']>(null);
@@ -78,17 +77,7 @@ export function Dashboard() {
                 OnFleet - export tasks
               </Button>
             )}
-            {hasRole('dispatcher') && (
-              <Button
-                variant="contained"
-                onClick={async () => {
-                  // TODO: download data as CSV
-                  const data = await tasksByDayNameQuery('yesterday');
-                  console.log('==> ', data);
-                }}>
-                Previous day - download CSV
-              </Button>
-            )}
+            {hasRole('dispatcher') && <YesterdayTasksExport />}
             <FileInput onChange={handleChangeFileInput}>Import tasks</FileInput>
             <SelectDateRange
               completeAfter={completeAfter}
