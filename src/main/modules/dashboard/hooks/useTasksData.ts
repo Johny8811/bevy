@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useTasksQuery } from '../../../queryHooks/useTasksQuery';
 import { useWorkersQuery } from '../../../queryHooks/useWorkersQuery';
+import { useTasksByDayNameQuery } from '../../../queryHooks/useTasksByDayNameQuery';
 import { useHasRole } from '../../../integrations/firebase/hooks/useHasRole';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
 import { TaskData, OurOnFleetTask } from '../../../types/tasks';
@@ -15,6 +16,7 @@ export const useTasksData = ({ completeAfter, completeBefore }: DateRange) => {
 
   const tasksQuery = useTasksQuery();
   const workersQuery = useWorkersQuery();
+  const tasksByDayNameQuery = useTasksByDayNameQuery();
 
   const [workers, setWorkers] = useState<OnFleetWorkers | null>();
   const [tasks, setTasks] = useState<
@@ -38,7 +40,7 @@ export const useTasksData = ({ completeAfter, completeBefore }: DateRange) => {
   // TODO: uuuufff... remove and optimise this shit! one route with different params can handle all cases
   const fetchTasks = async (): Promise<OurOnFleetTask[]> => {
     if (hasRole('dispatcher')) {
-      return tasksQuery({ completeAfter, completeBefore });
+      return tasksByDayNameQuery('tomorrow');
     }
 
     if (hasRole('root') && completeAfter && completeBefore) {

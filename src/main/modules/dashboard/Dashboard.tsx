@@ -17,6 +17,7 @@ import { useUser } from '../../integrations/firebase/components/UserProvider';
 import { useDialog } from '../../components/dialogProvider/DialogProvider';
 import { useHasRole } from '../../integrations/firebase/hooks/useHasRole';
 import { DialogsNames } from '../../components/dialogProvider/types';
+import { useTasksByDayNameQuery } from '../../queryHooks/useTasksByDayNameQuery';
 import { useOnFleetExportTasks } from './hooks/useOnFleetExportTasks';
 import { Table as TasksTable } from './components/tasksTable/Table';
 import { Dialog as BadImportsDialog } from './components/badImportsDialog/Dialog';
@@ -34,6 +35,7 @@ export function Dashboard() {
   const { user, openChangePasswordDialog } = useUser();
   const userRoles = useUserRoles();
   const { openDialog } = useDialog();
+  const tasksByDayNameQuery = useTasksByDayNameQuery();
 
   const [completeAfter, setCompleteAfter] = useState<DateRange['completeAfter']>(null);
   const [completeBefore, setCompleteBefore] = useState<DateRange['completeBefore']>(null);
@@ -74,6 +76,17 @@ export function Dashboard() {
             {(hasRole('dispatcher') || hasRole('root')) && (
               <Button variant="contained" onClick={onFleetExportTasks}>
                 OnFleet - export tasks
+              </Button>
+            )}
+            {hasRole('dispatcher') && (
+              <Button
+                variant="contained"
+                onClick={async () => {
+                  // TODO: download data as CSV
+                  const data = await tasksByDayNameQuery('yesterday');
+                  console.log('==> ', data);
+                }}>
+                Previous day - download CSV
               </Button>
             )}
             <FileInput onChange={handleChangeFileInput}>Import tasks</FileInput>
