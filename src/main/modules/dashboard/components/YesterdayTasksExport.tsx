@@ -59,7 +59,7 @@ export function YesterdayTasksExport() {
           'Postal Code': task.destination.address.postalCode || '-',
           Country: task.destination.address.country || '-',
           'Worker Name': workers?.find((w) => w.id === task.worker)?.name,
-          'Worker Phone': undefined,
+          'Worker Phone': workers?.find((w) => w.id === task.worker)?.phone,
           'Complete After': task.completeAfter
             ? formatToDateAndTime(task.completeAfter)
             : undefined,
