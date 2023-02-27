@@ -41,7 +41,8 @@ export enum SheetColumns {
   // currently not used
   PAYMENT = 'Payment',
   CASH_ON_DELIVER = 'Cash_on_deliver',
-  INTERNAL_ORDER_NO = 'Internal_order_no'
+  INTERNAL_ORDER_NO = 'Internal_order_no',
+  SKIP_PHONE_VALIDATION = 'Skip_phone_validation'
 }
 
 export type RawSheetData = {
@@ -58,6 +59,7 @@ export type RawSheetData = {
   [SheetColumns.DELIVER_BEFORE]?: number;
   [SheetColumns.QUANTITY]?: number;
   [SheetColumns.PICKUP_TASK]?: boolean;
+  [SheetColumns.SKIP_PHONE_VALIDATION]?: boolean;
   // -- define types of these items
   [SheetColumns.PAYMENT]?: number;
   [SheetColumns.CASH_ON_DELIVER]?: number;

@@ -41,14 +41,16 @@ export const mapSheetToTaskData = async (
         : undefined;
 
     const pickupTask = data[SheetColumns.PICKUP_TASK] || false;
+    const skipPhoneValidation = data[SheetColumns.SKIP_PHONE_VALIDATION] || false;
 
     return {
       recipients: [
         {
           name,
-          phone,
+          phone: skipPhoneValidation ? `+${phone}` : phone,
           notes: recipientNote,
-          skipSMSNotifications
+          skipSMSNotifications,
+          skipPhoneNumberValidation: skipPhoneValidation
         }
       ],
       destination: {
