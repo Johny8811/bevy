@@ -16,7 +16,7 @@ export const mapOnFleetTasksToTasks = (tasks: OurOnFleetTask[], workers: OnFleet
     // TODO: optimise
     workerName: workers.find((w) => w.id === task.worker)?.name,
     workerPhone: workers.find((w) => w.id === task.worker)?.phone,
-    estimatedArrivalTime: task.estimatedArrivalTime,
+    estimatedCompletionTime: task.estimatedCompletionTime,
     order: task.order,
     completeAfter: task.completeAfter,
     completeBefore: task.completeBefore,

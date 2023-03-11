@@ -96,10 +96,12 @@ export const TASKS_TABLE_COLUMNS: GridColDef[] = [
   },
   { field: 'quantity', headerName: 'Quantity', width: 100 },
   {
-    field: 'estimatedArrivalTime',
-    headerName: 'Estimated arrival time',
+    field: 'estimatedCompletionTime',
+    headerName: 'Estimated Completion time',
     width: 200,
-    valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['estimatedArrivalTime']>) =>
+    valueFormatter: ({
+      value
+    }: GridValueFormatterParams<OurOnFleetTask['estimatedCompletionTime']>) =>
       valueOrDash(value, (v) => formatToDateAndTime(v))
   },
   {

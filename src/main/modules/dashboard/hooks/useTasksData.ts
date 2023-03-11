@@ -33,7 +33,7 @@ export const useTasksData = ({ completeAfter, completeBefore }: DateRange) => {
         | 'completeBefore'
         | 'quantity'
       > &
-        Pick<OurOnFleetTask, 'estimatedArrivalTime' | 'slot'>)[]
+        Pick<OurOnFleetTask, 'estimatedCompletionTime' | 'slot'>)[]
     | []
   >([]);
 
