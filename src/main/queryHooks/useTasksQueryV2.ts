@@ -5,6 +5,7 @@ import { Methods, fetchApi } from '../integrations/fetch/fetchApi';
 import { useFetchParams } from '../integrations/fetch/hooks/useFetchParams';
 import { TASKS_GET_TASKS } from '../integrations/fetch/endpoints';
 import { buildUrlQueryParams } from '../utils/buildUrlQueryParams';
+import { OurOnFleetTask } from '../types/tasks';
 
 const QUERY_NAME = 'tasks';
 
@@ -15,13 +16,13 @@ type TasksQueryParams = {
 
 export const useTasksQueryV2 = (
   tasksQueryParams: Omit<TasksQueryParams, 'userId'>,
-  enabled: boolean = true
+  enabled: boolean = false
 ) => {
   const { getParamsWithAuthorization } = useFetchParams();
 
   return useQuery(
     [QUERY_NAME, tasksQueryParams],
-    async () => {
+    async (): Promise<OurOnFleetTask> => {
       const { completeAfter, completeBefore } = tasksQueryParams;
 
       const queryParams = buildUrlQueryParams([
