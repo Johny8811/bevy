@@ -72,12 +72,12 @@ export function Dashboard() {
                 Change password
               </Button>
             )}
-            {(hasRole('dispatcher') || hasRole('root')) && (
+            {hasRole('root') && (
               <Button variant="contained" onClick={onFleetExportTasks}>
                 OnFleet - export tasks
               </Button>
             )}
-            {hasRole('dispatcher') && <YesterdayTasksExport />}
+            {hasRole('root') && <YesterdayTasksExport />}
             <FileInput onChange={handleChangeFileInput}>Import tasks</FileInput>
             <SelectDateRange
               completeAfter={completeAfter}

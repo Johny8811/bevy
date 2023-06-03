@@ -20,4 +20,4 @@ export const FIREBASE_CONFIG_PROD = {
   measurementId: 'G-LK966N9TK6'
 };
 
-export type ROLES = 'root' | 'dispatcher' | 'user';
+export type ROLES = 'root' | 'user';
