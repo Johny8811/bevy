@@ -6,6 +6,7 @@ import { red } from '@mui/material/colors';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CssBaseline from '@mui/material/CssBaseline';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { SnackBarProvider } from './components/snackBar/SnackbarProvider';
 import { LoadingProvider } from './integrations/fetch/components/LoadingProvider';
@@ -55,6 +56,7 @@ export function App() {
                 </RemoteConfigProvider>
               </LoadingProvider>
             </SnackBarProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </LocalizationProvider>
       </ThemeProvider>
