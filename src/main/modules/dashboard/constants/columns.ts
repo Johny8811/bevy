@@ -2,7 +2,7 @@ import { GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
 
 import { formatToDateAndTime, formatToTime } from '../../../utils/formatDates';
 import { valueOrDash } from '../../../utils/valueOrDash';
-import { OurOnFleetTask } from '../../../types/tasks';
+import { Task, Recipient } from '../../../types/tasks';
 import { OnFleetWorker } from '../../../types/workers';
 
 export const BAD_IMPORTS_COLUMNS: GridColDef[] = [
@@ -31,32 +31,28 @@ export const TASKS_TABLE_COLUMNS: GridColDef[] = [
     field: 'shortId',
     headerName: 'Short Id',
     width: 150,
-    // TODO: use OurOnFleetTask['...'] for typing
-    valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
+    valueFormatter: ({ value }: GridValueFormatterParams<Task['shortId']>) => valueOrDash(value)
   },
   {
     field: 'name',
     headerName: 'Name',
     width: 250,
-    // TODO: use OurOnFleetTask['...'] for typing
-    valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
+    valueFormatter: ({ value }: GridValueFormatterParams<Recipient['name']>) => valueOrDash(value)
   },
   {
     field: 'phoneNumber',
     headerName: 'Phone number',
     width: 150,
-    // TODO: use OurOnFleetTask['...'] for typing
-    valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
+    valueFormatter: ({ value }: GridValueFormatterParams<Recipient['phone']>) => valueOrDash(value)
   },
   {
     field: 'recipientNotes',
     headerName: 'Customer Notes',
     width: 250,
-    // TODO: use OurOnFleetTask['...'] for typing
-    valueFormatter: ({ value }: GridValueFormatterParams<string>) => valueOrDash(value)
+    valueFormatter: ({ value }: GridValueFormatterParams<Recipient['notes']>) => valueOrDash(value)
   },
   { field: 'street', headerName: 'Street', width: 150 },
-  { field: 'number', headerName: 'Number', width: 150 },
+  { field: 'houseNumber', headerName: 'House Number', width: 150 },
   { field: 'city', headerName: 'City', width: 150 },
   { field: 'postalCode', headerName: 'Postal code', width: 120 },
   { field: 'country', headerName: 'Country', width: 150 },
@@ -74,24 +70,18 @@ export const TASKS_TABLE_COLUMNS: GridColDef[] = [
     valueFormatter: ({ value }: GridValueFormatterParams<OnFleetWorker['phone']>) =>
       valueOrDash(value)
   },
-  /*
-  // will be implemented
-  { field: 'payment', headerName: 'payment', width: 100 },
-  { field: 'cashOnDeliver', headerName: 'Cash on deliver', width: 100 },
-  { field: 'internalOrderNo', headerName: 'Internal order no', width: 100 },
-  */
   {
     field: 'completeAfter',
     headerName: 'Deliver after',
     width: 150,
-    valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['completeAfter']>) =>
+    valueFormatter: ({ value }: GridValueFormatterParams<Task['completeAfter']>) =>
       formatToDateAndTime(value)
   },
   {
     field: 'completeBefore',
     headerName: 'Deliver before',
     width: 150,
-    valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['completeBefore']>) =>
+    valueFormatter: ({ value }: GridValueFormatterParams<Task['completeBefore']>) =>
       formatToDateAndTime(value)
   },
   { field: 'quantity', headerName: 'Quantity', width: 100 },
@@ -99,17 +89,14 @@ export const TASKS_TABLE_COLUMNS: GridColDef[] = [
     field: 'estimatedCompletionTime',
     headerName: 'Estimated Completion time',
     width: 200,
-    valueFormatter: ({
-      value
-    }: GridValueFormatterParams<OurOnFleetTask['estimatedCompletionTime']>) =>
+    valueFormatter: ({ value }: GridValueFormatterParams<Task['estimatedCompletionTime']>) =>
       valueOrDash(value, (v) => formatToDateAndTime(v))
   },
   {
     field: 'order',
     headerName: 'Order',
     width: 100,
-    valueFormatter: ({ value }: GridValueFormatterParams<OurOnFleetTask['order']>) =>
-      valueOrDash(value)
+    valueFormatter: ({ value }: GridValueFormatterParams<Task['order']>) => valueOrDash(value)
   },
   {
     field: 'slot',
@@ -123,9 +110,7 @@ export const TASKS_TABLE_COLUMNS: GridColDef[] = [
     field: 'deliveredAt',
     headerName: 'Delivered at',
     width: 150,
-    valueFormatter: ({
-      value
-    }: GridValueFormatterParams<OurOnFleetTask['completionDetails']['time']>) =>
+    valueFormatter: ({ value }: GridValueFormatterParams<Task['completionDetails']['time']>) =>
       valueOrDash(value, (v) => formatToDateAndTime(v))
   }
   /*

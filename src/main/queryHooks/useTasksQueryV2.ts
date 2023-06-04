@@ -5,7 +5,7 @@ import { Methods, fetchApi } from '../integrations/fetch/fetchApi';
 import { useFetchParams } from '../integrations/fetch/hooks/useFetchParams';
 import { TASKS_GET_TASKS } from '../integrations/fetch/endpoints';
 import { buildUrlQueryParams } from '../utils/buildUrlQueryParams';
-import { OurOnFleetTask } from '../types/tasks';
+import { Task } from '../types/tasks';
 
 const QUERY_NAME = 'tasks';
 
@@ -22,7 +22,7 @@ export const useTasksQueryV2 = (
 
   return useQuery(
     [QUERY_NAME, tasksQueryParams],
-    async (): Promise<OurOnFleetTask> => {
+    async (): Promise<Task> => {
       const { completeAfter, completeBefore } = tasksQueryParams;
 
       const queryParams = buildUrlQueryParams([

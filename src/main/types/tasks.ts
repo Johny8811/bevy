@@ -1,28 +1,50 @@
 import { OnfleetTask, UpdateTaskResult } from '@onfleet/node-onfleet/Resources/Tasks';
 
-export type TaskData = {
+export type Recipient = {
   name: string;
-  phoneNumber: string;
+  phone: string;
+  notes?: string | undefined;
   skipSMSNotifications: boolean | undefined;
-  recipientNotes: string | undefined;
-  street: string;
-  houseNumber: string;
-  city: string;
-  postalCode: string | undefined;
-  country: string;
-  completeAfter: number | undefined;
-  completeBefore: number | undefined;
-  quantity: number | undefined;
 };
 
-// TODO: replace with "Task" type
-export type OurOnFleetTask = {
+export type Address = {
+  apartment?: string | undefined;
+  state?: string | undefined;
+  postalCode?: string | undefined;
+  country: string;
+  city: string;
+  street: string;
+  number: string;
+};
+
+export type Task = {
+  id: string;
+  shortId: string;
+  recipients: Recipient[];
+  destination: { address: Address };
+  completeAfter: number;
+  completeBefore: number;
+  quantity: number | undefined;
+  pickupTask: boolean;
+  completionDetails: {
+    failureNotes: string;
+    events: any[];
+    actions: any[];
+    time: number | null;
+    firstLocation: any[];
+    lastLocation: any[];
+  };
+  estimatedCompletionTime: number | null;
+  worker: string | null;
+  order: number | null;
   slot: {
     start: number;
     end: number;
   } | null;
-  order: number | null;
-} & UpdateTaskResult;
+  deliveredAt: number | null;
+};
+
+export type Tasks = Task[];
 
 export enum SheetColumns {
   CUSTOMER_NAME = 'Customer_name',
@@ -66,44 +88,6 @@ export type RawSheetData = {
   [SheetColumns.INTERNAL_ORDER_NO]?: number;
 };
 
-//
-export type Recipient = {
-  name: string;
-  phone: string;
-  notes?: string | undefined;
-  skipSMSNotifications: boolean | undefined;
-};
-
-export type Address = {
-  apartment?: string | undefined;
-  state?: string | undefined;
-  postalCode?: string | undefined;
-  country: string;
-  city: string;
-  street: string;
-  number: string;
-};
-
-export type Task = {
-  id: string;
-  recipients: Recipient[];
-  destination: { address: Address };
-  completeAfter: number | undefined;
-  completeBefore: number | undefined;
-  quantity: number | undefined;
-  pickupTask: boolean;
-
-  estimatedArrivalTime: number;
-  order: number | null;
-  slot: {
-    start: number;
-    end: number;
-  } | null;
-  deliveredAt: number | null;
-};
-
-export type Tasks = Task[];
-
 // TODO: rename to "CreateTaskProps"
 export type CreateTaskProps = Pick<
   Task,
@@ -136,6 +120,14 @@ export interface Id {
   completeAfter: number;
 }
 
+// TODO: investigate & remove if redundant
+type OurOnFleetTask = {
+  slot: {
+    start: number;
+    end: number;
+  } | null;
+  order: number | null;
+} & UpdateTaskResult;
 export interface AggregatedTask {
   _id: Id;
   uniqAddress: OurOnFleetTask[];

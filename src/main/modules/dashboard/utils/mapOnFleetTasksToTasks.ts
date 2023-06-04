@@ -1,7 +1,7 @@
-import { OurOnFleetTask } from '../../../types/tasks';
+import { Task } from '../../../types/tasks';
 import { OnFleetWorkers } from '../../../types/workers';
 
-export const mapOnFleetTasksToTasks = (tasks: OurOnFleetTask[], workers: OnFleetWorkers) =>
+export const mapOnFleetTasksToTasks = (tasks: Task[], workers: OnFleetWorkers) =>
   tasks.map((task) => ({
     id: task.id,
     shortId: task.shortId,
@@ -9,7 +9,7 @@ export const mapOnFleetTasksToTasks = (tasks: OurOnFleetTask[], workers: OnFleet
     phoneNumber: task.recipients[0]?.phone,
     recipientNotes: task.recipients[0]?.notes,
     street: task.destination.address.street,
-    number: task.destination.address.number,
+    houseNumber: task.destination.address.number,
     city: task.destination.address.city,
     postalCode: task.destination.address.postalCode,
     country: task.destination.address.country,

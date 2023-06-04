@@ -4,7 +4,7 @@ import { Methods } from '../integrations/fetch/fetchApi';
 import { useFetchBackend } from '../integrations/fetch/hooks/useFetchBackend';
 import { TASKS_GET_TASKS } from '../integrations/fetch/endpoints';
 import { buildUrlQueryParams } from '../utils/buildUrlQueryParams';
-import { OurOnFleetTask } from '../types/tasks';
+import { Task } from '../types/tasks';
 
 type TasksQueryParams = {
   completeAfter: Date | null;
@@ -14,7 +14,7 @@ type TasksQueryParams = {
 export const useTasksQuery = () => {
   const fetchBackend = useFetchBackend();
 
-  return ({ completeAfter, completeBefore }: TasksQueryParams): Promise<OurOnFleetTask[]> => {
+  return ({ completeAfter, completeBefore }: TasksQueryParams): Promise<Task[]> => {
     const queryParams = buildUrlQueryParams([
       completeAfter && {
         param: 'completeAfter',
