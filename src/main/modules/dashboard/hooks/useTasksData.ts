@@ -1,80 +1,47 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { useTasksQuery } from '../../../queryHooks/useTasksQuery';
-import { useWorkersQuery } from '../../../queryHooks/useWorkersQuery';
-import { useHasRole } from '../../../integrations/firebase/hooks/useHasRole';
+import { useTasksQueryV2 } from '../../../queryHooks/useTasksQueryV2';
+import { useWorkersQueryV2 } from '../../../queryHooks/useWorkersQueryV2';
 import { useSnackBar } from '../../../components/snackBar/SnackbarProvider';
-import { TaskData, OurOnFleetTask } from '../../../types/tasks';
-import { OnFleetWorkers } from '../../../types/workers';
+import { Task } from '../../../types/tasks';
+
 import { mapOnFleetTasksToTasks } from '../utils/mapOnFleetTasksToTasks';
 import { DateRange } from '../components/SelectDateRange';
+import { TaskPreview } from '../types/tasks';
 
 export const useTasksData = ({ completeAfter, completeBefore }: DateRange) => {
   const { openSnackBar } = useSnackBar();
-  const hasRole = useHasRole();
 
-  const tasksQuery = useTasksQuery();
-  const workersQuery = useWorkersQuery();
-
-  const [workers, setWorkers] = useState<OnFleetWorkers | null>();
-  const [tasks, setTasks] = useState<
-    | ({ id: string } & Pick<
-        TaskData,
-        | 'name'
-        | 'phoneNumber'
-        | 'recipientNotes'
-        | 'street'
-        | 'city'
-        | 'postalCode'
-        | 'country'
-        | 'completeAfter'
-        | 'completeBefore'
-        | 'quantity'
-      > &
-        Pick<OurOnFleetTask, 'estimatedCompletionTime' | 'slot'>)[]
-    | []
-  >([]);
-
-  // TODO: uuuufff... remove and optimise this shit! one route with different params can handle all cases
-  const fetchTasks = async (): Promise<OurOnFleetTask[]> => {
-    if (hasRole('root') && completeAfter && completeBefore) {
-      return tasksQuery({ completeAfter, completeBefore });
-    }
-
-    if (hasRole('user') && completeAfter) {
-      return tasksQuery({ completeAfter, completeBefore });
-    }
-
-    return new Promise((resolve) => {
-      resolve([]);
-    });
-  };
+  const {
+    data: tasksData,
+    isError: isTasksError,
+    isLoading: isTasksLoading,
+    isFetching: isTasksFetching
+  } = useTasksQueryV2({ completeAfter, completeBefore }, !!(completeAfter && completeBefore));
+  const { data: workersData, isError: isWorkersError } = useWorkersQueryV2();
 
   useEffect(() => {
-    if (workers) {
-      fetchTasks()
-        .then((onFleetTasks) => setTasks(mapOnFleetTasksToTasks(onFleetTasks, workers)))
-        .catch(() => {
-          // TODO: log error
-          openSnackBar({
-            text: `Something went wrong while getting data`,
-            severity: 'error'
-          });
-        });
-    }
-  }, [completeAfter, completeBefore, workers]);
-
-  useEffect(() => {
-    workersQuery()
-      .then((data) => setWorkers(data))
-      .catch(() => {
-        // TODO: log error
-        openSnackBar({
-          text: `Something went wrong while getting data`,
-          severity: 'error'
-        });
+    if (isTasksError || isWorkersError) {
+      openSnackBar({
+        text: `Something went wrong while getting data tasks data. Please try it again.`,
+        severity: 'error'
       });
-  }, []);
+    }
+  }, [isTasksError, isWorkersError]);
 
-  return tasks;
+  const tasks:
+    | (Omit<TaskPreview, 'skipSMSNotifications' | 'pickupTask'> &
+        Pick<Task, 'estimatedCompletionTime' | 'slot'>)[]
+    | [] = useMemo(() => {
+    if (tasksData && workersData) {
+      return mapOnFleetTasksToTasks(tasksData, workersData);
+    }
+
+    return [];
+  }, [tasksData]);
+
+  return {
+    tasks,
+    loading: isTasksLoading && isTasksFetching
+  };
 };

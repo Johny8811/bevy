@@ -26,13 +26,14 @@ type Props = DateRange;
 
 export function Table(props: Props) {
   const { completeAfter, completeBefore } = props;
-  const tasksData = useTasksData(props);
+  const { tasks, loading } = useTasksData(props);
 
   return (
     <Box sx={{ height: 'calc(100vh - 68px)', width: '100%' }}>
       <DataGrid
-        rows={tasksData}
+        rows={tasks}
         columns={TASKS_TABLE_COLUMNS}
+        loading={loading}
         checkboxSelection
         disableSelectionOnClick
         components={{ Toolbar: CustomToolbar, NoRowsOverlay: NoData }}
