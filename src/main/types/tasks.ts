@@ -1,5 +1,10 @@
 import { OnfleetTask, UpdateTaskResult } from '@onfleet/node-onfleet/Resources/Tasks';
 
+type Latitude = number;
+type Longitude = number;
+type Location = [Longitude, Latitude];
+
+// Task
 export type Recipient = {
   name: string;
   phone: string;
@@ -8,9 +13,9 @@ export type Recipient = {
 };
 
 export type Address = {
-  apartment?: string | undefined;
-  state?: string | undefined;
-  postalCode?: string | undefined;
+  apartment: string;
+  state: string;
+  postalCode: string;
   country: string;
   city: string;
   street: string;
@@ -21,7 +26,11 @@ export type Task = {
   id: string;
   shortId: string;
   recipients: Recipient[];
-  destination: { address: Address };
+  destination: {
+    location: Location;
+    address: Address;
+    notes: string;
+  };
   completeAfter: number;
   completeBefore: number;
   quantity: number | undefined;
@@ -34,6 +43,7 @@ export type Task = {
     firstLocation: any[];
     lastLocation: any[];
   };
+  estimatedArrivalTime: number | null;
   estimatedCompletionTime: number | null;
   worker: string | null;
   order: number | null;
@@ -46,6 +56,61 @@ export type Task = {
 
 export type Tasks = Task[];
 
+// Create Batch Tasks
+interface DestinationAddress {
+  apartment?: string | undefined;
+  city: string;
+  country: string;
+  name?: string | undefined;
+  number: string;
+  postalCode?: string | undefined;
+  state?: string | undefined;
+  street: string;
+}
+
+interface CreateDestinationProps {
+  address: DestinationAddress;
+  location?: Location | undefined;
+  notes?: string | undefined;
+}
+
+interface CreateRecipientProps {
+  name: string;
+  phone: string;
+  notes?: string | undefined;
+  skipSMSNotifications?: boolean | undefined;
+  skipPhoneNumberValidation?: boolean | undefined;
+}
+
+export type CreateTaskProps = {
+  destination: CreateDestinationProps;
+  recipients: CreateRecipientProps[];
+  completeAfter?: number | undefined;
+  completeBefore?: number | undefined;
+  notes?: string | undefined;
+  pickupTask?: boolean | undefined;
+  quantity?: number | undefined;
+};
+
+// Create Batch Tasks Response
+export type CreateBatchTasksError = {
+  cause: string | null;
+  error: number;
+  message: string;
+  statusCode: number;
+};
+
+export type CreateBatchTasksErrors = {
+  error: CreateBatchTasksError;
+  task: CreateTaskProps;
+};
+
+export type CreateBatchTasksResponse = {
+  errors: CreateBatchTasksErrors[];
+  tasks: OnfleetTask[];
+};
+
+// Sheet Columns
 export enum SheetColumns {
   CUSTOMER_NAME = 'Customer_name',
   TEL_NUMBER = 'Tel_number',
@@ -86,30 +151,6 @@ export type RawSheetData = {
   [SheetColumns.PAYMENT]?: number;
   [SheetColumns.CASH_ON_DELIVER]?: number;
   [SheetColumns.INTERNAL_ORDER_NO]?: number;
-};
-
-// TODO: rename to "CreateTaskProps"
-export type CreateTaskProps = Pick<
-  Task,
-  'recipients' | 'destination' | 'completeAfter' | 'completeBefore' | 'quantity' | 'pickupTask'
->;
-
-// Create Batch Tasks Response
-export type CreateBatchTasksError = {
-  cause: string | null;
-  error: number;
-  message: string;
-  statusCode: number;
-};
-
-export type CreateBatchTasksErrors = {
-  error: CreateBatchTasksError;
-  task: CreateTaskProps;
-};
-
-export type CreateBatchTasksResponse = {
-  errors: CreateBatchTasksErrors[];
-  tasks: OnfleetTask[];
 };
 
 // Aggregated Tasks

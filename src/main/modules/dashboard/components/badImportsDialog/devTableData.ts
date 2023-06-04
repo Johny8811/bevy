@@ -16,7 +16,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
           city: 'Přezletice',
           postalCode: '25073',
           country: 'Czech Republic'
-        }
+        },
+        location: [14.2171806, 50.0949608]
       },
       recipients: [
         {
@@ -46,7 +47,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
           city: 'Praha',
           postalCode: '19017',
           country: 'Czech Republic'
-        }
+        },
+        location: [14.2171806, 50.0949608]
       },
       recipients: [
         {
@@ -76,7 +78,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
           city: 'Praha',
           postalCode: '14900',
           country: 'Czech Republic'
-        }
+        },
+        location: [14.2171806, 50.0949608]
       },
       recipients: [
         {
@@ -106,7 +109,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
           city: 'Praha',
           postalCode: '12899',
           country: 'Czech Republic'
-        }
+        },
+        location: [14.2171806, 50.0949608]
       },
       recipients: [
         {
@@ -137,7 +141,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
           city: 'Praha',
           postalCode: '24211',
           country: 'Czech Republic'
-        }
+        },
+        location: [14.2171806, 50.0949608]
       },
       recipients: [
         {
@@ -168,7 +173,8 @@ export const EXAMPLE_IMPORT_ERRORS: CreateBatchTasksErrors[] = [
           city: 'Praha',
           postalCode: '11100',
           country: 'Czech Republic'
-        }
+        },
+        location: [14.2171806, 50.0949608]
       },
       recipients: [
         {
